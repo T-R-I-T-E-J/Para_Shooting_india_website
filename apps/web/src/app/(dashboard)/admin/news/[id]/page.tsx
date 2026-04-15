@@ -230,7 +230,7 @@ export default function EditNewsPage({ params }: { params: { id: string } }) {
                       <div className="flex flex-col items-center gap-2 text-neutral-400">
                         <Image className="w-8 h-8" />
                         <span className="text-sm font-medium">Upload featured image</span>
-                        <span className="text-xs text-neutral-400">JPG, PNG, WebP — max 5MB</span>
+                        <span className="text-xs text-neutral-400">JPG, PNG, WebP — max 10MB</span>
                       </div>
                     )}
                     <input

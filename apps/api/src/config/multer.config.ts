@@ -4,7 +4,10 @@ import { existsSync, mkdirSync } from 'fs';
 import * as crypto from 'crypto';
 import { BadRequestException } from '@nestjs/common';
 
-const isProduction = !!process.env.RENDER || !!process.env.RENDER_EXTERNAL_URL;
+const isProduction =
+  !!process.env.RENDER ||
+  !!process.env.RENDER_EXTERNAL_URL ||
+  process.env.NODE_ENV === 'production';
 
 type DestinationCallback = (error: Error | null, destination: string) => void;
 type FilenameCallback = (error: Error | null, filename: string) => void;
@@ -109,7 +112,7 @@ export const multerConfig = {
 
   // File size limits
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB max file size
+    fileSize: 10 * 1024 * 1024, // 10MB max file size
     files: 10, // Max 10 files per request
   },
 };
