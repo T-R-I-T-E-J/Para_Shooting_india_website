@@ -26,6 +26,11 @@ export class DownloadsService implements OnModuleInit {
   }
 
   async create(createDownloadDto: CreateDownloadDto): Promise<Download> {
+    // Normalise empty string categoryId to undefined to avoid Postgres UUID cast errors
+    if (createDownloadDto.categoryId === '') {
+      createDownloadDto.categoryId = undefined;
+    }
+
     // Auto-calculate content_year from content_date
     if (createDownloadDto.contentDate) {
       createDownloadDto.contentYear = new Date(
