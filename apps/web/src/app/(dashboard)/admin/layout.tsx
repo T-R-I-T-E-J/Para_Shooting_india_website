@@ -7,19 +7,11 @@ import { Sidebar } from '@/components/dashboard'
 
 const adminNavItems = [
   {
-<<<<<<< Updated upstream
     label: 'Registration System',
     href: '/admin/competitions',
     icon: Calendar,
     subItems: [
       { label: 'Manage Competitions', href: '/admin/competitions' },
-=======
-    label: 'Competitions',
-    href: '/admin/events',
-    icon: Calendar,
-    subItems: [
-      { label: 'Manage Matches', href: '/admin/events' },
->>>>>>> Stashed changes
       { label: 'Score Management', href: '/admin/scores' },
       { label: 'Match Reports', href: '/admin/events/reports' },
     ]

@@ -34,11 +34,8 @@ import configuration from './config/configuration';
 import { getDatabaseConfig } from './config/database.config';
 import { envValidationSchema } from './config/env.validation';
 import { LoggerModule } from './common/logger/logger.module';
-<<<<<<< Updated upstream
 import { CompetitionsModule } from './competitions/competitions.module';
 import { RegistrationsModule } from './registrations/registrations.module';
-=======
->>>>>>> Stashed changes
 
 // Disable ServeStaticModule in production (Render, Vercel, or NODE_ENV=production)
 // On Render, RENDER_EXTERNAL_URL is always set (e.g., https://yourapp.onrender.com)
@@ -146,12 +143,9 @@ const uploadServeStaticModules = isProduction
     // Only serve uploads from disk in development environment
     // In production (Render/Vercel), we use database storage and memory storage
     ...uploadServeStaticModules,
-<<<<<<< Updated upstream
 
     CompetitionsModule,
     RegistrationsModule,
-=======
->>>>>>> Stashed changes
   ],
   controllers: [AppController],
   providers: [
