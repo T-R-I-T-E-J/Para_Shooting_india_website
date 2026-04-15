@@ -69,61 +69,95 @@ const partners = [
 
 async function getLatestNews() {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://final-production-q1yw.onrender.com/api/v1';
-    const fetchUrl = API_URL.startsWith('http') ? `${API_URL}/news?status=published&limit=3` : `https://final-production-q1yw.onrender.com/api/v1/news?status=published&limit=3`;
-    const res = await fetch(fetchUrl, { cache: 'no-store' });
-    if (!res.ok) return null;
-    const json = await res.json();
-    const data = Array.isArray(json) ? json : json.data || [];
-    
-    if (data.length === 0) return null;
-
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+      'http://localhost:4000'
+    const res = await fetch(`${apiUrl}/api/v1/news?status=published&limit=6`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return []
+    const json = await res.json()
+    const data: any[] = Array.isArray(json) ? json : json.data || []
+    if (data.length === 0) return []
     return data.map((item: any, i: number) => ({
+      id: item.id,
+      slug: item.slug || String(item.id),
       category: item.category || 'NEWS',
-      date: new Date(item.published_at || item.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
       title: item.title,
-      snippet: item.excerpt || item.title,
+      excerpt: item.excerpt || item.title,
+      published_at: item.published_at || item.created_at || '',
       featured_image_url: item.featured_image_url || item.preview_image_url || '',
-      imageGradientFrom: ['#001A4D', '#C8A415', '#046A38'][i % 3],
-      imageGradientTo: ['#003DA5', '#8B7005', '#014022'][i % 3],
-      slug: item.slug || item.id.toString(),
-    }));
+      gradientFrom: ['#001A4D', '#C8A415', '#046A38'][i % 3],
+      gradientTo: ['#003DA5', '#8B7005', '#014022'][i % 3],
+    }))
   } catch (error) {
-    console.error('Home News Error:', error);
-    return null;
+    console.error('Home News Error:', error)
+    return []
   }
 }
 
 async function getUpcomingEvents() {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://final-production-q1yw.onrender.com/api/v1';
-    const fetchUrl = API_URL.startsWith('http') ? `${API_URL}/events?limit=4` : `https://final-production-q1yw.onrender.com/api/v1/events?limit=4`;
-    const res = await fetch(fetchUrl, { cache: 'no-store' });
-    if (!res.ok) return null;
-    const json = await res.json();
-    const data = Array.isArray(json) ? json : json.data || [];
-
-    if (data.length === 0) return null;
-
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+      'http://localhost:4000'
+    const res = await fetch(`${apiUrl}/api/v1/events?limit=4`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return null
+    const json = await res.json()
+    const data: any[] = Array.isArray(json) ? json : json.data || []
+    if (data.length === 0) return null
     return data.map((event: any) => {
-      const date = new Date(event.start_date);
+      const date = new Date(event.start_date)
       return {
         day: date.getDate().toString(),
         month: date.toLocaleDateString('en-GB', { month: 'short' }),
         title: event.title,
         location: event.venue?.name || event.location || 'TBA',
-        status: (event.status || 'upcoming').toLowerCase() as 'upcoming' | 'completed' | 'ongoing',
-      };
-    });
+        status: ((event.status || 'upcoming').toLowerCase()) as 'upcoming' | 'completed' | 'ongoing',
+      }
+    })
   } catch (error) {
-    console.error('Home Events Error:', error);
-    return null;
+    console.error('Home Events Error:', error)
+    return null
+  }
+}
+
+async function getFeaturedMedia() {
+  try {
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+      'http://localhost:4000'
+    const res = await fetch(`${apiUrl}/api/v1/media?limit=3`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return []
+    const json = await res.json()
+    const data: any[] = Array.isArray(json) ? json : json.data || []
+    return data.map((item: any, i: number) => ({
+      type: (item.type === 'video' ? 'video' : 'gallery') as 'video' | 'gallery',
+      title: item.title,
+      date: (() => {
+        const raw = item.published_at || item.created_at
+        if (!raw) return ''
+        const d = new Date(raw)
+        return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+      })(),
+      videoDuration: item.duration || '',
+      thumbnailUrl: item.thumbnail_url || item.cover_image_url || '',
+      thumbnailFrom: ['#1E293B', '#C8A415', '#046A38'][i % 3],
+      thumbnailTo: ['#0F172A', '#A5840D', '#024D28'][i % 3],
+    }))
+  } catch {
+    return []
   }
 }
 
 export default async function HomePage() {
-  const latestNews = await getLatestNews() || featuredNews;
-  const realEvents = await getUpcomingEvents() || upcomingEvents;
+  const latestNews = await getLatestNews()
+  const realEvents = await getUpcomingEvents() || upcomingEvents
+  const mediaItems = await getFeaturedMedia()
   return (
     <div className="w-full overflow-x-hidden">
 
@@ -435,7 +469,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredMedia.map((item, i) => (
+            {mediaItems.map((item, i) => (
               <RevealSection key={item.title} delay={i * 100}>
                 <MediaCard {...item} />
               </RevealSection>

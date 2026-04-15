@@ -36,7 +36,7 @@ function ArrowIcon({ dir }: { dir: 'left' | 'right' }) {
 }
 
 export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }) {
-  const items: CarouselItem[] = articles?.length ? articles : DUMMY_NEWS.slice(0, 6)
+  const items: CarouselItem[] = articles?.length ? articles : []
   const trackRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
