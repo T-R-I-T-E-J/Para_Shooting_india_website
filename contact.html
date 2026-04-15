@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — STC Para Shooting | Paralympic Committee of India</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #003DA5;
+    --navy-dark: #002B7A;
+    --navy-deeper: #001A4D;
+    --orange: #FF671F;
+    --orange-dark: #E85510;
+    --green: #046A38;
+    --gold: #C8A415;
+    --white: #ffffff;
+    --grey-50: #F8F9FB;
+    --grey-100: #EEF1F6;
+    --grey-200: #D8DEE9;
+    --grey-400: #94A3B8;
+    --grey-600: #4A5568;
+    --grey-900: #0F172A;
+    --shadow-card: 0 2px 12px rgba(0,61,165,0.08), 0 0 0 1px rgba(0,61,165,0.05);
+    --shadow-lg: 0 16px 48px rgba(0,61,165,0.14), 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--grey-50);
+    color: var(--grey-900);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy-deeper) 0%, var(--navy) 55%, #1A54B8 100%);
+    padding: 72px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+    ), repeating-linear-gradient(
+      90deg, transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+    );
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--orange), var(--gold));
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 540px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── LAYOUT ───────────────────────────────────────────── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section { padding: 72px 0; }
+  .section-sm { padding: 48px 0; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 40px;
+  }
+
+  /* ── QUICK CONTACT BAR ────────────────────────────────── */
+  .quick-bar {
+    background: white;
+    border-bottom: 3px solid var(--navy);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .quick-bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .quick-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 32px;
+    border-right: 1px solid var(--grey-100);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .quick-item:last-child { border-right: none; }
+  .quick-item:hover { background: var(--grey-50); }
+
+  .quick-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .quick-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .quick-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    display: block;
+  }
+
+  /* ── LEADERSHIP SECTION ───────────────────────────────── */
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .leader-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--grey-100);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .leader-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .leader-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .leader-card:hover::before { opacity: 1; }
+
+  .leader-role {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+
+  .leader-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .leader-credential {
+    font-size: 12px;
+    color: var(--grey-400);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .leader-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 14px;
+    border-top: 1px solid var(--grey-100);
+  }
+
+  .leader-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--grey-600);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .leader-contact-item:hover { color: var(--navy); }
+
+  .contact-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--grey-200);
+    flex-shrink: 0;
+  }
+
+  /* Special card for Chairman */
+  .leader-card.chairman {
+    background: linear-gradient(135deg, var(--navy-deeper), var(--navy));
+    border-color: transparent;
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 768px) {
+    .leader-card.chairman {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+  }
+
+  .chairman .leader-role { color: var(--gold); }
+  .chairman .leader-name { color: white; font-size: 28px; }
+  .chairman .leader-credential { color: rgba(255,255,255,0.55); }
+  .chairman .leader-contacts { border-top-color: rgba(255,255,255,0.12); }
+  .chairman .leader-contact-item { color: rgba(255,255,255,0.65); }
+  .chairman .leader-contact-item:hover { color: white; }
+  .chairman .contact-dot { background: rgba(255,255,255,0.2); }
+
+  .chairman-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200,164,21,0.15);
+    border: 1px solid rgba(200,164,21,0.3);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  /* ── ZONE LEADERS ─────────────────────────────────────── */
+  .zone-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .zone-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .zone-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--grey-100);
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .zone-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--navy);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .zone-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin: 0 auto 12px;
+  }
+
+  .zone-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+
+  .zone-person {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .zone-phone {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--grey-600);
+  }
+
+  /* ── CONTACT FORM ─────────────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr 1.4fr; }
+  }
+
+  .office-card {
+    background: linear-gradient(135deg, var(--navy-deeper), var(--navy));
+    border-radius: 20px;
+    padding: 36px;
+    color: white;
+    height: fit-content;
+  }
+
+  .office-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .office-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 32px;
+  }
+
+  .office-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 24px 0;
+  }
+
+  .office-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .office-item-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .office-item-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .office-item-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+  }
+
+  .office-item-value a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+  }
+
+  .office-item-value a:hover { color: white; text-decoration: underline; }
+
+  /* Form */
+  .form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--grey-100);
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .form-subtitle {
+    font-size: 14px;
+    color: var(--grey-400);
+    margin-bottom: 28px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey-600);
+    margin-bottom: 6px;
+  }
+
+  .form-label span { color: var(--orange); margin-left: 2px; }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--grey-200);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--grey-900);
+    background: white;
+    transition: all 0.2s;
+    outline: none;
+    appearance: none;
+  }
+
+  .form-input::placeholder { color: var(--grey-400); }
+
+  .form-input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(0,61,165,0.10);
+  }
+
+  textarea.form-input {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-btn {
+    width: 100%;
+    padding: 14px 28px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+    box-shadow: 0 4px 16px rgba(0,61,165,0.3);
+  }
+
+  .form-btn:hover {
+    background: var(--navy-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,61,165,0.4);
+  }
+
+  /* ── FULL DIRECTORY TABLE ─────────────────────────────── */
+  .table-wrapper {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--grey-100);
+    overflow: hidden;
+  }
+
+  .table-header {
+    background: var(--navy);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 700;
+  }
+
+  .table-header span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: #F0F4FF;
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 2px solid var(--grey-100);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--grey-100);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #F8F9FF; }
+
+  tbody td {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--grey-600);
+    vertical-align: middle;
+  }
+
+  .td-role { font-weight: 600; color: var(--grey-900); font-size: 13px; }
+
+  .td-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+  }
+
+  .td-phone {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  .td-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-chairman {
+    background: rgba(200,164,21,0.12);
+    color: #7A6008;
+    border: 1px solid rgba(200,164,21,0.3);
+  }
+
+  .badge-admin {
+    background: rgba(0,61,165,0.08);
+    color: var(--navy);
+    border: 1px solid rgba(0,61,165,0.15);
+  }
+
+  .badge-tech {
+    background: rgba(4,106,56,0.08);
+    color: var(--green);
+    border: 1px solid rgba(4,106,56,0.2);
+  }
+
+  .badge-zone {
+    background: rgba(255,103,31,0.08);
+    color: var(--orange-dark);
+    border: 1px solid rgba(255,103,31,0.2);
+  }
+
+  .badge-medical {
+    background: rgba(198,40,40,0.08);
+    color: #C62828;
+    border: 1px solid rgba(198,40,40,0.2);
+  }
+
+  /* ── FOOTER CTA ───────────────────────────────────────── */
+  .footer-cta {
+    background: linear-gradient(135deg, var(--navy-deeper), var(--navy));
+    padding: 64px 24px;
+    text-align: center;
+  }
+
+  .footer-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .footer-cta p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 32px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn-primary {
+    padding: 13px 28px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(255,103,31,0.4);
+  }
+
+  .cta-btn-primary:hover {
+    background: var(--orange-dark);
+    transform: translateY(-1px);
+  }
+
+  .cta-btn-secondary {
+    padding: 13px 28px;
+    background: transparent;
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .cta-btn-secondary:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* ── ANIMATIONS ───────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate { animation: fadeUp 0.5s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+
+  /* ── DIVIDER ──────────────────────────────────────────── */
+  .gold-divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--orange), transparent);
+    border: none;
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .quick-item { padding: 16px 20px; }
+    .form-card { padding: 24px; }
+    .office-card { padding: 24px; }
+    .table-wrapper { overflow-x: auto; }
+    table { min-width: 700px; }
+  }
+
+  @media (max-width: 480px) {
+    .quick-bar-inner { flex-direction: column; }
+    .quick-item { width: 100%; border-right: none; border-bottom: 1px solid var(--grey-100); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-badge">📍 Paralympic Committee of India</div>
+  <h1>Contact <span>STC Para Shooting</span></h1>
+  <p>Reach out to our national leadership team, zone coordinators, and support staff</p>
+</section>
+
+<hr class="gold-divider">
+
+<!-- ── QUICK CONTACT BAR ─────────────────────────────── -->
+<div class="quick-bar">
+  <div class="quick-bar-inner container">
+    <a class="quick-item" href="tel:+919560050909">
+      <div class="quick-icon">📞</div>
+      <div>
+        <span class="quick-label">Chairman's Office</span>
+        <span class="quick-value">+91 95600 50909</span>
+      </div>
+    </a>
+    <a class="quick-item" href="mailto:chairmanparashooting@paralympicindia.com">
+      <div class="quick-icon">✉️</div>
+      <div>
+        <span class="quick-label">Official Email</span>
+        <span class="quick-value">chairmanparashooting@paralympicindia.com</span>
+      </div>
+    </a>
+    <a class="quick-item" href="mailto:stcparashooting@gmail.com">
+      <div class="quick-icon">📧</div>
+      <div>
+        <span class="quick-label">STC Communication</span>
+        <span class="quick-value">stcparashooting@gmail.com</span>
+      </div>
+    </a>
+    <a class="quick-item" href="#">
+      <div class="quick-icon">📍</div>
+      <div>
+        <span class="quick-label">Head Office</span>
+        <span class="quick-value">Jaisalmer House, New Delhi – 110011</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ── LEADERSHIP ─────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label animate">STC Leadership</div>
+    <div class="section-title animate delay-1">Committee Members</div>
+
+    <div class="leadership-grid">
+
+      <!-- Chairman — featured card -->
+      <div class="leader-card chairman animate">
+        <div>
+          <div class="chairman-badge">🏆 Dronacharya Awardee</div>
+          <div class="leader-role">Chairperson — STC Para Shooting</div>
+          <div class="leader-name">Mr. Jaiprakash Nautiyal</div>
+          <div class="leader-credential">Dronacharya Awardee · Paralympic Committee of India · WSPS & ISSF Judge</div>
+        </div>
+        <div>
+          <div class="leader-contacts">
+            <a class="leader-contact-item" href="tel:+919560050909">
+              <span class="contact-dot"></span>
+              +91 95600 50909
+            </a>
+            <a class="leader-contact-item" href="mailto:chairmanparashooting@paralympicindia.com">
+              <span class="contact-dot"></span>
+              chairmanparashooting@paralympicindia.com
+            </a>
+            <a class="leader-contact-item" href="mailto:stcparashooting@gmail.com">
+              <span class="contact-dot"></span>
+              stcparashooting@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Administration -->
+      <div class="leader-card animate delay-1">
+        <div class="leader-role">Para Shooting Administration</div>
+        <div class="leader-name">Mr. Pramod Raje</div>
+        <div class="leader-credential">Administrative · Range Coordination</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+919582743138">
+            <span class="contact-dot"></span>
+            +91 95827 43138
+          </a>
+          <a class="leader-contact-item" href="mailto:theparashootingindia@gmail.com">
+            <span class="contact-dot"></span>
+            theparashootingindia@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="leader-card animate delay-2">
+        <div class="leader-role">Administrative — Office Queries</div>
+        <div class="leader-name">Mr. Pavittar</div>
+        <div class="leader-credential">Administrative Support</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+917015264709">
+            <span class="contact-dot"></span>
+            +91 70152 64709
+          </a>
+          <a class="leader-contact-item" href="mailto:theparashootingindia@gmail.com">
+            <span class="contact-dot"></span>
+            theparashootingindia@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Technical -->
+      <div class="leader-card animate delay-1">
+        <div class="leader-role">Technical Rules & Conduct — Rifle/Pistol</div>
+        <div class="leader-name">Mr. Hardik Rajput</div>
+        <div class="leader-credential">Equipment Technical Rules & Conduct · ISSF Coach C&D · WSPS & ISSF Jury · Director Sports Ops-PCI · 8th PEFI National Awardee</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+919810644202">
+            <span class="contact-dot"></span>
+            +91 98106 44202
+          </a>
+          <a class="leader-contact-item" href="mailto:theparashootingindia@gmail.com">
+            <span class="contact-dot"></span>
+            theparashootingindia@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="leader-card animate delay-2">
+        <div class="leader-role">Media Incharge</div>
+        <div class="leader-name">Mr. Vivek Saini</div>
+        <div class="leader-credential">NS-NIS & ISSF Coach D License · WSPS & ISSF Judge</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+918802562883">
+            <span class="contact-dot"></span>
+            +91 88025 62883
+          </a>
+          <a class="leader-contact-item" href="mailto:theparashootingindia@gmail.com">
+            <span class="contact-dot"></span>
+            theparashootingindia@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="leader-card animate delay-3">
+        <div class="leader-role">Competition Incharge</div>
+        <div class="leader-name">Mr. Charanjeet Singh Ghuman</div>
+        <div class="leader-credential">WSPS & ISSF Jury · Founder and Treasurer Para Target Shooting Association Pune</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+919355597111">
+            <span class="contact-dot"></span>
+            +91 93555 97111
+          </a>
+          <a class="leader-contact-item" href="mailto:theparashootingindia@gmail.com">
+            <span class="contact-dot"></span>
+            theparashootingindia@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Medical Classification -->
+      <div class="leader-card animate delay-1">
+        <div class="leader-role">Medical Classification Incharge</div>
+        <div class="leader-name">Mr. Amit Panwar</div>
+        <div class="leader-credential">Medical Classifier · International Medalist in Para Sports</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+918307712992">
+            <span class="contact-dot"></span>
+            +91 83077 12992
+          </a>
+          <a class="leader-contact-item" href="mailto:medicalclassification@gmail.com">
+            <span class="contact-dot"></span>
+            medicalclassification@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="leader-card animate delay-2">
+        <div class="leader-role">Medical Classification Co-ordinator</div>
+        <div class="leader-name">Mr. Shantnu Thakur</div>
+        <div class="leader-credential">WSPS Judge</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+919466667417">
+            <span class="contact-dot"></span>
+            +91 94666 67417
+          </a>
+          <a class="leader-contact-item" href="mailto:medicalclassification@gmail.com">
+            <span class="contact-dot"></span>
+            medicalclassification@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="leader-card animate delay-3">
+        <div class="leader-role">Education Program Incharge</div>
+        <div class="leader-name">Wing Comdr. Shantanu</div>
+        <div class="leader-credential">WSPS & ISSF Judge</div>
+        <div class="leader-contacts">
+          <a class="leader-contact-item" href="tel:+918007912900">
+            <span class="contact-dot"></span>
+            +91 80079 12900
+          </a>
+          <a class="leader-contact-item" href="mailto:stcparashooting@gmail.com">
+            <span class="contact-dot"></span>
+            stcparashooting@gmail.com
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ZONE INCHARGES ─────────────────────────────────── -->
+<section class="section-sm" style="background: white; border-top: 1px solid var(--grey-100);">
+  <div class="container">
+    <div class="section-label animate">Regional Coverage</div>
+    <div class="section-title animate delay-1">Zone Incharges</div>
+
+    <div class="zone-grid">
+      <div class="zone-card animate delay-1">
+        <div class="zone-icon">🧭</div>
+        <div class="zone-name">East Zone</div>
+        <div class="zone-person">Ms. Sanjana Baruah</div>
+        <div class="zone-phone">+91 96129 05586</div>
+      </div>
+      <div class="zone-card animate delay-2">
+        <div class="zone-icon">🧭</div>
+        <div class="zone-name">West Zone</div>
+        <div class="zone-person">Mr. Aakash Kumbhar</div>
+        <div class="zone-phone">+91 76665 20812</div>
+      </div>
+      <div class="zone-card animate delay-3">
+        <div class="zone-icon">🧭</div>
+        <div class="zone-name">South Zone</div>
+        <div class="zone-person">Mr. Varanasi Sandeep</div>
+        <div class="zone-phone">+91 90521 26394</div>
+      </div>
+      <div class="zone-card animate" style="animation-delay:0.4s">
+        <div class="zone-icon">🧭</div>
+        <div class="zone-name">North Zone</div>
+        <div class="zone-person">Mr. Shiva Kkaranwal</div>
+        <div class="zone-phone">+91 91050 35678</div>
+      </div>
+    </div>
+
+    <!-- Additional member -->
+    <div style="margin-top: 20px; background: var(--grey-50); border-radius: 14px; padding: 20px 24px; border: 1px solid var(--grey-100); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--navy); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">👤</div>
+      <div>
+        <div style="font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:3px;">Additional Member</div>
+        <div style="font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--navy);">Ms. Guranchal Pawar</div>
+        <div style="font-size:12px; color:var(--grey-400);">WSPS & ISSF Jury · <a href="tel:+919813649016" style="color:var(--navy); text-decoration:none;">+91 98136 49016</a></div>
+      </div>
+      <div style="margin-left:auto;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:3px;">Also</div>
+        <div style="font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--navy);">Mr. Ishwar Singh</div>
+        <div style="font-size:12px; color:var(--grey-400);">WSPS & ISSF Judge · <a href="tel:+919813649016" style="color:var(--navy); text-decoration:none;">Contact via STC email</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FULL DIRECTORY TABLE ───────────────────────────── -->
+<section class="section" style="background: var(--grey-50);">
+  <div class="container">
+    <div class="section-label animate">Complete Directory</div>
+    <div class="section-title animate delay-1">Full Contact List — STC Para Shooting</div>
+
+    <div class="table-wrapper animate delay-2">
+      <div class="table-header">
+        <h3>STC Para Shooting — Contact Directory</h3>
+        <span>Paralympic Committee of India</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-role">Chairperson — STC Para Shooting</td>
+            <td class="td-name">Mr. Jaiprakash Nautiyal</td>
+            <td class="td-phone"><a href="tel:+919560050909" style="color:var(--navy); text-decoration:none;">+91 95600 50909</a></td>
+            <td style="font-size:12px;"><a href="mailto:chairmanparashooting@paralympicindia.com" style="color:var(--navy); text-decoration:none;">chairmanparashooting@paralympicindia.com</a></td>
+            <td><span class="td-badge badge-chairman">Chairman</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Para Shooting Administration</td>
+            <td class="td-name">Mr. Pramod Raje</td>
+            <td class="td-phone"><a href="tel:+919582743138" style="color:var(--navy); text-decoration:none;">+91 95827 43138</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-admin">Administration</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Administrative — Office Queries</td>
+            <td class="td-name">Mr. Pavittar</td>
+            <td class="td-phone"><a href="tel:+917015264709" style="color:var(--navy); text-decoration:none;">+91 70152 64709</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-admin">Administration</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Technical Rules & Conduct — Rifle/Pistol</td>
+            <td class="td-name">Mr. Hardik Rajput</td>
+            <td class="td-phone"><a href="tel:+919810644202" style="color:var(--navy); text-decoration:none;">+91 98106 44202</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-tech">Technical</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Media Incharge</td>
+            <td class="td-name">Mr. Vivek Saini</td>
+            <td class="td-phone"><a href="tel:+918802562883" style="color:var(--navy); text-decoration:none;">+91 88025 62883</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-admin">Media</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Competition Incharge</td>
+            <td class="td-name">Mr. Charanjeet Singh Ghuman</td>
+            <td class="td-phone"><a href="tel:+919355597111" style="color:var(--navy); text-decoration:none;">+91 93555 97111</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-tech">Competition</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">East Zone Incharge</td>
+            <td class="td-name">Ms. Sanjana Baruah</td>
+            <td class="td-phone"><a href="tel:+919612905586" style="color:var(--navy); text-decoration:none;">+91 96129 05586</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-zone">East Zone</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">West Zone Incharge</td>
+            <td class="td-name">Mr. Aakash Kumbhar</td>
+            <td class="td-phone"><a href="tel:+917666520812" style="color:var(--navy); text-decoration:none;">+91 76665 20812</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-zone">West Zone</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">South Zone Incharge</td>
+            <td class="td-name">Mr. Varanasi Sandeep</td>
+            <td class="td-phone"><a href="tel:+919052126394" style="color:var(--navy); text-decoration:none;">+91 90521 26394</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-zone">South Zone</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">North Zone Incharge</td>
+            <td class="td-name">Mr. Shiva Kkaranwal</td>
+            <td class="td-phone"><a href="tel:+919105035678" style="color:var(--navy); text-decoration:none;">+91 91050 35678</a></td>
+            <td style="font-size:12px;"><a href="mailto:theparashootingindia@gmail.com" style="color:var(--navy); text-decoration:none;">theparashootingindia@gmail.com</a></td>
+            <td><span class="td-badge badge-zone">North Zone</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Medical Classification Incharge</td>
+            <td class="td-name">Mr. Amit Panwar</td>
+            <td class="td-phone"><a href="tel:+918307712992" style="color:var(--navy); text-decoration:none;">+91 83077 12992</a></td>
+            <td style="font-size:12px;"><a href="mailto:medicalclassification@gmail.com" style="color:var(--navy); text-decoration:none;">medicalclassification@gmail.com</a></td>
+            <td><span class="td-badge badge-medical">Medical</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Medical Classification Co-ordinator</td>
+            <td class="td-name">Mr. Shantnu Thakur</td>
+            <td class="td-phone"><a href="tel:+919466667417" style="color:var(--navy); text-decoration:none;">+91 94666 67417</a></td>
+            <td style="font-size:12px;"><a href="mailto:medicalclassification@gmail.com" style="color:var(--navy); text-decoration:none;">medicalclassification@gmail.com</a></td>
+            <td><span class="td-badge badge-medical">Medical</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Education Program Incharge</td>
+            <td class="td-name">Wing Comdr. Shantanu</td>
+            <td class="td-phone"><a href="tel:+918007912900" style="color:var(--navy); text-decoration:none;">+91 80079 12900</a></td>
+            <td style="font-size:12px;"><a href="mailto:stcparashooting@gmail.com" style="color:var(--navy); text-decoration:none;">stcparashooting@gmail.com</a></td>
+            <td><span class="td-badge badge-tech">Education</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Additional Member</td>
+            <td class="td-name">Ms. Guranchal Pawar</td>
+            <td class="td-phone"><a href="tel:+919813649016" style="color:var(--navy); text-decoration:none;">+91 98136 49016</a></td>
+            <td style="font-size:12px;"><a href="mailto:stcparashooting@gmail.com" style="color:var(--navy); text-decoration:none;">stcparashooting@gmail.com</a></td>
+            <td><span class="td-badge badge-admin">Member</span></td>
+          </tr>
+          <tr>
+            <td class="td-role">Additional Member</td>
+            <td class="td-name">Mr. Ishwar Singh</td>
+            <td class="td-phone">—</td>
+            <td style="font-size:12px;"><a href="mailto:stcparashooting@gmail.com" style="color:var(--navy); text-decoration:none;">stcparashooting@gmail.com</a></td>
+            <td><span class="td-badge badge-admin">Member</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT FORM + OFFICE ──────────────────────────── -->
+<section class="section" style="background: white; border-top: 1px solid var(--grey-100);">
+  <div class="container">
+    <div class="section-label animate">Get In Touch</div>
+    <div class="section-title animate delay-1">Send Us a Message</div>
+
+    <div class="contact-grid">
+      <!-- Office Info -->
+      <div class="office-card animate delay-1">
+        <div class="office-title">Our Office</div>
+        <div class="office-subtitle">Paralympic Committee of India — Para Shooting Division</div>
+
+        <div class="office-item">
+          <div class="office-item-icon">📍</div>
+          <div>
+            <div class="office-item-label">Address</div>
+            <div class="office-item-value">Jaisalmer House<br>26 Mansingh Road<br>New Delhi — 110011</div>
+          </div>
+        </div>
+
+        <div class="office-divider"></div>
+
+        <div class="office-item">
+          <div class="office-item-icon">📞</div>
+          <div>
+            <div class="office-item-label">Phone</div>
+            <div class="office-item-value">
+              <a href="tel:+911123075126">+91-11-23075126</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="office-item">
+          <div class="office-item-icon">✉️</div>
+          <div>
+            <div class="office-item-label">Official Communication</div>
+            <div class="office-item-value">
+              <a href="mailto:stcparashooting@gmail.com">stcparashooting@gmail.com</a><br>
+              <a href="mailto:theparashootingindia@gmail.com">theparashootingindia@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="office-item">
+          <div class="office-item-icon">🏆</div>
+          <div>
+            <div class="office-item-label">Chairman's Direct</div>
+            <div class="office-item-value">
+              <a href="mailto:chairmanparashooting@paralympicindia.com">chairmanparashooting@paralympicindia.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="office-divider"></div>
+
+        <div style="font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; font-style: italic;">
+          "Empowering Para-Athletes to Achieve Excellence"<br>
+          — Mr. Jaiprakash Nautiyal, Chairperson STC
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card animate delay-2">
+        <div class="form-title">Send a Message</div>
+        <div class="form-subtitle">We typically respond within 2 working days</div>
+
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name <span>*</span></label>
+              <input type="text" class="form-input" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address <span>*</span></label>
+              <input type="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject <span>*</span></label>
+              <select class="form-input" required>
+                <option value="" disabled selected>Select a subject</option>
+                <option>Registration & Membership</option>
+                <option>Classification Query</option>
+                <option>Competition Enquiry</option>
+                <option>Medical Classification</option>
+                <option>Equipment & Technical Rules</option>
+                <option>Zone Coordination</option>
+                <option>Media & Press</option>
+                <option>Education Programme</option>
+                <option>General Enquiry</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">State / Association</label>
+            <input type="text" class="form-input" placeholder="Your state or association name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message <span>*</span></label>
+            <textarea class="form-input" placeholder="Describe your query in detail..." required></textarea>
+          </div>
+
+          <button type="submit" class="form-btn">
+            <span>📨</span> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER CTA ─────────────────────────────────────── -->
+<section class="footer-cta">
+  <h2>Ready to Join Para Shooting?</h2>
+  <p>Register as a shooter, check classifications, or explore upcoming championships across India.</p>
+  <div class="cta-buttons">
+    <a href="/register" class="cta-btn-primary">🎯 Register as Shooter</a>
+    <a href="/classification" class="cta-btn-secondary">View Classification</a>
+    <a href="/championships" class="cta-btn-secondary">Championships</a>
+  </div>
+</section>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault()
+  const btn = e.target.querySelector('.form-btn')
+  btn.innerHTML = '<span>⏳</span> Sending...'
+  btn.disabled = true
+  setTimeout(() => {
+    btn.innerHTML = '<span>✅</span> Message Sent!'
+    btn.style.background = 'var(--green)'
+    setTimeout(() => {
+      e.target.reset()
+      btn.innerHTML = '<span>📨</span> Send Message'
+      btn.style.background = ''
+      btn.disabled = false
+    }, 3000)
+  }, 1500)
+}
+
+// Animate on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1'
+      e.target.style.transform = 'translateY(0)'
+    }
+  })
+}, { threshold: 0.1 })
+
+document.querySelectorAll('.animate').forEach(el => {
+  el.style.opacity = '0'
+  el.style.transform = 'translateY(20px)'
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease'
+  observer.observe(el)
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STC Para Shooting — Paralympic Committee of India</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   RESET & DESIGN TOKENS
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#003DA5;--navy-dark:#002B7A;--navy-deep:#001A4D;
+  --orange:#FF671F;--green:#046A38;--gold:#C8A415;
+  --bg:#F0F2F8;--card:#fff;--text:#0F172A;--mid:#334155;
+  --muted:#94A3B8;--border:#E2E8F0;--danger:#DC2626;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* ═══════════════════════════════════════════
+   PAGE ROUTING (SPA simulation)
+═══════════════════════════════════════════ */
+.page{display:none}
+.page.active{display:block}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;background:rgba(0,26,77,.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);transition:all .3s}
+nav.scrolled{background:rgba(0,26,77,.99);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;cursor:pointer}
+.nav-flag{width:30px;height:19px;border-radius:2px;overflow:hidden;flex-shrink:0;position:relative}
+.nav-flag-top{position:absolute;top:0;left:0;right:0;height:33%;background:#FF9933}
+.nav-flag-mid{position:absolute;top:33%;left:0;right:0;height:34%;background:#fff;display:flex;align-items:center;justify-content:center}
+.nav-flag-bot{position:absolute;bottom:0;left:0;right:0;height:33%;background:#138808}
+.nav-chakra{width:8px;height:8px;border-radius:50%;border:1px solid #000080}
+.nav-brand{display:flex;flex-direction:column}
+.nav-brand-main{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#fff;line-height:1;letter-spacing:.01em}
+.nav-brand-sub{font-size:8px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.nav-links{display:flex;align-items:center}
+.nav-link{padding:0 12px;height:64px;display:flex;align-items:center;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);text-decoration:none;cursor:pointer;transition:color .2s;position:relative;border:none;background:none;font-family:'DM Sans',sans-serif}
+.nav-link:hover,.nav-link.active{color:#fff}
+.nav-link.active::after{content:'';position:absolute;bottom:0;left:12px;right:12px;height:2px;background:var(--gold)}
+.nav-cta{margin-left:12px;padding:8px 16px;background:var(--gold);color:var(--navy-deep);border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-cta:hover{background:#d4b020;transform:translateY(-1px)}
+
+/* ═══════════════════════════════════════════
+   SHARED COMPONENTS
+═══════════════════════════════════════════ */
+/* Page hero banner (inner pages) */
+.page-hero{background:var(--navy-deep);position:relative;overflow:hidden;padding:120px 24px 72px}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 0% 50%,rgba(0,61,165,.6),transparent 55%),radial-gradient(ellipse 50% 60% at 100% 20%,rgba(200,164,21,.06),transparent 50%)}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:56px 56px}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--navy),var(--gold),var(--orange))}
+.ph-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.ph-eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:rgba(255,255,255,.6);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:18px}
+.ph-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.ph-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:900;color:#fff;line-height:1.06;letter-spacing:-.025em;margin-bottom:12px}
+.ph-title em{font-style:italic;color:var(--gold)}
+.ph-sub{font-size:16px;color:rgba(255,255,255,.5);max-width:520px;line-height:1.75}
+
+/* Section wrapper */
+.sec{padding:80px 24px}
+.sec-inner{max-width:1200px;margin:0 auto}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:14px}
+.sec-ey{font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);margin-bottom:5px}
+.sec-ti{font-family:'Playfair Display',serif;font-size:clamp(24px,2.8vw,34px);font-weight:700;color:var(--navy);line-height:1.15}
+.sec-ti em{font-style:italic;color:var(--gold)}
+.view-all{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;transition:gap .2s}
+.view-all:hover{gap:10px}
+
+/* Cards base */
+.card-white{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,61,165,.05)}
+
+/* Category pills */
+.cat-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;width:fit-content}
+.cat-news{background:rgba(0,61,165,.09);color:var(--navy)}
+.cat-event{background:rgba(255,103,31,.09);color:#C04A00}
+.cat-ann{background:rgba(4,106,56,.09);color:var(--green)}
+.cat-ach{background:rgba(200,164,21,.12);color:#7A6008}
+.cat-result{background:rgba(220,38,38,.09);color:var(--danger)}
+.cat-press{background:rgba(124,58,237,.09);color:#6D28D9}
+
+/* Rank badges */
+.rb-gold{background:#FEF9C3;color:#7A6008;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800;text-transform:uppercase}
+.rb-silver{background:#F1F5F9;color:#475569;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800;text-transform:uppercase}
+.rb-bronze{background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800;text-transform:uppercase}
+.rb-other{background:#F0F4FF;color:var(--navy);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+
+/* Buttons */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(0,61,165,.28);text-decoration:none}
+.btn-primary:hover{background:var(--navy-dark);transform:translateY(-1px)}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--gold);color:var(--navy-deep);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(200,164,21,.3);text-decoration:none}
+.btn-gold:hover{background:#d4b020;transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#fff;color:var(--navy);border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-outline:hover{border-color:var(--navy);box-shadow:0 4px 14px rgba(0,61,165,.1)}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* Footer */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.55);padding:56px 24px 0}
+.foot-inner{max-width:1200px;margin:0 auto}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.08)}
+.foot-brand-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
+.foot-brand-tag{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.foot-desc{font-size:12px;line-height:1.75;max-width:280px}
+.foot-col-title{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.foot-links{display:flex;flex-direction:column;gap:8px}
+.foot-link{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;cursor:pointer;transition:color .2s;border:none;background:none;font-family:'DM Sans',sans-serif;text-align:left}
+.foot-link:hover{color:#fff}
+.foot-contact-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;font-size:11px}
+.foot-contact-row svg{flex-shrink:0;margin-top:2px;color:var(--gold)}
+.foot-bottom{padding:18px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11px}
+.foot-bottom-links{display:flex;gap:18px}
+.foot-bottom-link{color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;cursor:pointer}
+.foot-bottom-link:hover{color:#fff}
+
+/* Ticker */
+.ticker{background:var(--navy);border-top:3px solid var(--gold);overflow:hidden}
+.ticker-inner{display:flex;align-items:center;height:42px}
+.ticker-label{background:var(--gold);color:var(--navy-deep);font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:0 18px;height:100%;display:flex;align-items:center;flex-shrink:0;white-space:nowrap}
+.ticker-track{flex:1;overflow:hidden}
+.ticker-scroll{display:flex;animation:tick 35s linear infinite;white-space:nowrap}
+.ticker-scroll:hover{animation-play-state:paused}
+.t-item{display:inline-flex;align-items:center;padding:0 28px;font-size:11px;color:rgba(255,255,255,.75);font-weight:500}
+.t-item::before{content:'●';color:var(--gold);font-size:7px;margin-right:10px}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════════════════════════════════════
+   PAGE 1 — HOME
+═══════════════════════════════════════════ */
+#home .hero{min-height:100vh;background:var(--navy-deep);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:0}
+#home .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 0% 40%,rgba(0,61,165,.7),transparent 55%),radial-gradient(ellipse 60% 60% at 100% 10%,rgba(200,164,21,.08),transparent 50%),radial-gradient(ellipse 50% 50% at 70% 80%,rgba(255,103,31,.06),transparent 50%)}
+#home .hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px}
+#home .hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.04);animation:ringPulse 8s ease-in-out infinite}
+@keyframes ringPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.03)}}
+#home .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--navy),var(--gold),var(--orange))}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:100px 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:rgba(255,255,255,.65);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:6px 16px;border-radius:999px;margin-bottom:22px;animation:fadeUp .8s ease both}
+.hero-ey-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(42px,5.5vw,68px);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.03em;margin-bottom:18px;animation:fadeUp .8s ease .1s both}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-h1 b{color:var(--orange);font-weight:900}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.52);max-width:460px;line-height:1.75;margin-bottom:32px;animation:fadeUp .8s ease .2s both}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .8s ease .3s both}
+.btn-hero-a{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--orange);color:#fff;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 6px 20px rgba(255,103,31,.35)}
+.btn-hero-a:hover{background:#e55a14;transform:translateY(-2px)}
+.btn-hero-b{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s}
+.btn-hero-b:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.hero-stats-row{display:flex;margin-top:48px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;animation:fadeUp .8s ease .4s both}
+.hs{flex:1;padding:16px 18px;border-right:1px solid rgba(255,255,255,.08);text-align:center}
+.hs:last-child{border-right:none}
+.hs-n{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold);display:block;line-height:1;margin-bottom:3px}
+.hs-l{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+/* Hero right panel */
+.hero-panel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:24px;backdrop-filter:blur(10px);animation:fadeUp .8s ease .2s both}
+.hero-panel-title{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.hero-ev-row{display:flex;align-items:center;gap:11px;padding:11px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:11px;margin-bottom:10px;transition:all .2s;cursor:pointer}
+.hero-ev-row:hover{background:rgba(255,255,255,.1);transform:translateX(3px)}
+.hero-ev-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-ev-name{font-size:12px;font-weight:600;color:#fff;flex:1;line-height:1.3}
+.hero-ev-date{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);margin-top:2px}
+.ev-badge{padding:2px 9px;border-radius:999px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;flex-shrink:0}
+.ev-badge-up{background:rgba(200,164,21,.15);color:var(--gold);border:1px solid rgba(200,164,21,.25)}
+.ev-badge-done{background:rgba(4,106,56,.15);color:#4ade80;border:1px solid rgba(4,106,56,.3)}
+.hero-medal-row{display:flex;gap:8px;margin-top:14px}
+.hm{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 8px;text-align:center}
+.hm-n{font-size:20px;display:block;line-height:1;margin-bottom:3px}
+.hm-l{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+
+/* Home — news strip */
+.home-news-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.hnc-feat{border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,61,165,.07);background:#fff;transition:all .3s}
+.hnc-feat:hover{transform:translateY(-4px);box-shadow:0 16px 44px rgba(0,61,165,.13)}
+.hnc-head{height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy-deep),var(--navy))}
+.hnc-head-wm{position:absolute;bottom:-10px;right:-4px;font-family:'Playfair Display',serif;font-size:90px;font-weight:900;font-style:italic;color:rgba(255,255,255,.05);pointer-events:none;white-space:nowrap}
+.hnc-head-pill{position:absolute;top:14px;left:14px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.hnc-head-date{position:absolute;bottom:12px;right:12px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.55);background:rgba(0,0,0,.3);backdrop-filter:blur(6px);padding:3px 9px;border-radius:5px}
+.hnc-body{padding:22px}
+.hnc-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:8px;margin-top:10px}
+.hnc-excerpt{font-size:13px;color:var(--mid);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px}
+.hnc-footer{display:flex;align-items:center;justify-content:space-between}
+.hnc-date-chip{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+.hnc-arrow{width:32px;height:32px;border-radius:8px;background:rgba(0,61,165,.07);display:flex;align-items:center;justify-content:center;color:var(--navy);border:none;cursor:pointer;transition:all .2s}
+.hnc-arrow:hover{background:var(--navy);color:#fff}
+/* small news */
+.hns-card{background:#fff;border-radius:14px;border:1px solid var(--border);display:flex;align-items:stretch;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .25s;cursor:pointer}
+.hns-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,61,165,.11);border-color:rgba(0,61,165,.2)}
+.hns-color{width:5px;flex-shrink:0}
+.hns-body{padding:14px;flex:1}
+.hns-cat{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:5px}
+.hns-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
+.hns-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.hns-arr{padding:0 14px;display:flex;align-items:center;color:var(--muted);transition:all .2s}
+.hns-card:hover .hns-arr{color:var(--navy);transform:translateX(3px)}
+
+/* Home — medals dark */
+.medals-dark{background:var(--navy-deep);position:relative;overflow:hidden}
+.medals-dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(0,61,165,.5),transparent 55%),radial-gradient(ellipse 40% 50% at 100% 30%,rgba(200,164,21,.06),transparent 50%)}
+.medals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px 20px;text-align:center;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.mc:hover{transform:translateY(-6px);background:rgba(255,255,255,.1)}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mc-gold::before{background:linear-gradient(90deg,transparent,#FFD700,transparent)}
+.mc-silver::before{background:linear-gradient(90deg,transparent,#C0C0C0,transparent)}
+.mc-bronze::before{background:linear-gradient(90deg,transparent,#CD7F32,transparent)}
+.mc-ico{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px}
+.mc-count{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;display:block;line-height:1;margin-bottom:5px}
+.mc-gold .mc-count{color:#FFD700}
+.mc-silver .mc-count{color:#C0C0C0}
+.mc-bronze .mc-count{color:#CD7F32}
+.mc-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.mc-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;font-style:italic}
+/* feat athletes row */
+.ath-feat-row{display:flex;gap:16px;margin-top:18px;flex-wrap:wrap}
+.afi{flex:1;min-width:180px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:17px;display:flex;align-items:center;gap:12px;transition:all .25s;cursor:pointer}
+.afi:hover{background:rgba(255,255,255,.1);transform:translateX(4px)}
+.afi-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.afi-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.afi-ev{font-size:10px;color:rgba(255,255,255,.4);line-height:1.4}
+.afi-medal{font-size:16px;margin-left:auto}
+
+/* Home — events strip */
+.events-strip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.ev-card{background:#fff;border-radius:14px;border:1px solid var(--border);display:flex;align-items:stretch;box-shadow:0 2px 8px rgba(0,61,165,.04);overflow:hidden;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+.ev-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,61,165,.12);border-color:rgba(0,61,165,.18)}
+.ev-date-blk{width:72px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 6px}
+.ev-day{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;line-height:1;display:block}
+.ev-mon{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.ev-body{padding:16px;flex:1;border-left:1px solid var(--border)}
+.ev-type-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:6px}
+.ev-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3}
+.ev-meta-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ev-meta-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
+
+/* Home — CTA strip */
+.cta-strip{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:68px 24px;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px}
+.cta-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px}
+.cta-ey{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(22px,2.8vw,34px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px}
+.cta-sub{font-size:13px;color:rgba(255,255,255,.5)}
+.cta-btns{display:flex;gap:11px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════
+   PAGE 2 — NEWS (already designed, compact version)
+═══════════════════════════════════════════ */
+.news-mag-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.nmc{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .28s cubic-bezier(.34,1.56,.64,1);cursor:pointer;position:relative}
+.nmc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--gold));opacity:0;transition:opacity .2s;z-index:1}
+.nmc:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(0,61,165,.12);border-color:rgba(0,61,165,.18)}
+.nmc:hover::before{opacity:1}
+.nmc:nth-child(1){grid-column:1/8}
+.nmc:nth-child(2){grid-column:8/13}
+.nmc:nth-child(3){grid-column:1/5}
+.nmc:nth-child(4){grid-column:5/9}
+.nmc:nth-child(5){grid-column:9/13}
+.nmc:nth-child(6){grid-column:1/6}
+.nmc:nth-child(7){grid-column:6/13}
+.nmh{position:relative;overflow:hidden;flex-shrink:0}
+.nmc:nth-child(1) .nmh{height:190px}
+.nmc:nth-child(2) .nmh,.nmc:nth-child(6) .nmh,.nmc:nth-child(7) .nmh{height:160px}
+.nmc:nth-child(3) .nmh,.nmc:nth-child(4) .nmh,.nmc:nth-child(5) .nmh{height:130px}
+.nmh-pill{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.nmh-date{position:absolute;bottom:10px;right:10px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.7);background:rgba(0,0,0,.28);backdrop-filter:blur(6px);padding:2px 8px;border-radius:4px}
+.nmh-wm{position:absolute;bottom:-8px;right:-4px;font-family:'Playfair Display',serif;font-size:clamp(44px,8vw,80px);font-weight:900;font-style:italic;color:rgba(255,255,255,.06);pointer-events:none;white-space:nowrap;line-height:1}
+.nm-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.nm-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nmc:nth-child(1) .nm-title{font-size:18px}
+.nm-exc{font-size:12px;color:var(--mid);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;margin-bottom:0}
+.nmc:nth-child(3) .nm-exc,.nmc:nth-child(4) .nm-exc,.nmc:nth-child(5) .nm-exc{display:none}
+.nm-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);margin-top:12px}
+.nmc:nth-child(3) .nm-foot,.nmc:nth-child(4) .nm-foot,.nmc:nth-child(5) .nm-foot{margin-top:auto;padding-top:10px}
+.nm-date{display:flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.nm-arr{width:30px;height:30px;border-radius:7px;background:rgba(0,61,165,.07);display:flex;align-items:center;justify-content:center;color:var(--navy);transition:all .2s;border:none;cursor:pointer}
+.nm-arr:hover{background:var(--navy);color:#fff}
+
+/* ═══════════════════════════════════════════
+   PAGE 3 — RESULTS
+═══════════════════════════════════════════ */
+.results-filter-bar{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:100;backdrop-filter:blur(20px)}
+.rfb-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;gap:0}
+.rfb-inner::-webkit-scrollbar{display:none}
+.rfb-btn{flex-shrink:0;padding:14px 16px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s}
+.rfb-btn.active{color:var(--navy);border-bottom-color:var(--navy)}
+.rfb-btn:hover:not(.active){color:var(--navy)}
+.rfb-search{margin-left:auto;padding:8px 0;flex-shrink:0}
+.rfb-si{position:relative}
+.rfb-si svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.rfb-si input{padding:8px 12px 8px 32px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;outline:none;width:180px;transition:all .2s}
+.rfb-si input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,61,165,.1);width:210px}
+/* Results year group */
+.results-year-group{margin-bottom:48px}
+.ryg-header{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.ryg-badge{background:var(--navy-deep);color:#fff;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;padding:6px 20px;border-radius:8px}
+.ryg-line{flex:1;height:1px;background:var(--border)}
+.ryg-count{font-size:11px;color:var(--muted);font-weight:600}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.rc-card{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .28s cubic-bezier(.34,1.56,.64,1)}
+.rc-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,61,165,.12);border-color:rgba(0,61,165,.18)}
+.rc-top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.rc-pdf-badge{display:flex;align-items:center;gap:5px;background:rgba(220,38,38,.08);color:var(--danger);font-size:9px;font-weight:700;padding:3px 9px;border-radius:5px;text-transform:uppercase;letter-spacing:.06em}
+.rc-issued{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto}
+.rc-body{padding:16px}
+.rc-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3}
+.rc-venue{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:14px}
+.rc-actions{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border);margin:0 -16px -16px}
+.rc-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+.rc-btn-view{background:#fff;color:var(--navy);border-right:1px solid var(--border)}
+.rc-btn-view:hover{background:rgba(0,61,165,.04)}
+.rc-btn-dl{background:var(--navy);color:#fff}
+.rc-btn-dl:hover{background:var(--navy-dark)}
+
+/* ═══════════════════════════════════════════
+   PAGE 4 — AWARDS
+═══════════════════════════════════════════ */
+.awards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.aw-card{background:#fff;border-radius:18px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px rgba(0,61,165,.05);transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.aw-card:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(0,61,165,.13);border-color:rgba(0,61,165,.2)}
+.aw-banner{height:140px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px}
+.aw-banner-wm{position:absolute;top:-10px;right:-8px;font-family:'Playfair Display',serif;font-size:80px;font-weight:900;font-style:italic;color:rgba(255,255,255,.07);pointer-events:none;line-height:1}
+.aw-trophy{font-size:40px;position:relative;z-index:1}
+.aw-body{padding:22px}
+.aw-event{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.aw-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.25}
+.aw-champ{font-size:13px;color:var(--mid);margin-bottom:14px}
+.aw-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.aw-state{background:rgba(0,61,165,.08);color:var(--navy);font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:.06em}
+.aw-medal{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:800;text-transform:uppercase}
+
+/* ═══════════════════════════════════════════
+   PAGE 5 — ABOUT
+═══════════════════════════════════════════ */
+.about-mission{background:#fff}
+.about-mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.am-left{}
+.am-right{display:flex;flex-direction:column;gap:20px}
+.am-stat-card{background:var(--bg);border-radius:14px;padding:22px;border:1px solid var(--border)}
+.am-stat-n{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px}
+.am-stat-l{font-size:12px;color:var(--mid)}
+.about-body-text{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:18px}
+.about-team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.team-card{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;text-align:center;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.team-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,61,165,.12)}
+.team-avatar{height:120px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.team-avatar-wm{position:absolute;font-family:'Playfair Display',serif;font-size:80px;font-weight:900;font-style:italic;color:rgba(255,255,255,.1);pointer-events:none}
+.team-initials{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;position:relative;z-index:1}
+.team-body{padding:18px 16px}
+.team-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:3px}
+.team-role{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.team-award{font-size:11px;color:var(--gold);font-style:italic}
+/* About affiliations */
+.affil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.affil-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px 16px;text-align:center;box-shadow:0 2px 6px rgba(0,61,165,.03);transition:all .2s}
+.affil-card:hover{border-color:rgba(0,61,165,.25);box-shadow:0 6px 20px rgba(0,61,165,.08)}
+.affil-ico{font-size:28px;margin-bottom:8px;display:block}
+.affil-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+.affil-loc{font-size:11px;color:var(--muted)}
+
+/* ═══════════════════════════════════════════
+   PAGE 6 — CLASSIFICATION
+═══════════════════════════════════════════ */
+.class-categories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.class-cat-card{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.class-cat-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,61,165,.12);border-color:rgba(0,61,165,.2)}
+.ccc-header{height:80px;display:flex;align-items:center;gap:14px;padding:16px 20px;position:relative;overflow:hidden}
+.ccc-header-wm{position:absolute;right:-8px;top:-10px;font-family:'Playfair Display',serif;font-size:56px;font-weight:900;font-style:italic;color:rgba(255,255,255,.1);pointer-events:none;white-space:nowrap}
+.ccc-code{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;position:relative;z-index:1}
+.ccc-name{font-size:13px;font-weight:700;color:rgba(255,255,255,.85);position:relative;z-index:1}
+.ccc-body{padding:18px}
+.ccc-desc{font-size:12px;color:var(--mid);line-height:1.65;margin-bottom:14px}
+.ccc-events{display:flex;flex-wrap:wrap;gap:5px}
+.ccc-ev-tag{background:var(--bg);color:var(--navy);font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid var(--border);letter-spacing:.04em}
+
+/* ═══════════════════════════════════════════
+   PAGE 7 — MEDIA / GALLERY
+═══════════════════════════════════════════ */
+.media-tabs{display:flex;gap:0;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:100}
+.media-tab{padding:14px 20px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.media-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.gallery-item{border-radius:14px;overflow:hidden;position:relative;aspect-ratio:4/3;cursor:pointer;transition:all .3s}
+.gallery-item:hover{transform:scale(1.02);box-shadow:0 12px 36px rgba(0,0,0,.2)}
+.gi-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.gi-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),transparent 50%);opacity:0;transition:opacity .25s}
+.gallery-item:hover .gi-overlay{opacity:1}
+.gi-caption{position:absolute;bottom:12px;left:12px;right:12px;color:#fff;font-size:12px;font-weight:600;opacity:0;transform:translateY(6px);transition:all .25s}
+.gallery-item:hover .gi-caption{opacity:1;transform:translateY(0)}
+.gi-play{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center}
+
+/* ═══════════════════════════════════════════
+   PAGE 8 — POLICIES
+═══════════════════════════════════════════ */
+.policies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.policy-card{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,61,165,.04);transition:all .3s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column}
+.policy-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,61,165,.12);border-color:rgba(0,61,165,.2)}
+.pc-header{padding:20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
+.pc-ico{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pc-type{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.pc-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text)}
+.pc-body{padding:16px 20px;flex:1}
+.pc-desc{font-size:12px;color:var(--mid);line-height:1.65;margin-bottom:14px}
+.pc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+.pc-meta-item{display:flex;align-items:center;gap:4px}
+.pc-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px}
+.pc-btn-dl{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.pc-btn-dl:hover{background:var(--navy-dark)}
+.pc-btn-view{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:#fff;color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.pc-btn-view:hover{border-color:var(--navy)}
+
+/* ═══════════════════════════════════════════
+   PAGE 9 — CONTACT
+═══════════════════════════════════════════ */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start}
+.contact-info-card{background:#fff;border-radius:18px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px rgba(0,61,165,.05)}
+.cic-head{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:24px;display:flex;align-items:center;gap:14px}
+.cic-head-ico{width:44px;height:44px;border-radius:11px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center}
+.cic-head-ico svg{color:#fff}
+.cic-head-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.cic-head-sub{font-size:11px;color:rgba(255,255,255,.5)}
+.cic-body{padding:22px}
+.cic-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.cic-item:last-child{border-bottom:none}
+.cic-item-ico{width:38px;height:38px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cic-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.cic-value{font-size:13px;color:var(--text);line-height:1.5}
+/* Contact form */
+.contact-form-card{background:#fff;border-radius:18px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px rgba(0,61,165,.05)}
+.cfc-head{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:24px;display:flex;align-items:center;gap:14px}
+.cfc-head-ico{width:44px;height:44px;border-radius:11px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center}
+.cfc-head-ico svg{color:#fff}
+.cfc-head-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.cfc-head-sub{font-size:11px;color:rgba(255,255,255,.5)}
+.cfc-body{padding:26px}
+.cf-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cf-group{margin-bottom:16px}
+.cf-label{display:block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+.cf-label span{color:var(--orange)}
+.cf-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:all .2s;resize:none}
+.cf-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,61,165,.1)}
+.cf-input::placeholder{color:var(--muted)}
+.cf-submit{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(0,61,165,.28)}
+.cf-submit:hover{background:var(--navy-dark);transform:translateY(-1px)}
+.cf-success{display:none;text-align:center;padding:32px 20px}
+.cf-success.show{display:block}
+.cf-success-ico{width:60px;height:60px;border-radius:50%;background:rgba(4,106,56,.1);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.cf-success-ico svg{color:var(--green)}
+.cf-success-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:6px}
+.cf-success-sub{font-size:13px;color:var(--mid)}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;padding-top:120px}
+  .hero-panel{display:none}
+  .about-mission-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .home-news-grid{grid-template-columns:1fr}
+  .events-strip-grid{grid-template-columns:1fr}
+  .news-mag-grid{grid-template-columns:1fr 1fr}
+  .nmc:nth-child(n){grid-column:auto}
+  .medals-grid{grid-template-columns:1fr 1fr 1fr}
+  .about-team-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  section,.sec{padding:56px 16px}
+  .medals-grid{grid-template-columns:1fr}
+  .news-mag-grid{grid-template-columns:1fr}
+  .about-team-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .cf-row2{grid-template-columns:1fr}
+  .hero-stats-row{flex-wrap:wrap}
+  .hs{flex-basis:50%;border-bottom:1px solid rgba(255,255,255,.08)}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ NAV ════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="goPage('home')">
+      <div class="nav-flag">
+        <div class="nav-flag-top"></div>
+        <div class="nav-flag-mid"><div class="nav-chakra"></div></div>
+        <div class="nav-flag-bot"></div>
+      </div>
+      <div class="nav-brand">
+        <span class="nav-brand-main">STC Para Shooting</span>
+        <span class="nav-brand-sub">Paralympic Committee of India</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="goPage('about')">About</button>
+      <button class="nav-link active" id="nl-news" onclick="goPage('news')">News</button>
+      <button class="nav-link" onclick="goPage('awards')">Awards</button>
+      <button class="nav-link" onclick="goPage('results')">Results</button>
+      <button class="nav-link" onclick="goPage('media')">Media</button>
+      <button class="nav-link" onclick="goPage('policies')">Policies</button>
+      <button class="nav-link" onclick="goPage('classification')">Classification</button>
+      <button class="nav-link" onclick="goPage('contact')">Contact</button>
+    </div>
+    <button class="nav-cta" onclick="goPage('contact')">Athlete Portal</button>
+  </div>
+</nav>
+
+<!-- ════════════════ PAGE: HOME ════════════════ -->
+<div class="page active" id="home">
+
+  <!-- HERO -->
+  <div class="hero" style="position:relative;overflow:hidden;min-height:100vh;background:var(--navy-deep);display:flex;flex-direction:column;justify-content:center">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-bg"></div>
+    <div class="hero-ring" style="width:600px;height:600px;top:-200px;right:-100px"></div>
+    <div class="hero-ring" style="width:380px;height:380px;top:-80px;right:70px;animation-delay:2s"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--navy),var(--gold),var(--orange))"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow"><span class="hero-ey-dot"></span>Paralympic Committee of India</div>
+        <h1 class="hero-h1">Empowering<br><em>Para-Athletes</em><br>to <b>Excel</b></h1>
+        <p class="hero-sub">India's premier para shooting organisation — developing world-class shooters and championing inclusion through sport since 2000.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-a" onclick="goPage('results')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            View Championships
+          </button>
+          <button class="btn-hero-b" onclick="goPage('news')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/></svg>
+            Latest News
+          </button>
+        </div>
+        <div class="hero-stats-row">
+          <div class="hs"><span class="hs-n">6</span><span class="hs-l">Championships</span></div>
+          <div class="hs"><span class="hs-n">275+</span><span class="hs-l">Athletes</span></div>
+          <div class="hs"><span class="hs-n">28</span><span class="hs-l">States</span></div>
+          <div class="hs"><span class="hs-n">2026</span><span class="hs-l">Season</span></div>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-panel-title">Upcoming &amp; Recent Events</div>
+        <div class="hero-ev-row">
+          <div class="hero-ev-ico" style="background:rgba(200,164,21,.15)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8A415" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div style="flex:1"><div class="hero-ev-name">WSPS World Cup — Al Ain 2026</div><div class="hero-ev-date">Mar 2026 · Al Ain, UAE</div></div>
+          <span class="ev-badge ev-badge-up">Upcoming</span>
+        </div>
+        <div class="hero-ev-row">
+          <div class="hero-ev-ico" style="background:rgba(4,106,56,.15)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+          <div style="flex:1"><div class="hero-ev-name">6th NPSC 2025 — Results Live</div><div class="hero-ev-date">Dec 2025 · Delhi</div></div>
+          <span class="ev-badge ev-badge-done">Done</span>
+        </div>
+        <div class="hero-ev-row" style="margin-bottom:0">
+          <div class="hero-ev-ico" style="background:rgba(255,103,31,.15)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF671F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div style="flex:1"><div class="hero-ev-name">WSPS Grand Prix France 2026</div><div class="hero-ev-date">Feb 26 – Mar 1 · France</div></div>
+          <span class="ev-badge ev-badge-done">Done</span>
+        </div>
+        <div class="hero-medal-row">
+          <div class="hm"><span class="hm-n">🥇</span><span class="hm-l">Gold</span></div>
+          <div class="hm"><span class="hm-n">🥈</span><span class="hm-l">Silver</span></div>
+          <div class="hm"><span class="hm-n">🥉</span><span class="hm-l">Bronze</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ticker-label">Latest</div>
+      <div class="ticker-track">
+        <div class="ticker-scroll">
+          <span class="t-item">Updated Shooting Calendar 2026–27 Released</span>
+          <span class="t-item">Al Ain 2026 WSPS WC Preliminary Schedule Published</span>
+          <span class="t-item">WSPS Novi Sad — Indian Contingent Announced</span>
+          <span class="t-item">6th NPSC 2025 Results Available for Download</span>
+          <span class="t-item">National Classification Camp — New Delhi Feb 2026</span>
+          <span class="t-item">Updated Shooting Calendar 2026–27 Released</span>
+          <span class="t-item">Al Ain 2026 WSPS WC Preliminary Schedule Published</span>
+          <span class="t-item">WSPS Novi Sad — Indian Contingent Announced</span>
+          <span class="t-item">6th NPSC 2025 Results Available for Download</span>
+          <span class="t-item">National Classification Camp — New Delhi Feb 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME NEWS -->
+  <div class="sec" style="background:#fff">
+    <div class="sec-inner">
+      <div class="sec-hd reveal">
+        <div><div class="sec-ey">Latest Updates</div><div class="sec-ti">News &amp; <em>Announcements</em></div></div>
+        <button class="view-all" onclick="goPage('news')">View All News <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+      </div>
+      <div class="home-news-grid reveal">
+        <div class="hnc-feat">
+          <div class="hnc-head"><div class="hnc-head-wm">Calendar</div><div class="hnc-head-pill"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/></svg>News · Featured</div><div class="hnc-head-date">2 Mar 2026</div></div>
+          <div class="hnc-body">
+            <span class="cat-pill cat-news" style="margin-bottom:10px">News</span>
+            <div class="hnc-title">Updated Shooting Calendar 2026–27 Released</div>
+            <div class="hnc-excerpt">The Paralympic Committee of India has released the comprehensive updated shooting calendar for the 2026–27 season, covering all national competitions, selection trials, and training camps.</div>
+            <div class="hnc-footer"><span class="hnc-date-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2 Mar 2026</span><button class="hnc-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div>
+          </div>
+        </div>
+        <div>
+          <div class="hns-card"><div class="hns-color" style="background:var(--orange)"></div><div class="hns-body"><div class="hns-cat">Event</div><div class="hns-title">Al Ain 2026 WSPS WC Preliminary Schedule Announced</div><div class="hns-date">19 Feb 2026</div></div><div class="hns-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></div></div>
+          <div class="hns-card"><div class="hns-color" style="background:var(--green)"></div><div class="hns-body"><div class="hns-cat">Announcement</div><div class="hns-title">WSPS Novi Sad — Indian Contingent Selected &amp; Announced</div><div class="hns-date">18 Feb 2026</div></div><div class="hns-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></div></div>
+          <div class="hns-card"><div class="hns-color" style="background:var(--navy)"></div><div class="hns-body"><div class="hns-cat">News</div><div class="hns-title">WSPS Grand Prix France 2026 Champagne Cup Completed</div><div class="hns-date">16 Feb 2026</div></div><div class="hns-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME MEDALS -->
+  <div class="sec medals-dark">
+    <div class="sec-inner" style="position:relative;z-index:2">
+      <div class="sec-hd reveal">
+        <div><div class="sec-ey" style="color:var(--gold)">Medal Count</div><div class="sec-ti" style="color:#fff">Highlights &amp; <em>Achievements</em></div></div>
+        <button class="view-all" style="color:rgba(255,255,255,.55)" onclick="goPage('awards')">View All <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+      </div>
+      <div class="medals-grid reveal">
+        <div class="mc mc-gold"><div class="mc-ico" style="background:rgba(255,215,0,.15);border:2px solid rgba(255,215,0,.25);font-size:26px">🥇</div><span class="mc-count">12</span><div class="mc-label">Gold Medals</div><div class="mc-sub">6th NPSC 2025</div></div>
+        <div class="mc mc-silver"><div class="mc-ico" style="background:rgba(192,192,192,.1);border:2px solid rgba(192,192,192,.2);font-size:26px">🥈</div><span class="mc-count">8</span><div class="mc-label">Silver Medals</div><div class="mc-sub">6th NPSC 2025</div></div>
+        <div class="mc mc-bronze"><div class="mc-ico" style="background:rgba(205,127,50,.1);border:2px solid rgba(205,127,50,.2);font-size:26px">🥉</div><span class="mc-count">6</span><div class="mc-label">Bronze Medals</div><div class="mc-sub">6th NPSC 2025</div></div>
+      </div>
+      <div class="ath-feat-row reveal">
+        <div class="afi"><div class="afi-ico" style="background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.25)">🏆</div><div><div class="afi-name">Avani Lekhara</div><div class="afi-ev">R2 - 10M Air Rifle Women SH1</div></div><div class="afi-medal">🥇</div></div>
+        <div class="afi"><div class="afi-ico" style="background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.25)">🏆</div><div><div class="afi-name">Rudransh Khandelwal</div><div class="afi-ev">P1 - 10M Air Pistol Men SH1</div></div><div class="afi-medal">🥇</div></div>
+        <div class="afi"><div class="afi-ico" style="background:rgba(192,192,192,.1);border:1px solid rgba(192,192,192,.2)">🎯</div><div><div class="afi-name">Mona Agarwal</div><div class="afi-ev">R6 - 50M Rifle Mixed Prone SH1</div></div><div class="afi-medal">🥈</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME EVENTS -->
+  <div class="sec" style="background:var(--bg)">
+    <div class="sec-inner">
+      <div class="sec-hd reveal"><div><div class="sec-ey">Schedule</div><div class="sec-ti">Upcoming <em>Events</em></div></div><button class="view-all" onclick="alert('View full calendar')">Full Calendar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div>
+      <div class="events-strip-grid reveal">
+        <div class="ev-card"><div class="ev-date-blk" style="background:linear-gradient(180deg,var(--navy-deep),var(--navy))"><span class="ev-day">15</span><span class="ev-mon">Apr</span></div><div class="ev-body"><span class="ev-type-tag" style="background:rgba(255,103,31,.1);color:#C04A00">International</span><div class="ev-title">WSPS World Cup — Al Ain 2026</div><div class="ev-meta-row"><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Al Ain, UAE</span><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>15–22 Apr</span></div></div></div>
+        <div class="ev-card"><div class="ev-date-blk" style="background:linear-gradient(180deg,#2d1200,var(--orange))"><span class="ev-day">18</span><span class="ev-mon">May</span></div><div class="ev-body"><span class="ev-type-tag" style="background:rgba(0,61,165,.08);color:var(--navy)">National</span><div class="ev-title">Selection Trial — Para Shooting 2026</div><div class="ev-meta-row"><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Delhi</span><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>18–22 May</span></div></div></div>
+        <div class="ev-card"><div class="ev-date-blk" style="background:linear-gradient(180deg,#012C17,var(--green))"><span class="ev-day">10</span><span class="ev-mon">Jun</span></div><div class="ev-body"><span class="ev-type-tag" style="background:rgba(4,106,56,.08);color:var(--green)">Classification</span><div class="ev-title">National Classification Camp 2026</div><div class="ev-meta-row"><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>New Delhi</span></div></div></div>
+        <div class="ev-card"><div class="ev-date-blk" style="background:linear-gradient(180deg,#2a2a00,var(--gold))"><span class="ev-day" style="font-size:18px">Dec</span><span class="ev-mon">2026</span></div><div class="ev-body"><span class="ev-type-tag" style="background:rgba(200,164,21,.1);color:#7A6008">Championship</span><div class="ev-title">7th National Para Shooting Championship 2026</div><div class="ev-meta-row"><span class="ev-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Venue TBD</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <div class="cta-inner">
+      <div><div class="cta-ey">Official Documents</div><div class="cta-title">Results &amp; Certificates<br>Available Now</div><div class="cta-sub">Download official result sheets and access athlete certificates</div></div>
+      <div class="cta-btns">
+        <button class="btn-gold" onclick="goPage('results')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Results</button>
+        <button class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.2)" onclick="goPage('classification')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg>Classification Guide</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /home -->
+
+<!-- ════════════════ PAGE: NEWS ════════════════ -->
+<div class="page" id="news">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Latest Updates</div><div class="ph-title">News &amp; <em>Updates</em></div><div class="ph-sub">Championships, announcements, achievements and press releases from para shooting across India and the world</div></div></div>
+  <!-- Filter bar -->
+  <div class="results-filter-bar">
+    <div class="rfb-inner">
+      <button class="rfb-btn active" onclick="setNewsFilter('all',this)">All</button>
+      <button class="rfb-btn" onclick="setNewsFilter('news',this)">News</button>
+      <button class="rfb-btn" onclick="setNewsFilter('announcement',this)">Announcement</button>
+      <button class="rfb-btn" onclick="setNewsFilter('result',this)">Result</button>
+      <button class="rfb-btn" onclick="setNewsFilter('achievement',this)">Achievement</button>
+      <button class="rfb-btn" onclick="setNewsFilter('event',this)">Event</button>
+      <div class="rfb-search"><div class="rfb-si"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search news…" oninput="filterNews(this.value)"></div></div>
+    </div>
+  </div>
+  <div class="sec" style="background:var(--bg)">
+    <div class="sec-inner">
+      <div class="news-mag-grid" id="newsGrid">
+        <div class="nmc" data-cat="news"><div class="nmh" style="background:linear-gradient(135deg,#001A4D,#003DA5)"><div class="nmh-wm">Calendar</div><div class="nmh-pill">📰 News · Featured</div><div class="nmh-date">2 Mar 2026</div></div><div class="nm-body"><span class="cat-pill cat-news" style="margin-bottom:8px">News</span><div class="nm-title">Updated Shooting Calendar 2026–27 — Full Season Schedule Released</div><div class="nm-exc">The Paralympic Committee of India has released the comprehensive updated shooting calendar for the 2026–27 season, covering all national competitions, selection trials, and training camps.</div><div class="nm-foot"><span class="nm-date"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2 Mar 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="event"><div class="nmh" style="background:linear-gradient(135deg,#3D1500,#FF671F)"><div class="nmh-wm">Event</div><div class="nmh-pill">📅 Event</div><div class="nmh-date">19 Feb 2026</div></div><div class="nm-body"><span class="cat-pill cat-event" style="margin-bottom:8px">Event</span><div class="nm-title">Al Ain 2026 WSPS WC Preliminary Schedule</div><div class="nm-exc">Preliminary schedule for the 2026 World Shooting Para Sport World Cup in Al Ain. Indian team to participate across multiple categories.</div><div class="nm-foot"><span class="nm-date">19 Feb 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="announcement"><div class="nmh" style="background:linear-gradient(135deg,#012C17,#046A38)"><div class="nmh-wm">Novi</div><div class="nmh-pill">📢 Ann.</div><div class="nmh-date">18 Feb 2026</div></div><div class="nm-body"><span class="cat-pill cat-ann" style="margin-bottom:8px">Announcement</span><div class="nm-title">WSPS Novi Sad — Indian Contingent Announced</div><div class="nm-foot"><span class="nm-date">18 Feb 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="news"><div class="nmh" style="background:linear-gradient(135deg,#001A4D,#1a54c8)"><div class="nmh-wm">France</div><div class="nmh-pill">📰 News</div><div class="nmh-date">16 Feb 2026</div></div><div class="nm-body"><span class="cat-pill cat-news" style="margin-bottom:8px">News</span><div class="nm-title">WSPS Grand Prix France 2026 — Champagne Cup</div><div class="nm-foot"><span class="nm-date">16 Feb 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="achievement"><div class="nmh" style="background:linear-gradient(135deg,#3D2800,#C8A415)"><div class="nmh-wm">Gold</div><div class="nmh-pill">🏆 Ach.</div><div class="nmh-date">10 Feb 2026</div></div><div class="nm-body"><span class="cat-pill cat-ach" style="margin-bottom:8px">Achievement</span><div class="nm-title">Avani Lekhara Wins Gold — New World Record Set</div><div class="nm-foot"><span class="nm-date">10 Feb 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="result"><div class="nmh" style="background:linear-gradient(135deg,#4A0000,#DC2626)"><div class="nmh-wm">Results</div><div class="nmh-pill">📊 Result</div><div class="nmh-date">31 Dec 2025</div></div><div class="nm-body"><span class="cat-pill cat-result" style="margin-bottom:8px">Result</span><div class="nm-title">3rd National Para Shooting Championship Results — Mhow</div><div class="nm-exc">Complete official results from the 3rd National Para Shooting Championship held at Mhow, Madhya Pradesh. All categories included.</div><div class="nm-foot"><span class="nm-date">31 Dec 2025</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+        <div class="nmc" data-cat="announcement"><div class="nmh" style="background:linear-gradient(135deg,#012C17,#0a8a4a)"><div class="nmh-wm">Press</div><div class="nmh-pill">📢 Press</div><div class="nmh-date">28 Jan 2026</div></div><div class="nm-body"><span class="cat-pill cat-ann" style="margin-bottom:8px">Announcement</span><div class="nm-title">National Classification Camp — Dr. Karni Singh Ranges, New Delhi</div><div class="nm-exc">National classification camp for all registered para shooters scheduled at Dr. Karni Singh Ranges, New Delhi in February 2026.</div><div class="nm-foot"><span class="nm-date">28 Jan 2026</span><button class="nm-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PAGE: RESULTS ════════════════ -->
+<div class="page" id="results">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Official Documents</div><div class="ph-title">Official <em>Result</em> Sheets</div><div class="ph-sub">Download official result sheets from national championships and selection trials</div></div></div>
+  <div class="results-filter-bar"><div class="rfb-inner"><button class="rfb-btn active">All Years</button><button class="rfb-btn">2025</button><button class="rfb-btn">2024</button><button class="rfb-btn">2023</button><div class="rfb-search"><div class="rfb-si"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search results…"></div></div></div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="results-year-group"><div class="ryg-header"><div class="ryg-badge">2025</div><div class="ryg-line"></div><span class="ryg-count">2 Results</span></div>
+    <div class="results-grid">
+      <div class="rc-card"><div class="rc-top"><span class="rc-pdf-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>PDF</span><span class="rc-issued"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Issued: 10 Dec 2025</span></div><div class="rc-body"><div class="rc-title">6th National Para Shooting Championship 2025</div><div class="rc-venue"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dr. Karni Singh Ranges, Delhi</div><div class="rc-actions"><button class="rc-btn rc-btn-view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="rc-btn rc-btn-dl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button></div></div></div>
+      <div class="rc-card"><div class="rc-top"><span class="rc-pdf-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>PDF</span><span class="rc-issued"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Issued: 15 Nov 2025</span></div><div class="rc-body"><div class="rc-title">Selection Trial 5 — Para Shooting 2025</div><div class="rc-venue"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>New Delhi</div><div class="rc-actions"><button class="rc-btn rc-btn-view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="rc-btn rc-btn-dl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button></div></div></div>
+    </div></div>
+    <div class="results-year-group"><div class="ryg-header"><div class="ryg-badge">2024</div><div class="ryg-line"></div><span class="ryg-count">1 Result</span></div>
+    <div class="results-grid">
+      <div class="rc-card"><div class="rc-top"><span class="rc-pdf-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>PDF</span><span class="rc-issued"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Issued: 22 Aug 2024</span></div><div class="rc-body"><div class="rc-title">5th National Para Shooting Championship 2024</div><div class="rc-venue"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dr. Karni Singh Ranges, Delhi</div><div class="rc-actions"><button class="rc-btn rc-btn-view"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="rc-btn rc-btn-dl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button></div></div></div>
+    </div></div>
+  </div></div>
+</div>
+
+<!-- ════════════════ PAGE: AWARDS ════════════════ -->
+<div class="page" id="awards">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Hall of Champions</div><div class="ph-title">Awards &amp; <em>Honours</em></div><div class="ph-sub">Celebrating India's finest para-athletes and their extraordinary achievements on the national and international stage</div></div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="sec-hd reveal"><div><div class="sec-ey">6th NPSC 2025</div><div class="sec-ti">Medal <em>Winners</em></div></div></div>
+    <div class="awards-grid reveal">
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#001A4D,#003DA5)"><div class="aw-banner-wm">Gold</div><div class="aw-trophy">🥇</div></div><div class="aw-body"><div class="aw-event">P1 - 10M Air Pistol Men SH1 · Final</div><div class="aw-name">Rudransh Khandelwal</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">RAJ</span><span class="aw-medal rb-gold">Gold</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 244.2</span></div></div></div>
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#012C17,#046A38)"><div class="aw-banner-wm">Gold</div><div class="aw-trophy">🥇</div></div><div class="aw-body"><div class="aw-event">R2 - 10M Air Rifle Women SH1 · Final</div><div class="aw-name">Avani Lekhara</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">RAJ</span><span class="aw-medal rb-gold">Gold</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 249.6</span></div></div></div>
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#2a2a2a,#475569)"><div class="aw-banner-wm">Silver</div><div class="aw-trophy">🥈</div></div><div class="aw-body"><div class="aw-event">R6 - 50M Rifle Mixed Prone SH1 · Final</div><div class="aw-name">Mona Agarwal</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">RAJ</span><span class="aw-medal rb-silver">Silver</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 245.1</span></div></div></div>
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#1A0F00,#8B4513)"><div class="aw-banner-wm">Bronze</div><div class="aw-trophy">🥉</div></div><div class="aw-body"><div class="aw-event">PT2 - Para Trap Standing Lower Limb · Final</div><div class="aw-name">Amarjeet Gupta</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">BIHAR</span><span class="aw-medal rb-bronze">Bronze</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 66</span></div></div></div>
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#001A4D,#003DA5)"><div class="aw-banner-wm">Gold</div><div class="aw-trophy">🥇</div></div><div class="aw-body"><div class="aw-event">P4 - 50M Pistol Mixed SH1 · Final</div><div class="aw-name">Rudransh Khandelwal</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">RAJ</span><span class="aw-medal rb-gold">Gold</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 225.6</span></div></div></div>
+      <div class="aw-card"><div class="aw-banner" style="background:linear-gradient(135deg,#2a2a2a,#475569)"><div class="aw-banner-wm">Silver</div><div class="aw-trophy">🥈</div></div><div class="aw-body"><div class="aw-event">R8 - 50M Rifle 3 Position Women SH1 · Final</div><div class="aw-name">Mona Agarwal</div><div class="aw-champ">6th National Para Shooting Championship 2025</div><div class="aw-meta"><span class="aw-state">RAJ</span><span class="aw-medal rb-silver">Silver</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Score: 565</span></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ════════════════ PAGE: ABOUT ════════════════ -->
+<div class="page" id="about">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Our Story</div><div class="ph-title">About <em>STC Para</em><br>Shooting</div><div class="ph-sub">The official para shooting body under the Paralympic Committee of India, recognised by the Ministry of Youth Affairs &amp; Sports</div></div></div>
+  <div class="sec about-mission" style="background:#fff"><div class="sec-inner">
+    <div class="about-mission-grid reveal">
+      <div class="am-left">
+        <div class="sec-ey">Our Mission</div>
+        <div class="sec-ti" style="margin-bottom:20px">Empowering Athletes,<br><em>Transforming Lives</em></div>
+        <p class="about-body-text">STC Para Shooting (Paralympic Committee of India) was founded with the view to promote and popularize shooting sports among para-athletes in India. We are committed to developing world-class shooters.</p>
+        <p class="about-body-text">Recognised by the Ministry of Youth Affairs &amp; Sports, Government of India, and affiliated with IPC Germany, IWAS UK, and APC UAE — we operate at the highest levels of international para sport governance.</p>
+        <p class="about-body-text">Through rigorous national championships, selection trials, classification camps and international exposure, we create pathways for para-athletes from every state in India to compete and excel on the world stage.</p>
+        <div style="display:flex;gap:12px;margin-top:24px"><button class="btn-primary" onclick="goPage('contact')">Contact Us</button><button class="btn-outline" onclick="goPage('policies')">Our Policies</button></div>
+      </div>
+      <div class="am-right">
+        <div class="am-stat-card"><div class="am-stat-n">275+</div><div class="am-stat-l">Registered athletes across India in the 2025 season</div></div>
+        <div class="am-stat-card"><div class="am-stat-n" style="color:var(--gold)">6</div><div class="am-stat-l">National Para Shooting Championships conducted since inception</div></div>
+        <div class="am-stat-card"><div class="am-stat-n" style="color:var(--green)">28</div><div class="am-stat-l">States and Union Territories with registered para shooters</div></div>
+        <div class="am-stat-card"><div class="am-stat-n" style="color:var(--orange)">3</div><div class="am-stat-l">International affiliations — IPC Germany, IWAS UK, APC UAE</div></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="sec" style="background:var(--bg)"><div class="sec-inner">
+    <div class="sec-hd reveal"><div><div class="sec-ey">Leadership</div><div class="sec-ti">Our <em>Team</em></div></div></div>
+    <div class="about-team-grid reveal">
+      <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,var(--navy-deep),var(--navy))"><div class="team-avatar-wm">D</div><div class="team-initials">D</div></div><div class="team-body"><div class="team-name">Devendra</div><div class="team-role">President</div><div class="team-award">Padma Bhushan · Khel Ratna Awardee</div></div></div>
+      <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#2d1200,var(--orange))"><div class="team-avatar-wm">J</div><div class="team-initials">J</div></div><div class="team-body"><div class="team-name">Jayawant Gundu H.</div><div class="team-role">Secretary General</div><div class="team-award">International Coach &amp; Referee</div></div></div>
+      <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#012C17,var(--green))"><div class="team-avatar-wm">J</div><div class="team-initials">J</div></div><div class="team-body"><div class="team-name">Jaiprakash Nautiyal</div><div class="team-role">Chairperson, STC Para Shooting</div><div class="team-award">Dronacharya Awardee</div></div></div>
+    </div>
+  </div></div>
+  <div class="sec" style="background:#fff"><div class="sec-inner">
+    <div class="sec-hd reveal"><div><div class="sec-ey">International</div><div class="sec-ti">Affiliations &amp; <em>Recognition</em></div></div></div>
+    <div class="affil-grid reveal">
+      <div class="affil-card"><span class="affil-ico">🌍</span><div class="affil-name">IPC Germany</div><div class="affil-loc">International Paralympic Committee</div></div>
+      <div class="affil-card"><span class="affil-ico">🇬🇧</span><div class="affil-name">IWAS UK</div><div class="affil-loc">Int'l Wheelchair &amp; Amputee Sports</div></div>
+      <div class="affil-card"><span class="affil-ico">🇦🇪</span><div class="affil-name">APC UAE</div><div class="affil-loc">Asian Paralympic Committee</div></div>
+      <div class="affil-card"><span class="affil-ico">🏛️</span><div class="affil-name">Ministry MYAS</div><div class="affil-loc">Youth Affairs &amp; Sports, Govt. of India</div></div>
+      <div class="affil-card"><span class="affil-ico">🎯</span><div class="affil-name">ISSF</div><div class="affil-loc">Int'l Shooting Sport Federation</div></div>
+      <div class="affil-card"><span class="affil-ico">🏋️</span><div class="affil-name">SAI</div><div class="affil-loc">Sports Authority of India</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ════════════════ PAGE: CLASSIFICATION ════════════════ -->
+<div class="page" id="classification">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Eligibility Guide</div><div class="ph-title">Sport <em>Classification</em></div><div class="ph-sub">Understanding the classification system for para shooting — ensuring fair competition by grouping athletes with similar functional profiles</div></div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="sec-hd reveal"><div><div class="sec-ey">Categories</div><div class="sec-ti">Shooting <em>Classes</em></div></div></div>
+    <div class="class-categories-grid reveal">
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,var(--navy-deep),var(--navy))"><div class="ccc-header-wm">SH1</div><div class="ccc-code">SH1</div><div><div class="ccc-name">Shooting class SH1</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Pistol &amp; Rifle</div></div></div><div class="ccc-body"><div class="ccc-desc">Athletes who shoot with a pistol or rifle and have full arm function but may have lower limb impairments. Can hold the firearm without support.</div><div class="ccc-events"><span class="ccc-ev-tag">P1 - 10M Air Pistol</span><span class="ccc-ev-tag">P4 - 50M Pistol</span><span class="ccc-ev-tag">R1 - 10M Air Rifle</span><span class="ccc-ev-tag">R6 - 50M Rifle Prone</span></div></div></div>
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,#2d1200,#FF671F)"><div class="ccc-header-wm">SH2</div><div class="ccc-code">SH2</div><div><div class="ccc-name">Shooting class SH2</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Rifle only</div></div></div><div class="ccc-body"><div class="ccc-desc">Athletes with impaired arm function who need a shooting stand to support the firearm. Uses a support stand attached to the wheelchair or bench.</div><div class="ccc-events"><span class="ccc-ev-tag">R3 - 10M Air Rifle Prone</span><span class="ccc-ev-tag">R5 - 10M Air Rifle Std</span><span class="ccc-ev-tag">R7 - 50M Rifle 3 Pos</span></div></div></div>
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,#012C17,#046A38)"><div class="ccc-header-wm">VI</div><div class="ccc-code">VI</div><div><div class="ccc-name">Visually Impaired</div><div style="font-size:10px;color:rgba(255,255,255,.55)">B1, B2, B3</div></div></div><div class="ccc-body"><div class="ccc-desc">Athletes with visual impairments. Uses electronic sighting systems. B1 = totally blind, B2 = some light perception, B3 = limited visual acuity.</div><div class="ccc-events"><span class="ccc-ev-tag">10M Air Rifle (VI)</span><span class="ccc-ev-tag">10M Air Pistol (VI)</span></div></div></div>
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,#3D2800,#C8A415)"><div class="ccc-header-wm">SG</div><div class="ccc-code">SG-L</div><div><div class="ccc-name">Shotgun Lower Limb</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Para Trap</div></div></div><div class="ccc-body"><div class="ccc-desc">Athletes with lower limb impairments who compete in shotgun disciplines. Includes Para Trap and Para Skeet events.</div><div class="ccc-events"><span class="ccc-ev-tag">PT2 - Para Trap SG-L</span><span class="ccc-ev-tag">PT3 - Para Trap SG-S</span></div></div></div>
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,#1e0050,#7C3AED)"><div class="ccc-header-wm">SG</div><div class="ccc-code">SG-S</div><div><div class="ccc-name">Shotgun Seated</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Para Trap/Skeet</div></div></div><div class="ccc-body"><div class="ccc-desc">Athletes who compete in shotgun events from a seated position due to impairments affecting both lower and upper body function.</div><div class="ccc-events"><span class="ccc-ev-tag">Para Trap Seated</span><span class="ccc-ev-tag">Para Skeet Seated</span></div></div></div>
+      <div class="class-cat-card"><div class="ccc-header" style="background:linear-gradient(135deg,#3D0000,#DC2626)"><div class="ccc-header-wm">Junior</div><div class="ccc-code">J</div><div><div class="ccc-name">Junior Category</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Under 21</div></div></div><div class="ccc-body"><div class="ccc-desc">Junior categories exist for athletes under 21 years. Denoted by "J" suffix — P1J, R1J etc. Separate rankings from senior events.</div><div class="ccc-events"><span class="ccc-ev-tag">P1J - Junior Pistol</span><span class="ccc-ev-tag">R1J - Junior Rifle</span><span class="ccc-ev-tag">All SH1/SH2 Junior</span></div></div></div>
+    </div>
+  </div></div>
+  <div class="cta-strip"><div class="cta-inner"><div><div class="cta-ey">Need Classification?</div><div class="cta-title">Book a Classification<br>Evaluation</div><div class="cta-sub">Contact us to schedule your official para shooting classification</div></div><div class="cta-btns"><button class="btn-gold" onclick="goPage('contact')">Contact Classification Team</button></div></div></div>
+</div>
+
+<!-- ════════════════ PAGE: MEDIA ════════════════ -->
+<div class="page" id="media">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Photo &amp; Video</div><div class="ph-title">Media <em>Gallery</em></div><div class="ph-sub">Photos and videos from national championships, international events, and athlete achievements</div></div></div>
+  <div style="background:#fff;border-bottom:1px solid var(--border)"><div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:0">
+    <button class="rfb-btn active">All</button>
+    <button class="rfb-btn">Championships</button>
+    <button class="rfb-btn">Athletes</button>
+    <button class="rfb-btn">International</button>
+    <button class="rfb-btn">Videos</button>
+  </div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <!-- Gallery items with gradient placeholders since no real images -->
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,var(--navy-deep),var(--navy));width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🎯</div><div style="font-size:11px;font-weight:600">6th NPSC 2025<br>Opening Ceremony</div></div></div><div class="gi-overlay"></div><div class="gi-caption">6th NPSC 2025 — Opening Ceremony, Delhi</div></div>
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,#012C17,var(--green));width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🏆</div><div style="font-size:11px;font-weight:600">Avani Lekhara<br>Gold Medal</div></div></div><div class="gi-overlay"></div><div class="gi-caption">Avani Lekhara — R2 Gold Medal Ceremony</div></div>
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,#3D2800,var(--gold));width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🥇</div><div style="font-size:11px;font-weight:600">Rudransh Khandelwal<br>Multiple Gold</div></div></div><div class="gi-overlay"></div><div class="gi-caption">Rudransh Khandelwal — P1 Final</div></div>
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,#2d1200,var(--orange));width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🎥</div><div style="font-size:11px;font-weight:600">WSPS Grand Prix<br>France 2026</div></div></div><div class="gi-overlay"></div><div class="gi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21 5,3"/></svg></div><div class="gi-caption">WSPS Grand Prix France 2026 — Highlights</div></div>
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,#1e0050,#7C3AED);width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🏟️</div><div style="font-size:11px;font-weight:600">Dr. Karni Singh<br>Shooting Range</div></div></div><div class="gi-overlay"></div><div class="gi-caption">Dr. Karni Singh Shooting Range — Delhi</div></div>
+      <div class="gallery-item" style="aspect-ratio:4/3"><div class="gi-bg" style="background:linear-gradient(135deg,#4A0000,var(--danger));width:100%;height:100%"><div style="text-align:center;color:rgba(255,255,255,.4)"><div style="font-size:36px;margin-bottom:8px">🎥</div><div style="font-size:11px;font-weight:600">Mona Agarwal<br>Paris Paralympics</div></div></div><div class="gi-overlay"></div><div class="gi-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21 5,3"/></svg></div><div class="gi-caption">Mona Agarwal — Paris Paralympics Silver</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ════════════════ PAGE: POLICIES ════════════════ -->
+<div class="page" id="policies">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Governance</div><div class="ph-title">Policies &amp; <em>Documents</em></div><div class="ph-sub">Official policies, guidelines, anti-doping rules and governance documents for STC Para Shooting</div></div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="sec-hd reveal"><div><div class="sec-ey">Official Documents</div><div class="sec-ti">Governing <em>Policies</em></div></div></div>
+    <div class="policies-grid reveal">
+      <div class="policy-card"><div class="pc-header"><div class="pc-ico" style="background:rgba(0,61,165,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div><div><div class="pc-type">Governance</div><div class="pc-name">Constitution &amp; Bylaws</div></div></div><div class="pc-body"><div class="pc-desc">The constitutional framework governing STC Para Shooting — membership, elections, committees and operating procedures.</div><div class="pc-meta"><span class="pc-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Updated 2024</span><span class="pc-meta-item">PDF · 2.4 MB</span></div></div><div class="pc-footer"><button class="pc-btn-view"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="pc-btn-dl"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/></svg>Download</button></div></div>
+      <div class="policy-card"><div class="pc-header"><div class="pc-ico" style="background:rgba(220,38,38,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="pc-type">Anti-Doping</div><div class="pc-name">Anti-Doping Policy</div></div></div><div class="pc-body"><div class="pc-desc">WADA-compliant anti-doping regulations applicable to all registered para shooters competing under PCI jurisdiction.</div><div class="pc-meta"><span class="pc-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Updated 2025</span><span class="pc-meta-item">PDF · 1.8 MB</span></div></div><div class="pc-footer"><button class="pc-btn-view"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="pc-btn-dl"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/></svg>Download</button></div></div>
+      <div class="policy-card"><div class="pc-header"><div class="pc-ico" style="background:rgba(4,106,56,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div><div><div class="pc-type">Competition</div><div class="pc-name">Selection Policy 2026</div></div></div><div class="pc-body"><div class="pc-desc">Criteria and procedures for selection of athletes to represent India at international para shooting competitions in 2026.</div><div class="pc-meta"><span class="pc-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Jan 2026</span><span class="pc-meta-item">PDF · 890 KB</span></div></div><div class="pc-footer"><button class="pc-btn-view"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="pc-btn-dl"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/></svg>Download</button></div></div>
+      <div class="policy-card"><div class="pc-header"><div class="pc-ico" style="background:rgba(200,164,21,.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="pc-type">Athlete</div><div class="pc-name">Athlete Code of Conduct</div></div></div><div class="pc-body"><div class="pc-desc">Standards of behaviour expected from all registered athletes, coaches and officials under the STC Para Shooting jurisdiction.</div><div class="pc-meta"><span class="pc-meta-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Updated 2025</span><span class="pc-meta-item">PDF · 1.1 MB</span></div></div><div class="pc-footer"><button class="pc-btn-view"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button><button class="pc-btn-dl"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/></svg>Download</button></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ════════════════ PAGE: CONTACT ════════════════ -->
+<div class="page" id="contact">
+  <div class="page-hero"><div class="page-hero-grid"></div><div class="ph-inner"><div class="ph-eyebrow"><span class="ph-dot"></span>Get In Touch</div><div class="ph-title">Contact <em>Us</em></div><div class="ph-sub">Reach out to the STC Para Shooting team for enquiries, registrations, classification and media requests</div></div></div>
+  <div class="sec"><div class="sec-inner">
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-info-card" style="margin-bottom:20px">
+          <div class="cic-head"><div class="cic-head-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cic-head-title">Our Office</div><div class="cic-head-sub">STC Para Shooting, PCI</div></div></div>
+          <div class="cic-body">
+            <div class="cic-item"><div class="cic-item-ico" style="background:rgba(0,61,165,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cic-label">Address</div><div class="cic-value">Jaisalmer House, 26 Mansingh Road,<br>New Delhi – 110011</div></div></div>
+            <div class="cic-item"><div class="cic-item-ico" style="background:rgba(4,106,56,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16z"/></svg></div><div><div class="cic-label">Phone</div><div class="cic-value">+91-11-23075126</div></div></div>
+            <div class="cic-item"><div class="cic-item-ico" style="background:rgba(200,164,21,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cic-label">Email</div><div class="cic-value">info@parashooting.org</div></div></div>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="cic-head"><div class="cic-head-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div><div><div class="cic-head-title">Quick Links</div><div class="cic-head-sub">Athlete resources</div></div></div>
+          <div class="cic-body">
+            <div class="cic-item" style="cursor:pointer" onclick="goPage('classification')"><div class="cic-item-ico" style="background:rgba(0,61,165,.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg></div><div><div class="cic-label">Classification</div><div class="cic-value">Book a classification evaluation →</div></div></div>
+            <div class="cic-item" style="cursor:pointer" onclick="goPage('results')"><div class="cic-item-ico" style="background:rgba(200,164,21,.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/></svg></div><div><div class="cic-label">Results &amp; Certificates</div><div class="cic-value">Download championship results →</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <div class="cfc-head"><div class="cfc-head-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cfc-head-title">Send a Message</div><div class="cfc-head-sub">We reply within 2 working days</div></div></div>
+        <div class="cfc-body">
+          <div id="cfForm">
+            <div class="cf-row2">
+              <div class="cf-group"><label class="cf-label">Full Name <span>*</span></label><input class="cf-input" type="text" placeholder="Your full name"></div>
+              <div class="cf-group"><label class="cf-label">Email <span>*</span></label><input class="cf-input" type="email" placeholder="your@email.com"></div>
+            </div>
+            <div class="cf-row2">
+              <div class="cf-group"><label class="cf-label">Phone</label><input class="cf-input" type="tel" placeholder="+91 XXXXX XXXXX"></div>
+              <div class="cf-group"><label class="cf-label">Subject <span>*</span></label>
+                <select class="cf-input"><option value="">Select subject…</option><option>Classification Enquiry</option><option>Athlete Registration</option><option>Results &amp; Certificates</option><option>Media Request</option><option>General Enquiry</option></select>
+              </div>
+            </div>
+            <div class="cf-group"><label class="cf-label">State / UT</label><input class="cf-input" type="text" placeholder="Your state"></div>
+            <div class="cf-group"><label class="cf-label">Message <span>*</span></label><textarea class="cf-input" rows="5" placeholder="Write your message here…"></textarea></div>
+            <button class="cf-submit" onclick="submitForm()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>Send Message</button>
+          </div>
+          <div class="cf-success" id="cfSuccess">
+            <div class="cf-success-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg></div>
+            <div class="cf-success-title">Message Sent!</div>
+            <div class="cf-success-sub">Thank you for reaching out. We'll get back to you within 2 working days.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ════════════════ SHARED FOOTER ════════════════ -->
+<footer id="site-footer">
+  <div class="foot-inner">
+    <div class="foot-grid">
+      <div><div class="foot-brand-name">STC Para Shooting</div><div class="foot-brand-tag">Paralympic Committee of India</div><div class="foot-desc">Founded to promote and popularize shooting sports among para-athletes in India. Committed to developing world-class shooters and championing inclusion through sport.</div></div>
+      <div><div class="foot-col-title">Quick Links</div><div class="foot-links"><button class="foot-link" onclick="goPage('about')">About Us</button><button class="foot-link" onclick="goPage('results')">Championships</button><button class="foot-link" onclick="goPage('policies')">Policies</button><button class="foot-link" onclick="goPage('classification')">Classification</button><button class="foot-link" onclick="goPage('contact')">Contact</button></div></div>
+      <div><div class="foot-col-title">Useful Links</div><div class="foot-links"><a class="foot-link" href="#">ISSF ↗</a><a class="foot-link" href="#">World Para Shooting ↗</a><a class="foot-link" href="#">Paralympic Committee of India ↗</a><a class="foot-link" href="#">Sports Authority of India ↗</a></div></div>
+      <div><div class="foot-col-title">Contact Us</div><div class="foot-contact-row"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Jaisalmer House, 26 Mansingh Road, New Delhi – 110011</span></div><div class="foot-contact-row"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16z"/></svg><span>+91-11-23075126</span></div><div class="foot-contact-row"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>info@parashooting.org</span></div></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 STC Para Shooting (Paralympic Committee of India). All rights reserved.</span><div class="foot-bottom-links"><span class="foot-bottom-link">Privacy Policy</span><span class="foot-bottom-link">Terms of Use</span><span class="foot-bottom-link">Accessibility</span></div></div>
+    <div style="padding:14px 0;text-align:center;font-size:11px;color:rgba(255,255,255,.25);border-top:1px solid rgba(255,255,255,.06);margin-top:4px">Supported by &nbsp;★&nbsp; Ministry of Youth Affairs &amp; Sports, Government of India &nbsp;·&nbsp; Recognised by IPC Germany, IWAS UK, APC UAE</div>
+  </div>
+</footer>
+
+<script>
+// ── PAGE ROUTING ──────────────────────────────────
+const PAGES = ['home','news','results','awards','about','classification','media','policies','contact']
+
+function goPage(id){
+  // hide all
+  PAGES.forEach(p => {
+    const el = document.getElementById(p)
+    if(el) el.classList.remove('active')
+  })
+  // show target
+  const target = document.getElementById(id)
+  if(target) target.classList.add('active')
+  // update nav active state
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'))
+  // scroll top
+  window.scrollTo({top:0,behavior:'instant'})
+  // re-run reveal
+  setTimeout(runReveal, 100)
+}
+
+// ── NAV SCROLL ────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40)
+})
+
+// ── SCROLL REVEAL ─────────────────────────────────
+function runReveal(){
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting){
+        setTimeout(() => e.target.classList.add('in'), i * 80)
+        obs.unobserve(e.target)
+      }
+    })
+  }, {threshold: .08})
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => obs.observe(el))
+}
+runReveal()
+
+// ── NEWS FILTER ───────────────────────────────────
+let newsFilter = 'all'
+function setNewsFilter(cat, btn){
+  newsFilter = cat
+  document.querySelectorAll('.rfb-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  applyNewsFilter()
+}
+function filterNews(q){
+  applyNewsFilter(q)
+}
+function applyNewsFilter(q=''){
+  const cards = document.querySelectorAll('#newsGrid .nmc')
+  cards.forEach(c => {
+    const catOk = newsFilter === 'all' || c.dataset.cat === newsFilter
+    const qOk = !q || c.querySelector('.nm-title')?.textContent.toLowerCase().includes(q.toLowerCase())
+    c.style.display = (catOk && qOk) ? '' : 'none'
+  })
+}
+
+// ── CONTACT FORM ──────────────────────────────────
+function submitForm(){
+  const btn = document.querySelector('.cf-submit')
+  btn.innerHTML = `<span style="animation:spin .8s linear infinite;display:inline-block"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span> Sending…`
+  btn.disabled = true
+  setTimeout(() => {
+    document.getElementById('cfForm').style.display = 'none'
+    document.getElementById('cfSuccess').classList.add('show')
+  }, 1400)
+}
+
+// ── START ON HOME ─────────────────────────────────
+goPage('home')
+</script>
+</body>
+</html>

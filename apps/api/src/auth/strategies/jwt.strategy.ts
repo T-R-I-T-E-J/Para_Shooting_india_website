@@ -1,0 +1,66 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
+import { JwtPayload } from '../interfaces/jwt-payload.interface.js';
+import { UsersService } from '../../users/users.service.js';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly usersService: UsersService,
+  ) {
+    const secret = configService.get<string>('config.jwt.secret');
+
+    if (!secret || secret === 'super-secret-change-in-production') {
+      if (
+        process.env.NODE_ENV === 'production' ||
+        process.env.NODE_ENV === 'prod'
+      ) {
+        throw new Error(
+          'FATAL SECURITY ERROR: JWT_SECRET must be explicitly defined in production.',
+        );
+      }
+    }
+
+    const finalSecret = secret || 'super-secret-change-in-production';
+
+    super({
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          const data = request?.cookies as Record<string, string> | undefined;
+          return data?.auth_token || null;
+        },
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
+      ignoreExpiration: false,
+      secretOrKey: finalSecret,
+      issuer: 'psci_platform',
+      audience: 'psci_users',
+    });
+  }
+
+  async validate(payload: JwtPayload) {
+    const user = await this.usersService.findById(payload.sub);
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    if (!user.is_active) {
+      throw new UnauthorizedException('User account is inactive');
+    }
+
+    // Return user object that will be attached to request.user
+    return {
+      id: user.id,
+      public_id: user.public_id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      roles: payload.roles,
+    };
+  }
+}

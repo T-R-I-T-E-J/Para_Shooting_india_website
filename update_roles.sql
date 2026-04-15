@@ -1,0 +1,3 @@
+UPDATE roles 
+SET permissions = '{"users:read": true, "users:create": true, "users:update": true, "users:delete": true, "roles:read": true, "roles:create": true, "roles:update": true, "roles:delete": true, "roles:assign": true, "shooters:read": true, "shooters:create": true, "shooters:update": true, "shooters:delete": true, "shooters:verify": true, "competitions:read": true, "competitions:create": true, "competitions:update": true, "competitions:delete": true, "scores:read": true, "scores:create": true, "scores:update": true, "scores:delete": true, "audit:read": true, "system:admin": true}'::jsonb 
+WHERE name = 'admin';

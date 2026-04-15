@@ -1,0 +1,68 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Patch,
+} from '@nestjs/common';
+import { DownloadsService } from './downloads.service';
+import { CreateDownloadDto } from './dto/create-download.dto';
+import { UpdateDownloadDto } from './dto/update-download.dto';
+import { Public } from '../auth/decorators/public.decorator';
+import { Roles } from '../auth/decorators/roles.decorator';
+
+@Controller('downloads')
+export class DownloadsController {
+  constructor(private readonly downloadsService: DownloadsService) {}
+
+  @Post()
+  @Roles('admin', 'super_admin')
+  create(@Body() createDownloadDto: CreateDownloadDto) {
+    return this.downloadsService.create(createDownloadDto);
+  }
+
+  @Public()
+  @Get('categories')
+  getCategories() {
+    return this.downloadsService.getCategories();
+  }
+
+  @Public()
+  @Get('years')
+  getDistinctYears() {
+    return this.downloadsService.getDistinctYears();
+  }
+
+  @Public()
+  @Get()
+  findAll(@Query('category') category?: string, @Query('year') year?: string) {
+    return this.downloadsService.findAll(
+      category,
+      year ? parseInt(year, 10) : undefined,
+    );
+  }
+
+  @Public()
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.downloadsService.findOne(id);
+  }
+
+  @Delete(':id')
+  @Roles('admin', 'super_admin')
+  remove(@Param('id') id: string) {
+    return this.downloadsService.remove(id);
+  }
+
+  @Patch(':id')
+  @Roles('admin', 'super_admin')
+  update(
+    @Param('id') id: string,
+    @Body() updateDownloadDto: UpdateDownloadDto,
+  ) {
+    return this.downloadsService.update(id, updateDownloadDto);
+  }
+}

@@ -1,0 +1,167 @@
+﻿       table_name        |       column_name       |        data_type         | is_nullable |           column_default            
+-------------------------+-------------------------+--------------------------+-------------+-------------------------------------
+ competition_entries     | id                      | bigint                   | NO          | 
+ competition_entries     | public_id               | uuid                     | NO          | gen_random_uuid()
+ competition_entries     | competition_event_id    | bigint                   | NO          | 
+ competition_entries     | event_relay_id          | bigint                   | YES         | 
+ competition_entries     | shooter_id              | bigint                   | NO          | 
+ competition_entries     | bib_number              | character varying        | YES         | 
+ competition_entries     | firing_point            | character varying        | YES         | 
+ competition_entries     | entry_status            | USER-DEFINED             | NO          | 'pending'::entry_status_enum
+ competition_entries     | payment_status          | USER-DEFINED             | NO          | 'pending'::payment_status_enum
+ competition_entries     | payment_id              | bigint                   | YES         | 
+ competition_entries     | entry_fee_paid          | numeric                  | YES         | 
+ competition_entries     | registered_at           | timestamp with time zone | NO          | now()
+ competition_entries     | confirmed_at            | timestamp with time zone | YES         | 
+ competition_entries     | withdrawn_at            | timestamp with time zone | YES         | 
+ competition_entries     | withdrawal_reason       | text                     | YES         | 
+ competition_entries     | notes                   | text                     | YES         | 
+ competition_entries     | created_at              | timestamp with time zone | NO          | now()
+ competition_entries     | updated_at              | timestamp with time zone | NO          | now()
+ competitions            | id                      | bigint                   | NO          | 
+ competitions            | public_id               | uuid                     | NO          | gen_random_uuid()
+ competitions            | name                    | character varying        | NO          | 
+ competitions            | code                    | character varying        | YES         | 
+ competitions            | competition_type        | character varying        | NO          | 
+ competitions            | level                   | character varying        | NO          | 
+ competitions            | venue_id                | bigint                   | YES         | 
+ competitions            | start_date              | date                     | NO          | 
+ competitions            | end_date                | date                     | NO          | 
+ competitions            | registration_opens      | timestamp with time zone | YES         | 
+ competitions            | registration_closes     | timestamp with time zone | YES         | 
+ competitions            | entry_fee               | numeric                  | YES         | 0
+ competitions            | max_participants        | integer                  | YES         | 
+ competitions            | description             | text                     | YES         | 
+ competitions            | rules_document_url      | text                     | YES         | 
+ competitions            | schedule_document_url   | text                     | YES         | 
+ competitions            | status                  | USER-DEFINED             | NO          | 'draft'::competition_status_enum
+ competitions            | is_wsps_ranked          | boolean                  | NO          | false
+ competitions            | is_record_eligible      | boolean                  | NO          | true
+ competitions            | organizer_name          | character varying        | YES         | 
+ competitions            | organizer_contact       | jsonb                    | YES         | 
+ competitions            | results_published_at    | timestamp with time zone | YES         | 
+ competitions            | created_by              | bigint                   | YES         | 
+ competitions            | created_at              | timestamp with time zone | NO          | now()
+ competitions            | updated_at              | timestamp with time zone | NO          | now()
+ documents               | id                      | bigint                   | NO          | 
+ documents               | category_id             | bigint                   | NO          | 
+ documents               | title                   | character varying        | NO          | 
+ documents               | description             | text                     | YES         | 
+ documents               | file_url                | text                     | NO          | 
+ documents               | file_name               | character varying        | NO          | 
+ documents               | file_size               | bigint                   | YES         | 
+ documents               | file_type               | character varying        | YES         | 
+ documents               | version                 | character varying        | YES         | 
+ documents               | is_public               | boolean                  | YES         | true
+ documents               | download_count          | integer                  | YES         | 0
+ documents               | uploaded_by             | bigint                   | YES         | 
+ documents               | valid_from              | date                     | YES         | 
+ documents               | valid_until             | date                     | YES         | 
+ documents               | is_active               | boolean                  | YES         | true
+ documents               | created_at              | timestamp with time zone | NO          | now()
+ documents               | updated_at              | timestamp with time zone | NO          | now()
+ memberships             | id                      | bigint                   | NO          | 
+ memberships             | public_id               | uuid                     | NO          | gen_random_uuid()
+ memberships             | user_id                 | bigint                   | NO          | 
+ memberships             | membership_type_id      | bigint                   | NO          | 
+ memberships             | membership_number       | character varying        | YES         | 
+ memberships             | start_date              | date                     | NO          | 
+ memberships             | end_date                | date                     | YES         | 
+ memberships             | status                  | USER-DEFINED             | NO          | 'pending'::membership_status_enum
+ memberships             | amount_paid             | numeric                  | NO          | 
+ memberships             | payment_id              | bigint                   | YES         | 
+ memberships             | approved_by             | bigint                   | YES         | 
+ memberships             | approved_at             | timestamp with time zone | YES         | 
+ memberships             | notes                   | text                     | YES         | 
+ memberships             | created_at              | timestamp with time zone | NO          | now()
+ memberships             | updated_at              | timestamp with time zone | NO          | now()
+ news_articles           | id                      | bigint                   | NO          | 
+ news_articles           | public_id               | uuid                     | NO          | gen_random_uuid()
+ news_articles           | title                   | character varying        | NO          | 
+ news_articles           | slug                    | character varying        | NO          | 
+ news_articles           | excerpt                 | text                     | YES         | 
+ news_articles           | content                 | text                     | NO          | 
+ news_articles           | featured_image_url      | text                     | YES         | 
+ news_articles           | category                | character varying        | NO          | 
+ news_articles           | tags                    | jsonb                    | YES         | '[]'::jsonb
+ news_articles           | author_id               | bigint                   | NO          | 
+ news_articles           | status                  | USER-DEFINED             | NO          | 'draft'::news_status_enum
+ news_articles           | is_featured             | boolean                  | YES         | false
+ news_articles           | is_pinned               | boolean                  | YES         | false
+ news_articles           | view_count              | integer                  | YES         | 0
+ news_articles           | published_at            | timestamp with time zone | YES         | 
+ news_articles           | created_at              | timestamp with time zone | NO          | now()
+ news_articles           | updated_at              | timestamp with time zone | NO          | now()
+ news_articles           | deleted_at              | timestamp with time zone | YES         | 
+ news_articles           | preview_image_url       | text                     | YES         | 
+ news_articles           | image_urls              | jsonb                    | YES         | '[]'::jsonb
+ news_articles           | documents               | jsonb                    | YES         | '[]'::jsonb
+ results                 | id                      | bigint                   | NO          | nextval('results_id_seq'::regclass)
+ results                 | title                   | character varying        | NO          | 
+ results                 | date                    | date                     | YES         | 
+ results                 | description             | text                     | YES         | 
+ results                 | file_name               | character varying        | YES         | 
+ results                 | stored_file_name        | character varying        | YES         | 
+ results                 | file_size               | bigint                   | YES         | 
+ results                 | mime_type               | character varying        | YES         | 
+ results                 | url                     | text                     | YES         | 
+ results                 | uploaded_by             | bigint                   | YES         | 
+ results                 | category_id             | bigint                   | YES         | 
+ results                 | is_published            | boolean                  | YES         | false
+ results                 | is_deleted              | boolean                  | YES         | false
+ results                 | created_at              | timestamp with time zone | YES         | now()
+ results                 | updated_at              | timestamp with time zone | YES         | now()
+ shooter_classifications | id                      | bigint                   | NO          | 
+ shooter_classifications | shooter_id              | bigint                   | NO          | 
+ shooter_classifications | disability_category_id  | bigint                   | NO          | 
+ shooter_classifications | classification_status   | USER-DEFINED             | NO          | 
+ shooter_classifications | classification_date     | date                     | NO          | 
+ shooter_classifications | valid_until             | date                     | YES         | 
+ shooter_classifications | classifier_name         | character varying        | YES         | 
+ shooter_classifications | classification_venue    | character varying        | YES         | 
+ shooter_classifications | medical_documents_url   | text                     | YES         | 
+ shooter_classifications | notes                   | text                     | YES         | 
+ shooter_classifications | is_current              | boolean                  | NO          | true
+ shooter_classifications | created_at              | timestamp with time zone | NO          | now()
+ shooter_classifications | updated_at              | timestamp with time zone | NO          | now()
+ shooters                | id                      | bigint                   | NO          | 
+ shooters                | user_id                 | bigint                   | NO          | 
+ shooters                | shooter_id              | character varying        | NO          | 
+ shooters                | issf_id                 | character varying        | YES         | 
+ shooters                | date_of_birth           | date                     | NO          | 
+ shooters                | gender                  | character varying        | NO          | 
+ shooters                | nationality             | character varying        | NO          | 'Indian'::character varying
+ shooters                | state_association_id    | bigint                   | YES         | 
+ shooters                | blood_group             | character varying        | YES         | 
+ shooters                | emergency_contact_name  | character varying        | YES         | 
+ shooters                | emergency_contact_phone | character varying        | YES         | 
+ shooters                | coach_name              | character varying        | YES         | 
+ shooters                | club_name               | character varying        | YES         | 
+ shooters                | bio                     | text                     | YES         | 
+ shooters                | achievements            | jsonb                    | YES         | '[]'::jsonb
+ shooters                | profile_complete        | boolean                  | NO          | false
+ shooters                | verified_at             | timestamp with time zone | YES         | 
+ shooters                | verified_by             | bigint                   | YES         | 
+ shooters                | created_at              | timestamp with time zone | NO          | now()
+ shooters                | updated_at              | timestamp with time zone | NO          | now()
+ users                   | id                      | bigint                   | NO          | 
+ users                   | public_id               | uuid                     | NO          | gen_random_uuid()
+ users                   | email                   | character varying        | NO          | 
+ users                   | password_hash           | character varying        | NO          | 
+ users                   | first_name              | character varying        | NO          | 
+ users                   | last_name               | character varying        | NO          | 
+ users                   | phone                   | character varying        | YES         | 
+ users                   | avatar_url              | text                     | YES         | 
+ users                   | email_verified_at       | timestamp with time zone | YES         | 
+ users                   | is_active               | boolean                  | NO          | true
+ users                   | last_login_at           | timestamp with time zone | YES         | 
+ users                   | created_at              | timestamp with time zone | NO          | now()
+ users                   | updated_at              | timestamp with time zone | NO          | now()
+ users                   | deleted_at              | timestamp with time zone | YES         | 
+ users                   | encrypted_email         | text                     | YES         | 
+ users                   | encrypted_phone         | text                     | YES         | 
+ users                   | two_factor_secret       | text                     | YES         | 
+ users                   | two_factor_enabled      | boolean                  | YES         | false
+ users                   | two_factor_backup_codes | jsonb                    | YES         | '[]'::jsonb
+(163 rows)
+

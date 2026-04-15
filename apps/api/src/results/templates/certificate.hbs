@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PSAI Certificate of Merit</title>
+  <style>
+    /* Reset and Base */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-family: Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      color: #1a1a1a;
+    }
+
+    /* Print settings */
+    @page { 
+      size: A4 portrait; 
+      margin: 0; 
+    }
+    
+    @media print {
+      body {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+
+    /* A4 Page Container */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      padding: 18mm; /* Margins: 18mm all sides */
+      box-sizing: border-box;
+      background: white;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    /* Outer Decorative Border */
+    .outer-border {
+      width: 100%;
+      height: 100%;
+      border: 12px solid;
+      border-image: repeating-linear-gradient(
+        45deg, 
+        #003087 0px, 
+        #003087 10px, 
+        #C8A415 10px, 
+        #C8A415 20px
+      ) 12;
+      box-sizing: border-box;
+      padding: 15px; /* Inset for the inner hairline */
+    }
+
+    /* Inner Hairline Border */
+    .inner-border {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #003087;
+      box-sizing: border-box;
+      padding: 30px; /* Inner padding for content */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Watermark */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 72px;
+      opacity: 0.035;
+      z-index: 0;
+      text-align: center;
+      font-family: 'Arial Black', sans-serif;
+      color: #000;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Content wrapper to position above watermark */
+    .content-layer {
+      z-index: 1;
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Flexbox */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-placeholder {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+    }
+    .logo-pci {
+      background: #003087;
+      border-radius: 50%;
+    }
+    .logo-psai {
+      background: #C8A415;
+      border-radius: 8px;
+    }
+    .logo-img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .header-center {
+      text-align: center;
+      flex: 1;
+      padding: 0 15px;
+    }
+
+    .header-title {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 18px;
+      color: #003087;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header-subtitle {
+      font-size: 7.5px;
+      color: #444;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .header-affiliation {
+      font-size: 7.5px;
+      color: #444;
+      margin-top: 2px;
+    }
+
+    .gold-divider {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #C8A415, transparent);
+      width: 80%;
+      margin: 8px auto 0;
+    }
+
+    /* Top Reference Line */
+    .ref-line {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 9px;
+    }
+
+    .cert-no-label {
+      font-family: Arial, sans-serif;
+      color: #003087;
+      font-weight: bold;
+    }
+    .cert-no-val {
+      color: #c8320a;
+      font-weight: bold;
+    }
+    .comp-no-label {
+      font-family: Arial, sans-serif;
+    }
+    .comp-no-val {
+      text-decoration: underline;
+      font-weight: bold;
+      font-size: 11px;
+    }
+
+    /* Cert Heading Area */
+    .heading-area {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .title-certificate {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 38px;
+      letter-spacing: 10px;
+      color: #000;
+      text-shadow: 1px 1px 2px rgba(0, 48, 135, 0.15);
+    }
+
+    .subtitle-certified {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #555;
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
+
+    .athlete-name {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 26px;
+      font-weight: bold;
+      text-decoration: underline;
+      color: #003087;
+      letter-spacing: 2px;
+      margin-top: 15px;
+      text-transform: uppercase;
+    }
+
+    .state-of {
+      font-size: 11px;
+      margin-top: 15px;
+      text-transform: uppercase;
+    }
+
+    .athlete-state {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: underline;
+      color: #000;
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+
+    .body-text {
+      font-size: 11px;
+      text-align: justify;
+      line-height: 1.7;
+      margin-top: 25px;
+      padding: 0 40px;
+    }
+
+    /* Results Table */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .results-table th {
+      background: #003087;
+      color: white;
+      font-size: 9px;
+      font-weight: bold;
+      padding: 6px;
+      text-align: center;
+    }
+    .results-table th:nth-child(2) {
+      text-align: left;
+    }
+
+    .results-table td {
+      font-size: 9px;
+      padding: 6px;
+    }
+    
+    .results-table tr:nth-child(even) {
+      background: #f7f9ff;
+    }
+    .results-table tr:nth-child(odd) {
+      background: white;
+    }
+
+    .col-event {
+      color: #003087;
+      font-weight: 600;
+    }
+    .col-score {
+      color: #003087;
+      font-weight: 700;
+      text-align: center;
+    }
+    .col-mqs, .col-sr {
+      text-align: center;
+    }
+
+    .rank-gold   { background: #fffbea; color: #c8a415; font-weight: 800; text-align: center; }
+    .rank-silver { background: #f4f4f8; color: #7a7a8a; font-weight: 700; text-align: center; }
+    .rank-bronze { background: #fff5f0; color: #b55a1a; font-weight: 700; text-align: center; }
+    .rank-other  { background: #eef3fa; color: #1a3a5c; font-weight: 600; text-align: center; }
+
+    .decimal-note {
+      font-size: 8px;
+      color: #555;
+      margin-top: 5px;
+      margin-bottom: 0;
+      text-align: right;
+    }
+
+    /* Footer / Signatures */
+    .footer-area {
+      margin-top: auto; /* pushes to the bottom */
+      width: 100%;
+    }
+
+    .signatures {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .sig-block {
+      width: 30%;
+    }
+
+    .sig-line {
+      border-top: 1.5px solid #1a1a1a;
+      margin-top: 30px; /* Space for physical signature */
+      padding-top: 5px;
+    }
+
+    .sig-name {
+      font-weight: bold;
+      font-size: 9px;
+    }
+
+    .sig-title {
+      font-size: 7.5px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    /* Sponsors & QR Box */
+    .sponsors-wrap {
+      display: flex;
+      margin-top: 25px;
+    }
+
+    .sponsors-strip {
+      flex: 1;
+      border-top: 2px solid #C8A415;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .sponsor-box {
+      font-size: 7px;
+      color: #444;
+      border: 1px solid #ccc;
+      padding: 4px 6px;
+      background: #fafafa;
+    }
+
+    .qr-box {
+      width: 60px;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-left: 15px;
+    }
+    
+    .qr-img {
+      width: 40px;
+      height: 40px;
+      background: #eee;
+    }
+
+    .qr-cert-text {
+      font-size: 6px;
+      font-family: monospace;
+      margin-top: 4px;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="outer-border">
+      <div class="inner-border">
+        
+        <!-- Watermark Background -->
+        <div class="watermark">
+          PARALYMPIC COMMITTEE OF INDIA
+        </div>
+
+        <div class="content-layer">
+          
+          <!-- Header -->
+          <div class="header">
+            <div class="logo-placeholder logo-pci">
+              {{#if pciLogoUrl}}
+                <img src="{{pciLogoUrl}}" class="logo-img" style="border-radius: 50%;">
+              {{else}}
+                PCI
+              {{/if}}
+            </div>
+            
+            <div class="header-center">
+              <div class="header-title">PARALYMPIC COMMITTEE OF INDIA</div>
+              <div class="header-subtitle">RECOGNISED BY MINISTRY OF YOUTH AFFAIRS & SPORTS, GOVERNMENT OF INDIA</div>
+              <div class="header-affiliation">AFFILIATED MEMBER OF: IPC GERMANY, IWAS UK, APC UAE</div>
+              <div class="gold-divider"></div>
+            </div>
+
+            <div class="logo-placeholder logo-psai">
+              {{#if psaiLogoUrl}}
+                <img src="{{psaiLogoUrl}}" class="logo-img" style="border-radius: 8px;">
+              {{else}}
+                PSAI
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Top Reference Line -->
+          <div class="ref-line">
+            <div>
+              <span class="cert-no-label">NO.: </span>
+              <span class="cert-no-val">{{certNo}}</span>
+            </div>
+            <div>
+              <span class="comp-no-label">COMPETITOR NUMBER:- </span>
+              <span class="comp-no-val">{{competitorNo}}</span>
+            </div>
+          </div>
+
+          <!-- Heading Area -->
+          <div class="heading-area">
+            <div class="title-certificate">CERTIFICATE</div>
+            <div class="subtitle-certified">CERTIFIED THAT</div>
+            
+            <div class="athlete-name">{{athleteName}}</div>
+            
+            <div class="state-of">OF</div>
+            <div class="athlete-state">{{state}}</div>
+            
+            <div class="body-text">
+              has participated in the <strong>{{competitionName}}</strong> held at <strong>{{venue}}</strong>, 
+              from <strong>{{startDate}}</strong> to <strong>{{endDate}} {{month}} {{year}}</strong>, 
+              and has obtained the following result:—
+            </div>
+          </div>
+
+          <!-- Results Table -->
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th style="width: 30px;">Sr. No.</th>
+                <th>Event</th>
+                <th style="width: 55px;">MQS</th>
+                <th style="width: 65px;">Achieved Score</th>
+                <th style="width: 55px;">Rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each events}}
+              <tr>
+                <td class="col-sr">{{this.srNo}}</td>
+                <td class="col-event">{{this.name}}</td>
+                <td class="col-mqs">{{#if this.mqs}}{{this.mqs}}{{else}}-{{/if}}</td>
+                <td class="col-score">{{this.score}}</td>
+                <td class="{{#if this.isGold}}rank-gold{{else if this.isSilver}}rank-silver{{else if this.isBronze}}rank-bronze{{else}}rank-other{{/if}}">
+                  {{this.position}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          
+          {{#if hasDecimalScore}}
+            <p class="decimal-note">*DECIMAL SCORE</p>
+          {{/if}}
+
+          <!-- Footer Area (Pushed to bottom) -->
+          <div class="footer-area">
+            
+            <div class="signatures">
+              <div class="sig-block">
+                <div class="sig-line">
+                  <div class="sig-name">DEVENDRA</div>
+                  <div class="sig-title">Padma Bhushan, Khel Ratna Awardee</div>
+                  <div class="sig-title">President, Paralympic Committee of India</div>
+                </div>
+              </div>
+              <div class="sig-block">
+                <div class="sig-line">
+                  <div class="sig-name">JAYAWANT GUNDU H.</div>
+                  <div class="sig-title">International Coach &amp; Referee</div>
+                  <div class="sig-title">Secretary General, Paralympic Committee of India</div>
+                </div>
+              </div>
+              <div class="sig-block">
+                <div class="sig-line">
+                  <div class="sig-name">JAIPRAKASH NAUTIYAL</div>
+                  <div class="sig-title">Dronacharya Awardee</div>
+                  <div class="sig-title">Chairperson, STC-Para Shooting, PCI</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sponsors-wrap">
+              <div class="sponsors-strip">
+                <div class="sponsor-box">AU Sports</div>
+                <div class="sponsor-box">Aaryans Group</div>
+                <div class="sponsor-box">ACRE</div>
+                <div class="sponsor-box">Wheeling Happiness</div>
+                <div class="sponsor-box">Thumbs Up</div>
+                <div class="sponsor-box">Punjab &amp; Sind Bank</div>
+                <div class="sponsor-box">IndianOil</div>
+              </div>
+              
+              <div class="qr-box">
+                {{#if qrCodeDataUrl}}
+                  <img src="{{qrCodeDataUrl}}" class="qr-img" />
+                {{else}}
+                  <div class="qr-img" style="border: 1px dashed #999; display: flex; align-items:center; justify-content:center; font-size:6px; color:#999;">QR</div>
+                {{/if}}
+                <div class="qr-cert-text">{{certNo}}</div>
+                <div style="font-size: 5px; color: #999; margin-top: 1px;">{{generatedDate}}</div>
+              </div>
+            </div>
+
+          </div><!-- /footer-area -->
+          
+        </div><!-- /content-layer -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

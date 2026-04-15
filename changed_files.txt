@@ -1,0 +1,72 @@
+﻿git : warning: in the working copy of 
+'apps/api/package.json', LF will be replaced by 
+CRLF the next time Git touches it
+At line:1 char:1
++ git diff --name-only HEAD -- "apps/" 2>&1 | 
+Out-File -FilePath "C:\Us ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (wa 
+   rning: in the... Git touches it:String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandErro 
+   r
+ 
+warning: in the working copy of 
+'apps/web/src/app/(public)/contact/page.tsx', 
+LF will be replaced by CRLF the next time Git 
+touches it
+warning: in the working copy of 
+'apps/web/src/app/layout.tsx', LF will be 
+replaced by CRLF the next time Git touches it
+apps/api/api_start.log
+apps/api/lint_report.json
+apps/api/package.json
+apps/api/result.json
+apps/api/scripts/run-migrations.js
+apps/api/src/app.module.ts
+apps/api/src/auth/auth.controller.ts
+apps/api/src/auth/auth.service.ts
+apps/api/src/certificates/certificates.controller.ts
+apps/api/src/certificates/certificates.service.ts
+apps/api/src/common/filters/all-exceptions.filter.ts
+apps/api/src/config/multer.config.ts
+apps/api/src/config/security.config.ts
+apps/api/src/results/services/certificate-pdf.service.ts
+apps/api/src/results/templates/certificate.hbs
+apps/api/src/shooters/dto/create-shooter-profile.dto.ts
+apps/api/src/shooters/entities/shooter-classification.entity.ts
+apps/api/src/shooters/entities/shooter.entity.ts
+apps/api/src/shooters/shooters.controller.ts
+apps/api/src/shooters/shooters.module.ts
+apps/api/src/shooters/shooters.service.ts
+apps/api/test_output.txt
+apps/web/src/app/(auth)/login/page.tsx
+apps/web/src/app/(auth)/register/page.tsx
+apps/web/src/app/(dashboard)/admin/certificates/generate/generate.css
+apps/web/src/app/(dashboard)/admin/certificates/generate/page.tsx
+apps/web/src/app/(dashboard)/admin/layout.tsx
+apps/web/src/app/(dashboard)/admin/results-import/page.tsx
+apps/web/src/app/(dashboard)/admin/results-import/results-import.css
+apps/web/src/app/(dashboard)/admin/shooters/page.tsx
+apps/web/src/app/(dashboard)/admin/shooters/shooters.css
+apps/web/src/app/(dashboard)/shooter/certificates/page.tsx
+apps/web/src/app/(dashboard)/shooter/documents/page.tsx
+apps/web/src/app/(dashboard)/shooter/layout.tsx
+apps/web/src/app/(dashboard)/shooter/nationality/page.tsx
+apps/web/src/app/(dashboard)/shooter/page.tsx
+apps/web/src/app/(dashboard)/shooter/profile/id-card/page.tsx
+apps/web/src/app/(dashboard)/shooter/profile/page.tsx
+apps/web/src/app/(dashboard)/shooter/profile/view/page.tsx
+apps/web/src/app/(public)/awards/page.tsx
+apps/web/src/app/(public)/contact/page.tsx
+apps/web/src/app/(public)/leadership/page.tsx
+apps/web/src/app/(public)/news/[slug]/page.tsx
+apps/web/src/app/(public)/news/page.tsx
+apps/web/src/app/(public)/page.tsx
+apps/web/src/app/(public)/verify/[[...certNo]]/page.tsx
+apps/web/src/app/(public)/verify/verify.css
+apps/web/src/app/layout.tsx
+apps/web/src/components/dashboard/DashboardHeader.tsx
+apps/web/src/components/ui/Card.tsx
+apps/web/src/components/ui/Header.tsx
+apps/web/src/middleware.ts

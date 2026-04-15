@@ -1,0 +1,67 @@
+=== STDOUT ===
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [NestFactory] Starting Nest application...
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] TypeOrmModule dependencies initialized +46ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] PassportModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] LoggerModule dependencies initialized +1ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ConfigHostModule dependencies initialized +2ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ThrottlerModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] WinstonModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ConfigModule dependencies initialized +7ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ServeStaticModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ServeStaticModule dependencies initialized +0ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] ServeStaticModule dependencies initialized +1ms
+[Nest] 61500  - 03/01/2026, 1:32:37 AM     LOG [InstanceLoader] JwtModule dependencies initialized +110ms
+query: SELECT version()
+query: SELECT * FROM current_schema()
+query: SELECT version()
+query: SELECT * FROM current_schema()
+query: SELECT version()
+query: SELECT * FROM current_schema()
+query: SELECT version()
+query: SELECT * FROM current_schema()
+
+=== STDERR ===
+[Nest] 61500  - 03/01/2026, 1:32:37 AM   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (1)...
+DataTypeNotSupportedError: Data type "Object" in "Shooter.approved_by" is not supported by "postgres" database.
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:89:27
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:86:18)
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:58
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:25)
+    at DataSource.buildMetadatas (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:493:33)
+    at async DataSource.initialize (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:145:13)
+[Nest] 61500  - 03/01/2026, 1:32:40 AM   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (2)...
+DataTypeNotSupportedError: Data type "Object" in "Shooter.approved_by" is not supported by "postgres" database.
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:89:27
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:86:18)
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:58
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:25)
+    at DataSource.buildMetadatas (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:493:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DataSource.initialize (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:145:13)
+[Nest] 61500  - 03/01/2026, 1:32:43 AM   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (3)...
+DataTypeNotSupportedError: Data type "Object" in "Shooter.approved_by" is not supported by "postgres" database.
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:89:27
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:86:18)
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:58
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:25)
+    at DataSource.buildMetadatas (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:493:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DataSource.initialize (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:145:13)
+[Nest] 61500  - 03/01/2026, 1:32:46 AM   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (4)...
+DataTypeNotSupportedError: Data type "Object" in "Shooter.approved_by" is not supported by "postgres" database.
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:89:27
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:86:18)
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:58
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:25)
+    at DataSource.buildMetadatas (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:493:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DataSource.initialize (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\data-source\DataSource.js:145:13)

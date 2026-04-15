@@ -1,0 +1,9 @@
+Unable to connect to the database. Retrying (1)...[39m
+DataTypeNotSupportedError: Data type "Object" in "Shooter.approved_by" is not supported by "postgres" database.
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:89:27
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validate (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:86:18)
+    at C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:58
+    at Array.forEach (<anonymous>)
+    at EntityMetadataValidator.validateMany (C:\Users\trite\Documents\test\results_final\node_modules\typeorm\metadata-builder\EntityMetadataValidator.js:38:25)
+ 
