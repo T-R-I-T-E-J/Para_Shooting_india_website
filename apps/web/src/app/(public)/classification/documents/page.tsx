@@ -52,10 +52,9 @@ async function getAllClassificationDocs(): Promise<ClassificationDoc[]> {
     const filtered = items.filter(
       (d) => d.isActive && CLASSIFICATION_CATEGORIES.includes(d.category as CategoryKey),
     )
-    if (filtered.length === 0) throw new Error('No data')
     return filtered
   } catch {
-    return DUMMY_DOCUMENTS as ClassificationDoc[]
+    return []
   }
 }
 

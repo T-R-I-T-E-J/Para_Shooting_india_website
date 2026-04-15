@@ -54,9 +54,7 @@ async function getPolicyDocs(): Promise<PolicyDoc[]> {
     if (!res.ok) throw new Error('API unavailable')
     const json = await res.json()
     const items: PolicyDoc[] = json?.data ?? json ?? []
-    const active = items.filter((d) => d.isActive)
-    if (active.length === 0) throw new Error('No data')
-    return active
+    return items.filter((d) => d.isActive)
   } catch {
     return []
   }

@@ -3,11 +3,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import './shooters.css'
 
 /* ─── Types ─── */
-<<<<<<< Updated upstream
 type ShooterStatus = 'pending' | 'approved' | 'rejected' | 'incomplete' | 'needs_changes'
-=======
-type ShooterStatus = 'pending' | 'approved' | 'rejected'
->>>>>>> Stashed changes
 
 interface Shooter {
   id: number
@@ -35,7 +31,6 @@ interface Toast {
   message: string
 }
 
-<<<<<<< Updated upstream
 /* ─── API Hooks ─── */
 function useShooterStats() {
   const [stats, setStats] = useState({ total: 0, pending: 0, approved: 0, rejected: 0, needs_changes: 0 })
@@ -130,47 +125,17 @@ function useShooterList(filters: any) {
 const STATES = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal']
 const EVENT_TYPES = ['RIFLE', 'PISTOL', 'SHOTGUN']
 const CATEGORIES = ['SH1', 'SH2', 'SH3', 'SH-VI', 'Deaf', 'Open']
-=======
-/* ─── Sample Data ─── */
-const SAMPLE_SHOOTERS: Shooter[] = [
-  { id: 1, competitorNo: 2001, name: 'Avani Lekhara', state: 'Rajasthan', eventType: 'RIFLE', category: 'SH1', status: 'approved', pciId: 'PCI/PSAI/2025/0001', registeredAt: '2025-12-01', contact: '+91 98765 43210', email: 'avani.lekhara@email.com', dob: '2001-11-08', gender: 'Female', guardianName: 'Praveen Lekhara', classificationDate: '2024-06-15', equipmentAdaptations: 'Wheelchair-mounted shooting stand, custom grip', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 2, competitorNo: 2002, name: 'Manish Narwal', state: 'Haryana', eventType: 'PISTOL', category: 'SH1', status: 'approved', pciId: 'PCI/PSAI/2025/0002', registeredAt: '2025-12-02', contact: '+91 99876 54321', email: 'manish.narwal@email.com', dob: '2002-03-15', gender: 'Male', guardianName: 'Dilbagh Narwal', classificationDate: '2024-07-20', equipmentAdaptations: 'Custom pistol grip, wrist support brace', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 3, competitorNo: 2003, name: 'Singhraj Adhana', state: 'Haryana', eventType: 'PISTOL', category: 'SH1', status: 'approved', pciId: 'PCI/PSAI/2025/0003', registeredAt: '2025-12-03', contact: '+91 97654 32109', email: 'singhraj.adhana@email.com', dob: '1989-07-26', gender: 'Male', guardianName: 'Ranbir Adhana', classificationDate: '2024-05-10', equipmentAdaptations: 'Adapted trigger mechanism', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 4, competitorNo: 2004, name: 'Deepika Sharma', state: 'Madhya Pradesh', eventType: 'RIFLE', category: 'SH2', status: 'pending', pciId: null, registeredAt: '2025-12-05', contact: '+91 96543 21098', email: 'deepika.sharma@email.com', dob: '1999-04-22', gender: 'Female', guardianName: 'Rajendra Sharma', classificationDate: '2025-01-12', equipmentAdaptations: 'Standing shooting frame, elbow rest', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: false }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 5, competitorNo: 2005, name: 'Siddharth Babu', state: 'Tamil Nadu', eventType: 'RIFLE', category: 'SH-VI', status: 'pending', pciId: null, registeredAt: '2025-12-06', contact: '+91 95432 10987', email: 'siddharth.babu@email.com', dob: '1997-09-14', gender: 'Male', guardianName: 'P. Babu', classificationDate: '2025-02-08', equipmentAdaptations: 'Audio-guided sighting system, tactile markings', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 6, competitorNo: 2006, name: 'Priya Patel', state: 'Gujarat', eventType: 'PISTOL', category: 'SH2', status: 'approved', pciId: 'PCI/PSAI/2025/0006', registeredAt: '2025-12-07', contact: '+91 94321 09876', email: 'priya.patel@email.com', dob: '2000-01-30', gender: 'Female', guardianName: 'Vikas Patel', classificationDate: '2024-09-05', equipmentAdaptations: 'Custom trigger weight adjustment', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 7, competitorNo: 2007, name: 'Rahul Khanna', state: 'Punjab', eventType: 'SHOTGUN', category: 'SH1', status: 'rejected', pciId: null, registeredAt: '2025-12-08', contact: '+91 93210 98765', email: 'rahul.khanna@email.com', dob: '1995-06-18', gender: 'Male', guardianName: 'Suresh Khanna', classificationDate: '2025-01-25', equipmentAdaptations: 'Seated shooting platform', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: false }, { name: 'Classification Card', uploaded: false }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 8, competitorNo: 2008, name: 'Ananya Singh', state: 'Uttar Pradesh', eventType: 'RIFLE', category: 'SH1', status: 'pending', pciId: null, registeredAt: '2025-12-09', contact: '+91 92109 87654', email: 'ananya.singh@email.com', dob: '2003-12-05', gender: 'Female', guardianName: 'Vikram Singh', classificationDate: '2025-03-01', equipmentAdaptations: 'Wheelchair rest, scope magnifier', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: false }] },
-  { id: 9, competitorNo: 2009, name: 'Vikram Deshmukh', state: 'Maharashtra', eventType: 'PISTOL', category: 'SH2', status: 'approved', pciId: 'PCI/PSAI/2025/0009', registeredAt: '2025-12-10', contact: '+91 91098 76543', email: 'vikram.deshmukh@email.com', dob: '1998-08-11', gender: 'Male', guardianName: 'Ashok Deshmukh', classificationDate: '2024-11-20', equipmentAdaptations: 'Modified pistol rest, trigger guard extension', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 10, competitorNo: 2010, name: 'Kavya Reddy', state: 'Telangana', eventType: 'RIFLE', category: 'SH-VI', status: 'pending', pciId: null, registeredAt: '2025-12-12', contact: '+91 90987 65432', email: 'kavya.reddy@email.com', dob: '2001-05-27', gender: 'Female', guardianName: 'Suresh Reddy', classificationDate: '2025-02-15', equipmentAdaptations: 'Braille-marked equipment, tactile rifle stock', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: false }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 11, competitorNo: 2011, name: 'Arjun Mehta', state: 'Delhi', eventType: 'SHOTGUN', category: 'SH1', status: 'approved', pciId: 'PCI/PSAI/2025/0011', registeredAt: '2025-12-14', contact: '+91 89876 54321', email: 'arjun.mehta@email.com', dob: '1996-10-03', gender: 'Male', guardianName: 'Rakesh Mehta', classificationDate: '2024-08-30', equipmentAdaptations: 'Custom recoil pad, adapted stock', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 12, competitorNo: 2012, name: 'Nisha Kumari', state: 'Bihar', eventType: 'PISTOL', category: 'SH2', status: 'pending', pciId: null, registeredAt: '2025-12-16', contact: '+91 88765 43210', email: 'nisha.kumari@email.com', dob: '2002-07-19', gender: 'Female', guardianName: 'Ramesh Kumar', classificationDate: '2025-03-10', equipmentAdaptations: 'Wrist brace, lightweight pistol frame', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 13, competitorNo: 2013, name: 'Rohan Verma', state: 'Uttarakhand', eventType: 'RIFLE', category: 'SH1', status: 'approved', pciId: 'PCI/PSAI/2025/0013', registeredAt: '2025-12-18', contact: '+91 87654 32109', email: 'rohan.verma@email.com', dob: '1994-02-14', gender: 'Male', guardianName: 'Ajay Verma', classificationDate: '2024-04-22', equipmentAdaptations: 'None required', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-  { id: 14, competitorNo: 2014, name: 'Pooja Nair', state: 'Kerala', eventType: 'PISTOL', category: 'SH1', status: 'rejected', pciId: null, registeredAt: '2025-12-20', contact: '+91 86543 21098', email: 'pooja.nair@email.com', dob: '2000-11-08', gender: 'Female', guardianName: 'Gopal Nair', classificationDate: '2025-01-05', equipmentAdaptations: 'Modified trigger pull weight', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: false }, { name: 'Classification Card', uploaded: false }, { name: 'Passport Photo', uploaded: false }] },
-  { id: 15, competitorNo: 2015, name: 'Amit Joshi', state: 'Karnataka', eventType: 'SHOTGUN', category: 'SH2', status: 'pending', pciId: null, registeredAt: '2025-12-22', contact: '+91 85432 10987', email: 'amit.joshi@email.com', dob: '1997-03-25', gender: 'Male', guardianName: 'Sanjay Joshi', classificationDate: '2025-03-18', equipmentAdaptations: 'Adapted shotgun stock, recoil dampener', documents: [{ name: 'Aadhaar Card', uploaded: true }, { name: 'Medical Certificate', uploaded: true }, { name: 'Classification Card', uploaded: true }, { name: 'Passport Photo', uploaded: true }] },
-]
-
-const STATES = Array.from(new Set(SAMPLE_SHOOTERS.map(s => s.state))).sort()
-const EVENT_TYPES = ['RIFLE', 'PISTOL', 'SHOTGUN']
-const CATEGORIES = Array.from(new Set(SAMPLE_SHOOTERS.map(s => s.category))).sort()
->>>>>>> Stashed changes
 const PAGE_SIZE = 10
 
 /* ─── Component ─── */
 export default function ShooterManagementPage() {
-<<<<<<< Updated upstream
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-=======
-  const [shooters, setShooters] = useState<Shooter[]>(SAMPLE_SHOOTERS)
-  const [search, setSearch] = useState('')
->>>>>>> Stashed changes
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [stateFilter, setStateFilter] = useState<string>('all')
   const [eventTypeFilter, setEventTypeFilter] = useState<string>('all')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [currentPage, setCurrentPage] = useState(1)
-<<<<<<< Updated upstream
 
   // Debounce search
   useEffect(() => {
@@ -194,8 +159,6 @@ export default function ShooterManagementPage() {
   const { shooters, setShooters, total, loading: listLoading, lastUpdated, refetch: refetchList } = useShooterList(apiFilters)
 
   useEffect(() => { setCurrentPage(1) }, [debouncedSearch, statusFilter, stateFilter, eventTypeFilter, categoryFilter])
-=======
->>>>>>> Stashed changes
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
   const [slideOverShooter, setSlideOverShooter] = useState<Shooter | null>(null)
   const [slideOverTab, setSlideOverTab] = useState<'profile' | 'documents' | 'classification' | 'actions'>('profile')
@@ -204,7 +167,6 @@ export default function ShooterManagementPage() {
   const [toasts, setToasts] = useState<Toast[]>([])
   const [loading, setLoading] = useState<Record<string, boolean>>({})
   const [deleteConfirm, setDeleteConfirm] = useState<Shooter | null>(null)
-<<<<<<< Updated upstream
   const [requestChangesShooter, setRequestChangesShooter] = useState<Shooter | null>(null)
   const [requestChangesFeedback, setRequestChangesFeedback] = useState('')
   
@@ -249,10 +211,6 @@ export default function ShooterManagementPage() {
     setSlideOverClassification(null)
   }, [slideOverShooter?.id])
 
-=======
-  const toastIdRef = useRef(0)
-
->>>>>>> Stashed changes
   /* ─── Toast System ─── */
   const addToast = useCallback((type: Toast['type'], message: string) => {
     const id = ++toastIdRef.current
@@ -271,48 +229,15 @@ export default function ShooterManagementPage() {
     })
   }, [])
 
-<<<<<<< Updated upstream
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
   const paginated = shooters // The API already paginates
 
   // Since we use API stats, we could remove the useMemo stats and just use what API returns, but let's just make sure.
   const apiStats = stats
-=======
-  /* ─── Filtering ─── */
-  const filtered = useMemo(() => {
-    return shooters.filter(s => {
-      const q = search.toLowerCase()
-      const matchesSearch = !q ||
-        s.name.toLowerCase().includes(q) ||
-        s.pciId?.toLowerCase().includes(q) ||
-        s.state.toLowerCase().includes(q) ||
-        String(s.competitorNo).includes(q)
-      const matchesStatus = statusFilter === 'all' || s.status === statusFilter
-      const matchesState = stateFilter === 'all' || s.state === stateFilter
-      const matchesEvent = eventTypeFilter === 'all' || s.eventType === eventTypeFilter
-      const matchesCat = categoryFilter === 'all' || s.category === categoryFilter
-      return matchesSearch && matchesStatus && matchesState && matchesEvent && matchesCat
-    })
-  }, [shooters, search, statusFilter, stateFilter, eventTypeFilter, categoryFilter])
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
-  const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
-
-  useEffect(() => { setCurrentPage(1) }, [search, statusFilter, stateFilter, eventTypeFilter, categoryFilter])
-
-  /* ─── Stats ─── */
-  const stats = useMemo(() => ({
-    total: shooters.length,
-    pending: shooters.filter(s => s.status === 'pending').length,
-    approved: shooters.filter(s => s.status === 'approved').length,
-    rejected: shooters.filter(s => s.status === 'rejected').length,
-  }), [shooters])
->>>>>>> Stashed changes
 
   /* ─── Actions ─── */
   const handleApprove = async (shooter: Shooter) => {
     await simulateAsync(`approve-${shooter.id}`)
-<<<<<<< Updated upstream
     try {
       const res = await fetch(`/api/v1/admin/shooters/${shooter.id}/approve`, { 
         method: 'PATCH',
@@ -333,16 +258,10 @@ export default function ShooterManagementPage() {
     } catch (e: any) {
       addToast('error', e.message || `Failed to approve ${shooter.name}`)
     }
-=======
-    setShooters(prev => prev.map(s => s.id === shooter.id ? { ...s, status: 'approved' as const } : s))
-    if (slideOverShooter?.id === shooter.id) setSlideOverShooter(prev => prev ? { ...prev, status: 'approved' } : null)
-    addToast('success', `${shooter.name} has been approved`)
->>>>>>> Stashed changes
   }
 
   const handleReject = async (shooter: Shooter) => {
     await simulateAsync(`reject-${shooter.id}`)
-<<<<<<< Updated upstream
     try {
       const res = await fetch(`/api/v1/admin/shooters/${shooter.id}/reject`, {
         method: 'PATCH',
@@ -415,16 +334,10 @@ export default function ShooterManagementPage() {
   const handleViewProof = (shooter: Shooter) => {
     openSlideOver(shooter)
     setSlideOverTab('documents')
-=======
-    setShooters(prev => prev.map(s => s.id === shooter.id ? { ...s, status: 'rejected' as const } : s))
-    if (slideOverShooter?.id === shooter.id) setSlideOverShooter(prev => prev ? { ...prev, status: 'rejected' } : null)
-    addToast('error', `${shooter.name} has been rejected`)
->>>>>>> Stashed changes
   }
 
   const handleDelete = async (shooter: Shooter) => {
     await simulateAsync(`delete-${shooter.id}`)
-<<<<<<< Updated upstream
     try {
       const res = await fetch(`/api/v1/admin/shooters/${shooter.id}`, { method: 'DELETE' })
       if (!res.ok) throw new Error()
@@ -439,13 +352,6 @@ export default function ShooterManagementPage() {
     } catch {
       addToast('error', `Failed to delete ${shooter.name}`)
     }
-=======
-    setShooters(prev => prev.filter(s => s.id !== shooter.id))
-    setSelectedIds(prev => { const next = new Set(prev); next.delete(shooter.id); return next })
-    if (slideOverShooter?.id === shooter.id) setSlideOverShooter(null)
-    setDeleteConfirm(null)
-    addToast('info', `${shooter.name} has been removed`)
->>>>>>> Stashed changes
   }
 
   const handleAssignId = async () => {
@@ -456,7 +362,6 @@ export default function ShooterManagementPage() {
       return
     }
     await simulateAsync('assign-id')
-<<<<<<< Updated upstream
     try {
       const res = await fetch(`/api/v1/admin/shooters/${assignModalShooter.id}/assign-pci-id`, {
         method: 'PATCH',
@@ -489,27 +394,11 @@ export default function ShooterManagementPage() {
     } catch {
       setAssignIdValue(`PCI/PSAI/2025/0001`)
     }
-=======
-    setShooters(prev => prev.map(s => s.id === assignModalShooter.id ? { ...s, pciId: assignIdValue.trim() } : s))
-    if (slideOverShooter?.id === assignModalShooter.id) setSlideOverShooter(prev => prev ? { ...prev, pciId: assignIdValue.trim() } : null)
-    addToast('success', `PCI ID ${assignIdValue.trim()} assigned to ${assignModalShooter.name}`)
-    setAssignModalShooter(null)
-    setAssignIdValue('')
-  }
-
-  const openAssignModal = (shooter: Shooter) => {
-    const maxNum = shooters
-      .map(s => s.pciId ? parseInt(s.pciId.split('/').pop() || '0') : 0)
-      .reduce((a, b) => Math.max(a, b), 0)
-    setAssignIdValue(`PCI/PSAI/2025/${String(maxNum + 1).padStart(4, '0')}`)
-    setAssignModalShooter(shooter)
->>>>>>> Stashed changes
   }
 
   /* ─── Bulk Actions ─── */
   const handleBulkApprove = async () => {
     await simulateAsync('bulk-approve')
-<<<<<<< Updated upstream
     try {
       // Backend currently lacks bulk endpoints, so we iterate for now
       // A future optimization should add bulk endpoints to the NestJS API
@@ -528,16 +417,10 @@ export default function ShooterManagementPage() {
     } catch {
       addToast('error', 'Failed to complete some bulk approvals')
     }
-=======
-    setShooters(prev => prev.map(s => selectedIds.has(s.id) && s.status === 'pending' ? { ...s, status: 'approved' as const } : s))
-    addToast('success', `${selectedIds.size} shooters approved`)
-    setSelectedIds(new Set())
->>>>>>> Stashed changes
   }
 
   const handleBulkReject = async () => {
     await simulateAsync('bulk-reject')
-<<<<<<< Updated upstream
     try {
       const promises = Array.from(selectedIds).map(id => 
         fetch(`/api/v1/admin/shooters/${id}/reject`, {
@@ -554,16 +437,10 @@ export default function ShooterManagementPage() {
     } catch {
       addToast('error', 'Failed to complete some bulk rejections')
     }
-=======
-    setShooters(prev => prev.map(s => selectedIds.has(s.id) && s.status === 'pending' ? { ...s, status: 'rejected' as const } : s))
-    addToast('error', `${selectedIds.size} shooters rejected`)
-    setSelectedIds(new Set())
->>>>>>> Stashed changes
   }
 
   const handleBulkDelete = async () => {
     await simulateAsync('bulk-delete')
-<<<<<<< Updated upstream
     try {
       const promises = Array.from(selectedIds).map(id => 
         fetch(`/api/v1/admin/shooters/${id}`, { method: 'DELETE' })
@@ -576,11 +453,6 @@ export default function ShooterManagementPage() {
     } catch {
       addToast('error', 'Failed to complete some bulk deletions')
     }
-=======
-    setShooters(prev => prev.filter(s => !selectedIds.has(s.id)))
-    addToast('info', `${selectedIds.size} shooters removed`)
-    setSelectedIds(new Set())
->>>>>>> Stashed changes
   }
 
   /* ─── Checkbox Handling ─── */
@@ -601,7 +473,6 @@ export default function ShooterManagementPage() {
   }
 
   /* ─── Export CSV ─── */
-<<<<<<< Updated upstream
   const exportCSV = async () => {
     addToast('info', 'Preparing CSV export...')
     try {
@@ -626,23 +497,6 @@ export default function ShooterManagementPage() {
     } catch {
       addToast('error', 'Failed to export CSV')
     }
-=======
-  const exportCSV = () => {
-    const headers = ['#', 'Competitor No', 'Name', 'State', 'Event Type', 'Category', 'Status', 'PCI ID', 'Registered', 'Contact', 'Email', 'DOB']
-    const rows = filtered.map((s, i) => [
-      i + 1, s.competitorNo, s.name, s.state, s.eventType, s.category, s.status,
-      s.pciId || 'N/A', s.registeredAt, s.contact, s.email, s.dob
-    ])
-    const csv = [headers, ...rows].map(r => r.join(',')).join('\n')
-    const blob = new Blob([csv], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `shooters_export_${new Date().toISOString().slice(0, 10)}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
-    addToast('success', `Exported ${filtered.length} records to CSV`)
->>>>>>> Stashed changes
   }
 
   /* ─── Helpers ─── */
@@ -650,7 +504,6 @@ export default function ShooterManagementPage() {
   const isLoading = (key: string) => loading[key] || false
 
   const statusBadge = (status: ShooterStatus) => {
-<<<<<<< Updated upstream
     const map: Record<string, { cls: string; label: string }> = {
       incomplete: { cls: 'sm-badge-pending', label: '📝 Incomplete' },
       pending: { cls: 'sm-badge-pending', label: '⏳ Pending' },
@@ -660,14 +513,6 @@ export default function ShooterManagementPage() {
     }
     const entry = map[status] || { cls: 'sm-badge-pending', label: status }
     return <span className={`sm-badge ${entry.cls}`}>{entry.label}</span>
-=======
-    const map = {
-      pending: { cls: 'sm-badge-pending', label: '⏳ Pending' },
-      approved: { cls: 'sm-badge-approved', label: '✅ Approved' },
-      rejected: { cls: 'sm-badge-rejected', label: '❌ Rejected' },
-    }
-    return <span className={`sm-badge ${map[status].cls}`}>{map[status].label}</span>
->>>>>>> Stashed changes
   }
 
   /* ─── Slide-Over ─── */
@@ -702,13 +547,10 @@ export default function ShooterManagementPage() {
             <span className="sm-stat-label">Rejected</span>
             <span className="sm-stat-value">{stats.rejected}</span>
           </div>
-<<<<<<< Updated upstream
           <div className="sm-stat">
             <span className="sm-stat-label">Needs Changes</span>
             <span className="sm-stat-value">{stats.needs_changes}</span>
           </div>
-=======
->>>>>>> Stashed changes
         </div>
 
         <div className="sm-filters">
@@ -727,10 +569,7 @@ export default function ShooterManagementPage() {
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
-<<<<<<< Updated upstream
             <option value="needs_changes">Needs Changes</option>
-=======
->>>>>>> Stashed changes
           </select>
           <select className="sm-select" value={stateFilter} onChange={e => setStateFilter(e.target.value)}>
             <option value="all">All States</option>
@@ -807,12 +646,8 @@ export default function ShooterManagementPage() {
                       <td>
                         <div className="sm-actions">
                           <button className="sm-action-btn sm-action-view" title="View Details" onClick={() => openSlideOver(shooter)}>👁</button>
-<<<<<<< Updated upstream
                           <button className="sm-action-btn sm-action-proof" title="View Proof / Documents" onClick={() => handleViewProof(shooter)}>📎</button>
                           {(shooter.status === 'pending' || shooter.status === 'needs_changes') && (
-=======
-                          {shooter.status === 'pending' && (
->>>>>>> Stashed changes
                             <button
                               className="sm-action-btn sm-action-approve"
                               title="Approve"
@@ -822,7 +657,6 @@ export default function ShooterManagementPage() {
                               {isLoading(`approve-${shooter.id}`) ? <span className="sm-spinner" /> : '✅'}
                             </button>
                           )}
-<<<<<<< Updated upstream
                           {(shooter.status === 'pending' || shooter.status === 'approved') && (
                             <button className="sm-action-btn sm-action-assign" title="Assign PCI ID" onClick={() => openAssignModal(shooter)}>🆔</button>
                           )}
@@ -847,15 +681,6 @@ export default function ShooterManagementPage() {
                             <button
                               className="sm-action-btn sm-action-reject"
                               title="Reject (Final)"
-=======
-                          {(shooter.status === 'pending' || (shooter.status === 'approved' && !shooter.pciId)) && (
-                            <button className="sm-action-btn sm-action-assign" title="Assign PCI ID" onClick={() => openAssignModal(shooter)}>🆔</button>
-                          )}
-                          {shooter.status === 'pending' && (
-                            <button
-                              className="sm-action-btn sm-action-reject"
-                              title="Reject"
->>>>>>> Stashed changes
                               disabled={isLoading(`reject-${shooter.id}`)}
                               onClick={() => handleReject(shooter)}
                             >
@@ -879,11 +704,7 @@ export default function ShooterManagementPage() {
           {/* ─── Pagination ─── */}
           <div className="sm-pagination">
             <span className="sm-pagination-info">
-<<<<<<< Updated upstream
               Showing {total === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, total)} of {total}
-=======
-              Showing {filtered.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filtered.length)} of {filtered.length}
->>>>>>> Stashed changes
             </span>
             <div className="sm-pagination-btns">
               <button
@@ -975,7 +796,6 @@ export default function ShooterManagementPage() {
 
               {slideOverTab === 'documents' && (
                 <div className="sm-docs-list">
-<<<<<<< Updated upstream
                   {loadingSlideOverData ? (
                     <div className="sm-spinner-container"><span className="sm-spinner sm-spinner-dark" /> Loading docs...</div>
                   ) : slideOverDocuments.length > 0 ? (
@@ -996,32 +816,11 @@ export default function ShooterManagementPage() {
                   ) : (
                     <div className="sm-no-docs">No documents found for this shooter.</div>
                   )}
-=======
-                  {slideOverShooter.documents.map((doc, i) => (
-                    <div key={i} className={`sm-doc-item ${doc.uploaded ? '' : 'sm-doc-missing'}`}>
-                      <div className="sm-doc-info">
-                        <span className="sm-doc-icon">{doc.uploaded ? '📄' : '⚠️'}</span>
-                        <span className="sm-doc-name">{doc.name}</span>
-                      </div>
-                      <div className="sm-doc-status">
-                        {doc.uploaded ? (
-                          <>
-                            <span className="sm-doc-uploaded">Uploaded</span>
-                            <button className="sm-doc-preview" title="Preview">👁</button>
-                          </>
-                        ) : (
-                          <span className="sm-doc-pending">Missing</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
->>>>>>> Stashed changes
                 </div>
               )}
 
               {slideOverTab === 'classification' && (
                 <div className="sm-class-section">
-<<<<<<< Updated upstream
                   {loadingSlideOverData ? (
                     <div className="sm-spinner-container"><span className="sm-spinner sm-spinner-dark" /> Loading info...</div>
                   ) : slideOverClassification ? (
@@ -1037,19 +836,11 @@ export default function ShooterManagementPage() {
                       <div className="sm-profile-item sm-profile-full"><span className="sm-profile-label">Equipment Adaptations</span><span className="sm-profile-value">{slideOverShooter.equipmentAdaptations || 'None reported'}</span></div>
                     </div>
                   )}
-=======
-                  <div className="sm-class-grid">
-                    <div className="sm-profile-item"><span className="sm-profile-label">Category</span><span className="sm-profile-value">{slideOverShooter.category}</span></div>
-                    <div className="sm-profile-item"><span className="sm-profile-label">Classification Date</span><span className="sm-profile-value">{formatDate(slideOverShooter.classificationDate)}</span></div>
-                    <div className="sm-profile-item sm-profile-full"><span className="sm-profile-label">Equipment Adaptations</span><span className="sm-profile-value">{slideOverShooter.equipmentAdaptations}</span></div>
-                  </div>
->>>>>>> Stashed changes
                 </div>
               )}
 
               {slideOverTab === 'actions' && (
                 <div className="sm-actions-tab">
-<<<<<<< Updated upstream
 
                   {/* ── Pending / Needs Changes ── */}
                   {(slideOverShooter.status === 'pending' || slideOverShooter.status === 'needs_changes') && (
@@ -1064,30 +855,10 @@ export default function ShooterManagementPage() {
                         </button>
                         <button className="sm-panel-btn sm-panel-reject" onClick={() => handleReject(slideOverShooter)} disabled={isLoading(`reject-${slideOverShooter.id}`)}>
                           {isLoading(`reject-${slideOverShooter.id}`) ? <span className="sm-spinner" /> : '❌'} Reject (Final)
-=======
-                  {slideOverShooter.status === 'pending' && (
-                    <div className="sm-actions-group">
-                      <h3 className="sm-actions-title">Review Application</h3>
-                      <div className="sm-actions-btns">
-                        <button
-                          className="sm-panel-btn sm-panel-approve"
-                          onClick={() => handleApprove(slideOverShooter)}
-                          disabled={isLoading(`approve-${slideOverShooter.id}`)}
-                        >
-                          {isLoading(`approve-${slideOverShooter.id}`) ? <span className="sm-spinner" /> : '✅'} Approve Shooter
-                        </button>
-                        <button
-                          className="sm-panel-btn sm-panel-reject"
-                          onClick={() => handleReject(slideOverShooter)}
-                          disabled={isLoading(`reject-${slideOverShooter.id}`)}
-                        >
-                          {isLoading(`reject-${slideOverShooter.id}`) ? <span className="sm-spinner" /> : '❌'} Reject Shooter
->>>>>>> Stashed changes
                         </button>
                       </div>
                     </div>
                   )}
-<<<<<<< Updated upstream
 
                   {/* ── Approved ── */}
                   {slideOverShooter.status === 'approved' && (
@@ -1133,15 +904,6 @@ export default function ShooterManagementPage() {
                   <div className="sm-actions-group">
                     <h3 className="sm-actions-title" style={{color:'#c62828'}}>Danger Zone</h3>
                     <button className="sm-panel-btn sm-panel-reject" onClick={() => setDeleteConfirm(slideOverShooter)}>🗑 Delete Shooter</button>
-=======
-                  <div className="sm-actions-group">
-                    <h3 className="sm-actions-title">Assign PCI ID</h3>
-                    <p className="sm-actions-desc">Current: {slideOverShooter.pciId || 'Not assigned'}</p>
-                    <button
-                      className="sm-panel-btn sm-panel-assign"
-                      onClick={() => openAssignModal(slideOverShooter)}
-                    >🆔 Assign PCI ID</button>
->>>>>>> Stashed changes
                   </div>
                 </div>
               )}
@@ -1199,7 +961,6 @@ export default function ShooterManagementPage() {
         </>
       )}
 
-<<<<<<< Updated upstream
       {/* ─── Request Changes Modal ─── */}
       {requestChangesShooter && (
         <>
@@ -1232,8 +993,6 @@ export default function ShooterManagementPage() {
         </>
       )}
 
-=======
->>>>>>> Stashed changes
       {/* ─── Toast Notifications ─── */}
       <div className="sm-toast-container">
         {toasts.map(toast => (

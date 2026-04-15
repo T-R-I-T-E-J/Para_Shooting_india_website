@@ -317,14 +317,11 @@
   color: #c62828;
   border: 1px solid #ffcdd2;
 }
-<<<<<<< Updated upstream
 .sm-badge-changes {
   background: #fff8e1;
   color: #e65100;
   border: 1px solid #ffcc80;
 }
-=======
->>>>>>> Stashed changes
 
 /* ─── Action Buttons ─── */
 .sm-actions {
@@ -754,12 +751,9 @@
 .sm-panel-reject { background: #c62828; color: #fff; }
 .sm-panel-reject:hover:not(:disabled) { background: #b71c1c; }
 
-<<<<<<< Updated upstream
 .sm-panel-changes { background: #e65100; color: #fff; }
 .sm-panel-changes:hover:not(:disabled) { background: #bf360c; }
 
-=======
->>>>>>> Stashed changes
 .sm-panel-assign { background: #003087; color: #fff; }
 .sm-panel-assign:hover:not(:disabled) { background: #002060; }
 
@@ -875,7 +869,6 @@
 }
 .sm-modal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
 
-<<<<<<< Updated upstream
 .sm-action-proof { color: #5c35d4; }
 .sm-action-proof:hover { background: #ede7f6; }
 .sm-action-changes { color: #e65100; }
@@ -911,8 +904,6 @@
   background: #bf360c;
 }
 
-=======
->>>>>>> Stashed changes
 .sm-modal-delete-btn {
   padding: 10px 22px;
   border: none;

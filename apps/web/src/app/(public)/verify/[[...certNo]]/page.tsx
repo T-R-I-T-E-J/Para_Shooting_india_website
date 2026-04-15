@@ -144,16 +144,10 @@ export default function CertificateVerificationPage() {
           </div>
           <div className="gold-divider"></div>
           
-<<<<<<< Updated upstream
           <label htmlFor="cert-search" className="search-label">Enter Certificate Number to Verify</label>
           <form onSubmit={handleSearchSubmit}>
             <input 
               id="cert-search"
-=======
-          <label className="search-label">Enter Certificate Number to Verify</label>
-          <form onSubmit={handleSearchSubmit}>
-            <input 
->>>>>>> Stashed changes
               type="text" 
               className="search-input"
               placeholder="PCI/PSAI/6NPSC/2025/XXXX" 
@@ -193,11 +187,7 @@ export default function CertificateVerificationPage() {
         <div className="verified-wrapper animate-fade-in">
           
           <div className="top-nav">
-<<<<<<< Updated upstream
             <button type="button" onClick={resetSearch} className="verify-another-link text-blue-300 hover:text-white transition-colors cursor-pointer bg-transparent border-none p-0 text-sm font-semibold">← Verify Another Certificate</button>
-=======
-            <a onClick={resetSearch} className="verify-another-link">← Verify Another Certificate</a>
->>>>>>> Stashed changes
           </div>
 
           <div className="success-banner">
@@ -221,11 +211,7 @@ export default function CertificateVerificationPage() {
 
             {/* Verification Stamp SVG Overlay */}
             <div className="stamp-container">
-<<<<<<< Updated upstream
               <svg aria-hidden="true" width="120" height="120" viewBox="0 0 120 120">
-=======
-              <svg width="120" height="120" viewBox="0 0 120 120">
->>>>>>> Stashed changes
                 <defs>
                   <path id="circlePath" d="M 60, 60 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" />
                 </defs>
@@ -334,11 +320,7 @@ export default function CertificateVerificationPage() {
         <div className="verified-wrapper animate-fade-in" style={{ textAlign: 'center' }}>
           
           <div className="top-nav" style={{ justifyContent: 'center', marginBottom: '1rem' }}>
-<<<<<<< Updated upstream
             <button type="button" onClick={resetSearch} className="verify-another-link text-blue-300 hover:text-white transition-colors cursor-pointer bg-transparent border-none p-0 text-sm font-semibold">← Go Back to Search</button>
-=======
-            <a onClick={resetSearch} className="verify-another-link">← Go Back to Search</a>
->>>>>>> Stashed changes
           </div>
 
           <div className="red-cross">❌</div>
@@ -379,11 +361,7 @@ export default function CertificateVerificationPage() {
         <div className="verified-wrapper animate-fade-in" style={{ textAlign: 'center' }}>
           
           <div className="top-nav" style={{ justifyContent: 'center', marginBottom: '1rem' }}>
-<<<<<<< Updated upstream
             <button type="button" onClick={resetSearch} className="verify-another-link text-blue-300 hover:text-white transition-colors cursor-pointer bg-transparent border-none p-0 text-sm font-semibold">← Go Back to Search</button>
-=======
-            <a onClick={resetSearch} className="verify-another-link">← Go Back to Search</a>
->>>>>>> Stashed changes
           </div>
 
           <div className="result-card result-card-revoked">

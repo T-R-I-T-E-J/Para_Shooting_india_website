@@ -1,53 +1,7 @@
 import Link from 'next/link'
 import MediaCard from '@/components/public/MediaCard'
 
-const dummyMedia = [
-  {
-    type: 'video' as const,
-    title: 'Highlights from the 5th National Para Shooting Championship',
-    date: '20 Dec 2025',
-    videoDuration: '04:12',
-    thumbnailFrom: '#1E293B',
-    thumbnailTo: '#0F172A',
-  },
-  {
-    type: 'gallery' as const,
-    title: 'International Classification Workshop 2025',
-    date: '10 Oct 2025',
-    thumbnailFrom: '#C8A415',
-    thumbnailTo: '#A5840D',
-  },
-  {
-    type: 'gallery' as const,
-    title: 'Asian Para Games — Team India Arrival',
-    date: '05 Oct 2025',
-    thumbnailFrom: '#046A38',
-    thumbnailTo: '#024D28',
-  },
-  {
-    type: 'video' as const,
-    title: "Athlete Spotlight: The Journey of Singhraj",
-    date: '15 Sep 2025',
-    videoDuration: '08:45',
-    thumbnailFrom: '#DC2626',
-    thumbnailTo: '#991B1B',
-  },
-  {
-    type: 'gallery' as const,
-    title: 'National Selectors Committee Meeting',
-    date: '01 Aug 2025',
-    thumbnailFrom: '#475569',
-    thumbnailTo: '#334155',
-  },
-  {
-    type: 'video' as const,
-    title: 'Basics of Air Rifle Stances for SH2 Class',
-    date: '20 Jul 2025',
-    videoDuration: '12:30',
-    thumbnailFrom: '#001A4D',
-    thumbnailTo: '#003DA5',
-  },
-]
+const dummyMedia: any[] = []
 
 const categories = ['All Media', 'Videos', 'Image Galleries', 'Interviews']
 

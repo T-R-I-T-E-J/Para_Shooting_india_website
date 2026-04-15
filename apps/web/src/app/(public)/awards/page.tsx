@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import Link from 'next/link'
 
 const khelRatna = [
@@ -51,55 +50,10 @@ export default function AwardsPage() {
           </h1>
           <p className="text-white/50 font-body text-lg max-w-2xl leading-relaxed">
             Honouring the extraordinary para shooters and coaches who have earned India's highest sporting recognitions — the pinnacle of athletic achievement.
-=======
-import type { Metadata } from 'next'
-import { Trophy, Medal, Crown } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: 'Awards & Recognition | STC Para Shooting',
-  description: 'Celebrating excellence in Para Shooting. Discover our distinguished Khel Ratna, Arjuna, and Dronacharya awardees.',
-}
-
-export default function AwardsPage() {
-  const khelRatnaList = [
-    'Avani Lekhara',
-    'Manish Narwal'
-  ];
-
-  const arjunaList = [
-    'Manish Narwal',
-    'Singhraj',
-    'Mona Agarwal',
-    'Naresh Kumar Sharma',
-    'Rubina Francis'
-  ];
-
-  const dronacharyaList = [
-    'Jaiprakash Nautiyal',
-    'Subhash Rana'
-  ]
-
-  return (
-    <div className="bg-neutral-50 min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-primary overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
-        <div className="container-main relative z-10 text-center text-white">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 animate-fade-in-up">
-            <Crown className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium tracking-wide uppercase">Celebrating Excellence</span>
-          </div>
-          <h1 className="font-heading text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up delay-100">
-            National <span className="text-accent-gradient">Awards</span>
-          </h1>
-          <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto animate-fade-in-up delay-200">
-             Honoring the pride of India in Para Shooting.
->>>>>>> Stashed changes
           </p>
         </div>
       </section>
 
-<<<<<<< Updated upstream
       {/* Khel Ratna */}
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
@@ -133,61 +87,11 @@ export default function AwardsPage() {
                   </div>
                 </div>
               </div>
-=======
-      {/* Major Dhyan Chand Khel Ratna Award Section */}
-      <section className="py-16 container-main">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl font-bold text-primary mb-4">Major Dhyan Chand Khel Ratna Award</h2>
-          <div className="h-1 w-20 bg-accent mx-auto rounded-full"></div>
-          <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-            The Major Dhyan Chand Khel Ratna Award is India's highest sporting honour, awarded for outstanding performance in the field of sports over a period of four years.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 justify-center max-w-3xl mx-auto">
-          {khelRatnaList.map((name, index) => (
-             <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-neutral-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center shrink-0">
-                   <Crown className="w-6 h-6" />
-                </div>
-                <div>
-                   <h3 className="font-bold text-lg text-neutral-800">{name}</h3>
-                   <span className="text-sm text-neutral-500">Para Shooting</span>
-                </div>
-             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Arjuna Award Section */}
-      <section className="py-16 bg-white border-t border-neutral-200">
-        <div className="container-main">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-primary mb-4">Arjuna Award</h2>
-            <div className="h-1 w-20 bg-accent mx-auto rounded-full"></div>
-            <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-              The Arjuna Award is given by the Ministry of Youth Affairs and Sports, Government of India, to recognize outstanding achievement in National sports.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
-            {arjunaList.map((name, index) => (
-               <div key={index} className="bg-neutral-50 p-6 rounded-xl shadow-sm border border-neutral-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                  <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center shrink-0">
-                     <Trophy className="w-6 h-6" />
-                  </div>
-                  <div>
-                     <h3 className="font-bold text-lg text-neutral-800">{name}</h3>
-                     <span className="text-sm text-neutral-500">Para Shooting</span>
-                  </div>
-               </div>
->>>>>>> Stashed changes
             ))}
           </div>
         </div>
       </section>
 
-<<<<<<< Updated upstream
       {/* Arjuna Awards */}
       <section className="py-16 px-6 bg-[#001A4D]/30">
         <div className="max-w-7xl mx-auto">
@@ -215,34 +119,11 @@ export default function AwardsPage() {
                 <h3 className="font-heading text-lg font-bold text-white mb-1">{a.name}</h3>
                 <p className="text-white/40 text-sm">{a.event}</p>
               </div>
-=======
-      {/* Dronacharya Award Section */}
-      <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-        <div className="container-main">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-primary mb-4">Dronacharya Award</h2>
-            <div className="h-1 w-20 bg-accent mx-auto rounded-full"></div>
-            <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-               The Dronacharya Award is presented to coaches for producing medal winners at prestigious international sports events.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-4xl mx-auto">
-            {dronacharyaList.map((name, index) => (
-               <div key={index} className="bg-white p-8 rounded-xl border border-neutral-200 flex flex-col items-center text-center gap-4 hover:border-primary/30 transition-colors shadow-sm">
-                  <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-2">
-                     <Medal className="w-8 h-8" />
-                  </div>
-                  <h3 className="font-heading font-bold text-2xl text-neutral-900">{name}</h3>
-                  <span className="px-4 py-1 bg-neutral-50 border border-neutral-200 rounded-full text-sm font-medium text-neutral-500">Coach</span>
-               </div>
->>>>>>> Stashed changes
             ))}
           </div>
         </div>
       </section>
 
-<<<<<<< Updated upstream
       {/* Dronacharya */}
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
@@ -268,28 +149,6 @@ export default function AwardsPage() {
                   <h3 className="font-heading text-xl font-bold text-white mb-1">{c.name}</h3>
                   <p className="text-white/40 text-sm mb-3">{c.role}</p>
                   <span className="inline-block bg-[#046A38]/15 text-[#046A38] text-[10px] font-bold tracking-widest uppercase px-3 py-1 border border-[#046A38]/30">{c.year}</span>
-=======
-      {/* 8th PEFI National Award Section */}
-      <section className="py-16 bg-white border-t border-neutral-200">
-        <div className="container-main">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-primary mb-4">8th PEFI National Award</h2>
-            <div className="h-1 w-20 bg-accent mx-auto rounded-full"></div>
-            <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-              The PEFI (Paralympic Education Foundation of India) National Award recognises outstanding contributions to para sports in India.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-3xl mx-auto">
-            {['Mr. Jeevan Lal Rai', 'Vivek Saini'].map((name, index) => (
-              <div key={index} className="bg-neutral-50 p-6 rounded-xl shadow-sm border border-neutral-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0">
-                  <Trophy className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-neutral-800">{name}</h3>
-                  <span className="text-sm text-neutral-500">PEFI National Awardee</span>
->>>>>>> Stashed changes
                 </div>
               </div>
             ))}
@@ -297,7 +156,6 @@ export default function AwardsPage() {
         </div>
       </section>
 
-<<<<<<< Updated upstream
       {/* PEFI Award */}
       <section className="py-16 px-6 bg-[#001A4D]/30">
         <div className="max-w-7xl mx-auto">
@@ -342,8 +200,6 @@ export default function AwardsPage() {
         </div>
       </section>
 
-=======
->>>>>>> Stashed changes
     </div>
   )
 }
