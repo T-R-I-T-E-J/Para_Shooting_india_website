@@ -29,13 +29,14 @@ const CATEGORY_META: Record<string, { label: string; color: string }> = {
 
 const DEFAULT_META = { label: 'Document', color: '#C8A415' }
 
+// Categories that belong ONLY to the Classification page — excluded from Policies library
+const CLASSIFICATION_ONLY = ['classification', 'medical_classification', 'national_classification', 'ipc_license']
+
 const FILTER_TABS = [
   { key: '', label: 'All Documents' },
   { key: 'rules', label: 'Rules' },
   { key: 'selection', label: 'Selection' },
   { key: 'calendar', label: 'Calendar' },
-  { key: 'classification', label: 'Classification' },
-  { key: 'ipc_license', label: 'IPC License' },
   { key: 'match', label: 'Match' },
 ]
 
@@ -54,7 +55,8 @@ async function getPolicyDocs(): Promise<PolicyDoc[]> {
     if (!res.ok) throw new Error('API unavailable')
     const json = await res.json()
     const items: PolicyDoc[] = json?.data ?? json ?? []
-    return items.filter((d) => d.isActive)
+    // Exclude classification-specific categories — they belong on /classification page
+    return items.filter((d) => d.isActive && !CLASSIFICATION_ONLY.includes(d.category))
   } catch {
     return []
   }

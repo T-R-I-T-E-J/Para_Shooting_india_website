@@ -332,18 +332,16 @@ export default async function ClassificationPage({
                   Classification rules, medical forms, and IPC licence documents.
                 </p>
               </div>
-              {totalDocs > DOCS_LIMIT && (
-                <Link
-                  href="/classification/documents"
-                  className="group inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-500 hover:text-[#C8A415] transition-colors whitespace-nowrap"
-                >
-                  <span className="text-neutral-300 group-hover:text-[#C8A415]/40 transition-colors">{totalDocs} total</span>
-                  <span>Browse All</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-1 transition-transform">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </Link>
-              )}
+              <Link
+                href="/classification/documents"
+                className="group inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-500 hover:text-[#C8A415] transition-colors whitespace-nowrap"
+              >
+                {totalDocs > DOCS_LIMIT && <span className="text-neutral-300 group-hover:text-[#C8A415]/40 transition-colors">{totalDocs} total</span>}
+                <span>Browse All</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-1 transition-transform">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
             </div>
 
             {/* List preview */}
@@ -401,26 +399,25 @@ export default async function ClassificationPage({
             </div>
 
             {/* Footer CTA bar */}
-            {totalDocs > DOCS_LIMIT && (
-              <div className="flex items-center justify-between py-4 px-6 border border-neutral-200 bg-neutral-50">
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C8A415]" />
-                  <span className="text-neutral-500 text-[12px]">
-                    Showing <span className="text-neutral-700 font-semibold">{DOCS_LIMIT}</span> of{' '}
-                    <span className="text-neutral-700 font-semibold">{totalDocs}</span> documents
-                  </span>
-                </div>
-                <Link
-                  href="/classification/documents"
-                  className="group inline-flex items-center gap-2.5 bg-[#C8A415] text-white text-[11px] font-extrabold tracking-widest uppercase px-5 py-2.5 hover:bg-[#b8940f] transition-colors"
-                >
-                  Browse Full Library
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-0.5 transition-transform">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </Link>
+            <div className="flex items-center justify-between py-4 px-6 border border-neutral-200 bg-neutral-50">
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#C8A415]" />
+                <span className="text-neutral-500 text-[12px]">
+                  {totalDocs > DOCS_LIMIT
+                    ? <>Showing <span className="text-neutral-700 font-semibold">{DOCS_LIMIT}</span> of <span className="text-neutral-700 font-semibold">{totalDocs}</span> documents</>
+                    : <><span className="text-neutral-700 font-semibold">{totalDocs}</span> document{totalDocs !== 1 ? 's' : ''} total</>}
+                </span>
               </div>
-            )}
+              <Link
+                href="/classification/documents"
+                className="group inline-flex items-center gap-2.5 bg-[#C8A415] text-white text-[11px] font-extrabold tracking-widest uppercase px-5 py-2.5 hover:bg-[#b8940f] transition-colors"
+              >
+                Browse Full Library
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-0.5 transition-transform">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
+            </div>
 
           </div>
         </section>
