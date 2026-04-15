@@ -64,14 +64,14 @@ export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }
     const clamped = Math.max(0, Math.min(index, maxIndex))
     setActiveIndex(clamped)
     const track = trackRef.current
-    if (!track) return
+    if (!track || items.length === 0) return
     const cardWidth = track.scrollWidth / items.length
     track.scrollTo({ left: clamped * cardWidth, behavior: 'smooth' })
   }, [maxIndex, items.length])
 
   // Auto-scroll every 4 seconds
   useEffect(() => {
-    if (isPaused) return
+    if (isPaused || items.length === 0) return
     const timer = setInterval(() => {
       setActiveIndex((prev) => {
         const next = prev >= maxIndex ? 0 : prev + 1
@@ -80,7 +80,10 @@ export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }
       })
     }, 4000)
     return () => clearInterval(timer)
-  }, [isPaused, maxIndex, scrollTo])
+  }, [isPaused, maxIndex, scrollTo, items.length])
+
+  // Don't render the section at all if there's no content
+  if (items.length === 0) return null
 
   return (
     <section className="py-16 px-6 bg-white border-t border-neutral-100">
