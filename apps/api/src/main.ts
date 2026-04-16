@@ -13,7 +13,7 @@ async function bootstrap() {
   const { port, apiPrefix, corsOrigin, environment } = configureApp(app);
 
   logger.log(`🔒 Security headers enabled for: ${environment}`);
-  logger.log('🛡️  Express rate limiting enabled (100 req/15min per IP)');
+  logger.log('🛡️ Express rate limiting enabled (100 req/15min per IP)');
 
   if (environment === 'production' || environment === 'prod') {
     logger.log('🔐 Trust proxy enabled for production');

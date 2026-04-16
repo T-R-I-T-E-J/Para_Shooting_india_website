@@ -6,6 +6,7 @@ import EventCard from '@/components/public/EventCard'
 import MediaCard from '@/components/public/MediaCard'
 import RevealSection from '@/components/public/RevealSection'
 import DocumentsSection from '@/components/public/DocumentsSection'
+import TickerBar from '@/components/public/TickerBar'
 
 const featuredNews = [
   {
@@ -54,17 +55,14 @@ const featuredMedia = [
 ]
 
 const stats = [
-  { value: '450+', label: 'Registered Athletes' },
-  { value: '26', label: 'States Represented' },
-  { value: '12', label: 'Intl. Medals (2025)' },
-  { value: '8', label: 'National Tournaments' },
+  { value: '900+', label: 'Registered Athletes' },
+  { value: '25+', label: 'International Athletes' },
+  { value: '150+', label: 'International Medals' },
+  { value: '9', label: 'Paralympic Medals' },
 ]
 
 const partners = [
-  { name: 'Ministry of Youth Affairs & Sports', short: 'MYAS' },
-  { name: 'Sports Authority of India', short: 'SAI' },
-  { name: 'Paralympic Committee of India', short: 'PCI' },
-  { name: 'World Para Shooting', short: 'WPS' },
+  { name: 'VSK Sports', short: 'VSK' },
 ]
 
 async function getLatestNews() {
@@ -154,12 +152,34 @@ async function getFeaturedMedia() {
   }
 }
 
+async function getLatestUpdatesTicker() {
+  try {
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+      'http://localhost:4000'
+    const res = await fetch(`${apiUrl}/api/v1/latest-updates?limit=3`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    return Array.isArray(data) ? data : (data.data || [])
+  } catch (error) {
+    console.error('Home Ticker Error:', error)
+    return []
+  }
+}
+
 export default async function HomePage() {
   const latestNews = await getLatestNews()
   const realEvents = await getUpcomingEvents() || upcomingEvents
   const mediaItems = await getFeaturedMedia()
+  const tickerUpdates = await getLatestUpdatesTicker()
+  
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden bg-[#000D26]">
+
+      {/* MARQUEE TICKER — JS animation, immediately visible at top */}
+      <TickerBar items={tickerUpdates} />
 
       {/* ══════════════════════════════════════════
           HERO — Full-viewport cinematic opener
@@ -259,30 +279,7 @@ export default async function HomePage() {
 
         {/* Bottom accent — diagonal gold slash */}
         <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 opacity-30">
-          <div className="w-px h-12 bg-white animate-pulse" />
-          <span className="text-[9px] text-white uppercase tracking-[0.3em]">Scroll</span>
-        </div>
       </section>
-
-
-      {/* ══════════════════════════════════════════
-          MARQUEE TICKER — momentum between sections
-      ══════════════════════════════════════════ */}
-      <div className="bg-gold py-3 overflow-hidden border-y-2 border-[#A8880F]">
-        <div className="flex items-center gap-8 animate-marquee whitespace-nowrap" style={{ animationDuration: '30s' }}>
-          {['5th National Para Shooting Championship', 'Athlete Registration Now Open', 'National Selection Trials — June 2026', 'Medical Classification Camps Available', '450+ Registered Athletes Nationwide', 'India — 12 International Medals in 2025'].concat(
-            ['5th National Para Shooting Championship', 'Athlete Registration Now Open', 'National Selection Trials — June 2026', 'Medical Classification Camps Available', '450+ Registered Athletes Nationwide', 'India — 12 International Medals in 2025']
-          ).map((item, i) => (
-            <span key={i} className="inline-flex items-center gap-6 text-[11px] font-black tracking-[0.25em] uppercase text-[#001A4D]">
-              {item}
-              <span className="w-1 h-1 rounded-full bg-[#001A4D]/40" />
-            </span>
-          ))}
-        </div>
-      </div>
 
 
       {/* ══════════════════════════════════════════
@@ -548,18 +545,21 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════
           PARTNERS — Clean authority strip
       ══════════════════════════════════════════ */}
-      <section className="py-16 px-6 bg-white border-t border-neutral-100">
+      <section className="py-20 px-6 bg-white border-t border-neutral-100">
         <div className="max-w-7xl mx-auto">
           <div className="text-[10px] font-black tracking-[0.35em] uppercase text-neutral-300 text-center mb-12">
-            Recognised &amp; Supported By
+            Recognised & Supported By
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-neutral-100 border border-neutral-100">
+          <div className="flex justify-center">
             {partners.map(({ name, short }) => (
-              <div key={short} className="py-8 px-6 flex flex-col items-center justify-center text-center group hover:bg-neutral-50 transition-colors">
-                <span className="font-heading text-[28px] md:text-[32px] font-black text-neutral-150 group-hover:text-[#001A4D] transition-colors leading-none mb-2" style={{ color: '#D8DEE9' }}>
+              <div 
+                key={short} 
+                className="py-10 px-12 flex flex-col items-center justify-center text-center group hover:bg-neutral-50 transition-colors border border-neutral-100 max-w-[320px] w-full"
+              >
+                <span className="font-heading text-[32px] md:text-[40px] font-black text-neutral-150 group-hover:text-[#001A4D] transition-colors leading-none mb-2" style={{ color: '#D8DEE9' }}>
                   {short}
                 </span>
-                <span className="text-[9px] text-neutral-400 tracking-[0.15em] uppercase font-bold leading-tight">{name}</span>
+                <span className="text-[10px] text-neutral-400 tracking-[0.2em] uppercase font-bold leading-tight">{name}</span>
               </div>
             ))}
           </div>

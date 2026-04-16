@@ -1,135 +1,172 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { DashboardHeader } from '@/components/dashboard'
-import { Image, Upload, Search, X, Loader2 } from 'lucide-react'
+import { Plus, Trash2, Eye, Images, Edit } from 'lucide-react'
+import { format } from 'date-fns'
 
-export default function GalleryPage() {
-  const [uploading, setUploading] = useState(false)
-  const [media, setMedia] = useState<any[]>([]) // Will be populated from API
-  const fileInputRef = useRef<HTMLInputElement>(null)
+const API_URL = '/api/v1'
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click()
-  }
+interface Collection {
+  id: number
+  title: string
+  short_description?: string
+  event_date?: string
+  created_at: string
+  images: { id: number }[]
+}
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
+export default function AdminGalleryPage() {
+  const [collections, setCollections] = useState<Collection[]>([])
+  const [loading, setLoading] = useState(true)
 
-    setUploading(true)
-
+  const fetchCollections = async () => {
     try {
-      const apiUrl = '/api/v1'
-
-      for (const file of Array.from(files)) {
-        const formData = new FormData()
-        formData.append('image', file)
-
-        const res = await fetch(`${apiUrl}/upload/image`, {
-          method: 'POST',
-          credentials: 'include',
-          body: formData
-        })
-
-        if (res.ok) {
-          console.log('Image uploaded successfully')
-          // TODO: Refresh media list
-        } else {
-          alert(`Failed to upload ${file.name}`)
-        }
-      }
-
-      // Reset input
-      e.target.value = ''
-      alert('Upload complete!')
-
-    } catch (error) {
-      console.error('Upload error:', error)
-      alert('Upload failed')
+      const res = await fetch(`${API_URL}/media-collections`, {
+        credentials: 'include',
+        cache: 'no-store',
+      })
+      if (!res.ok) throw new Error('Fetch failed')
+      const data = await res.json()
+      setCollections(Array.isArray(data) ? data : data.data || [])
+    } catch (e) {
+      console.error(e)
     } finally {
-      setUploading(false)
+      setLoading(false)
     }
   }
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('Delete this collection? This will also remove all its photos.')) return
+    try {
+      const res = await fetch(`${API_URL}/media-collections/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+      if (res.ok) {
+        fetchCollections()
+      } else {
+        alert('Failed to delete collection')
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchCollections()
+  }, [])
 
   return (
     <>
       <DashboardHeader
-        title="Gallery Management"
-        subtitle="Manage photos and media for events, news, and shooters"
+        title="Media & Gallery"
+        subtitle="Manage photo collections for events and activities"
       />
 
       <div className="p-6 space-y-6">
-        {/* Hidden File Input */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleFileChange}
-          className="hidden"
-        />
-
-        {/* Search and Upload */}
-        <div className="flex gap-4 items-center">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
-            <input
-              type="text"
-              placeholder="Search media..."
-              className="input pl-10"
-            />
-          </div>
-          <button
-            onClick={handleUploadClick}
-            disabled={uploading}
-            className="btn-primary flex items-center gap-2 disabled:opacity-50"
+        {/* Actions */}
+        <div className="flex justify-end">
+          <Link
+            href="/admin/gallery/create"
+            className="btn-primary flex items-center gap-2"
           >
-            {uploading ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Uploading...
-              </>
-            ) : (
-              <>
-                <Upload className="h-4 w-4" />
-                Upload Media
-              </>
-            )}
-          </button>
+            <Plus className="w-4 h-4" />
+            New Collection
+          </Link>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="card">
-          <h3 className="text-lg font-heading font-semibold text-primary mb-4">All Media Files</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Placeholder */}
-            <div className="aspect-square rounded-card border-2 border-dashed border-neutral-300 flex items-center justify-center">
-              <div className="text-center p-4">
-                <Image className="h-12 w-12 mx-auto mb-2 text-neutral-400" />
-                <p className="text-sm text-neutral-500">No media uploaded yet</p>
-                <button
-                  onClick={handleUploadClick}
-                  disabled={uploading}
-                  className="text-interactive text-sm mt-2 hover:underline disabled:opacity-50"
-                >
-                  Upload your first image
-                </button>
-              </div>
-            </div>
+        {/* Table */}
+        <div className="card overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-neutral-500 bg-neutral-50/50 uppercase border-b border-neutral-100">
+                <tr>
+                  <th className="px-6 py-4 font-bold">Collection Title</th>
+                  <th className="px-6 py-4 font-bold">Event Date</th>
+                  <th className="px-6 py-4 font-bold text-center">Photos</th>
+                  <th className="px-6 py-4 font-bold">Created</th>
+                  <th className="px-6 py-4 font-bold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-neutral-100">
+                {loading ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-10 text-center text-neutral-500">
+                      Loading collections...
+                    </td>
+                  </tr>
+                ) : collections.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-12 text-center">
+                      <Images className="w-10 h-10 mx-auto text-neutral-300 mb-3" />
+                      <p className="text-neutral-500 font-medium">No collections yet</p>
+                      <p className="text-neutral-400 text-xs mt-1">
+                        Create your first media collection to get started.
+                      </p>
+                    </td>
+                  </tr>
+                ) : (
+                  collections.map((col) => (
+                    <tr
+                      key={col.id}
+                      className="hover:bg-neutral-50/50 transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <p className="font-semibold text-neutral-900">{col.title}</p>
+                        {col.short_description && (
+                          <p className="text-neutral-400 text-xs mt-0.5 line-clamp-1 max-w-xs">
+                            {col.short_description}
+                          </p>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-neutral-600">
+                        {col.event_date
+                          ? format(new Date(col.event_date), 'dd MMM yyyy')
+                          : <span className="text-neutral-400">—</span>
+                        }
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        <span className="inline-flex items-center gap-1 text-primary font-bold">
+                          <Images className="w-3.5 h-3.5" />
+                          {col.images?.length ?? 0}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-neutral-500 text-xs">
+                        {format(new Date(col.created_at), 'dd MMM yyyy, HH:mm')}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            href={`/admin/gallery/${col.id}`}
+                            className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                            title="Manage collection"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Link>
+                          <Link
+                            href={`/admin/gallery/${col.id}/edit`}
+                            className="p-2 text-neutral-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                            title="Edit collection details"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(col.id)}
+                            className="p-2 text-error hover:bg-error/10 rounded-lg transition-colors cursor-pointer"
+                            title="Delete collection"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
-        </div>
-
-        {/* Upload Guidelines */}
-        <div className="card">
-          <h3 className="text-lg font-heading font-semibold text-primary mb-4">Upload Guidelines</h3>
-          <ul className="list-disc list-inside space-y-1 text-sm text-neutral-600">
-            <li>Recommended image size: 1920x1080px or higher</li>
-            <li>Supported formats: JPG, PNG, WebP</li>
-            <li>Maximum file size: 5MB per image</li>
-            <li>Use descriptive filenames for better organization</li>
-            <li>Compress images before uploading for faster load times</li>
-          </ul>
         </div>
       </div>
     </>

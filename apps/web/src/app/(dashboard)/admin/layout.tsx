@@ -22,8 +22,10 @@ const adminNavItems = [
     icon: FileText,
     subItems: [
       { label: 'Policies', href: '/admin/policies' },
+      { label: 'Events', href: '/admin/events' },
       { label: 'Classification', href: '/admin/classification' },
-      { label: 'News & Updates', href: '/admin/news' },
+      { label: 'News Section', href: '/admin/news' },
+      { label: 'Latest Updates', href: '/admin/latest-updates' },
       { label: 'Results List', href: '/admin/scores' },
       { label: 'Results Import', href: '/admin/results-import' },
       { label: 'Gallery', href: '/admin/gallery' },
