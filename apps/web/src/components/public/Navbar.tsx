@@ -76,7 +76,7 @@ export default function Navbar() {
                 STC PARA SHOOTING
               </span>
               <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/50 mt-1">
-                PARALYMPIC TECHNICAL COMMITTEE
+                PARA OLYMPIC COMMITTEE
               </span>
             </div>
           </Link>
