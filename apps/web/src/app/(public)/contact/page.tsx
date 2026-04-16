@@ -61,7 +61,7 @@ const leadershipCards = [
   },
   {
     role: 'Education Program Incharge',
-    name: 'Wing Comdr. Shantanu',
+    name: 'Wing Commander Shantanu',
     credential: 'International Medalist in Para Sports',
     phone: '+91 80079 12900',
     phoneTel: '+918007912900',
@@ -105,7 +105,7 @@ const directoryRows = [
   { role: 'North Zone Incharge', name: 'Mr. Shiva Kkaranwal', phone: '+91 91050 35678', phoneTel: '+919105035678', email: 'stcparashootng@gmail.com', badge: 'North Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
   { role: 'Medical Classification Incharge', name: 'Ms. Guranchal Pawar', phone: '+91 98151 11552', phoneTel: '+919815111552', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
   { role: 'Medical Classification Co-ordinator', name: 'Mr. Ishwar Singh', phone: '+91 98136 49016', phoneTel: '+919813649016', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
-  { role: 'Education Program Incharge', name: 'Wing Comdr. Shantanu', phone: '+91 80079 12900', phoneTel: '+918007912900', email: 'theparashootingindia@gmail.com', badge: 'Education', badgeStyle: 'bg-green/8 text-green border border-green/20' },
+  { role: 'Education Program Incharge', name: 'Wing Commander Shantanu', phone: '+91 80079 12900', phoneTel: '+918007912900', email: 'theparashootingindia@gmail.com', badge: 'Education', badgeStyle: 'bg-green/8 text-green border border-green/20' },
   { role: 'Media Incharge', name: 'Mr. Shantnu Thakur', phone: '+91 94666 67417', phoneTel: '+919466667417', email: 'stcparashootng@gmail.com', badge: 'Media', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
   { role: 'Competition Incharge', name: 'Mr. Amit Panwar', phone: '+91 83077 12992', phoneTel: '+918307712992', email: 'theparashootingindia@gmail.com', badge: 'Competition', badgeStyle: 'bg-green/8 text-green border border-green/20' },
 ]

@@ -53,9 +53,10 @@ function formatDate(dateStr?: string | null): string {
 export default async function CollectionDetailPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const collection = await getCollection(params.id)
+  const { id } = await params
+  const collection = await getCollection(id)
   if (!collection) notFound()
 
   return (

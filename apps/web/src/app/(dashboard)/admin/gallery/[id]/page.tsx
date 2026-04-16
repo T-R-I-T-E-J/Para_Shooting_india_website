@@ -49,11 +49,11 @@ export default function AdminCollectionDetailPage() {
         credentials: 'include',
         cache: 'no-store',
       })
-      if (!res.ok) throw new Error('Not found')
+      if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`)
       const json = await res.json()
       setCollection(json.data || json)
     } catch (e) {
-      console.error(e)
+      console.error('fetchCollection failed:', e)
     } finally {
       setLoading(false)
     }
