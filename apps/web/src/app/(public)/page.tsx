@@ -191,7 +191,7 @@ export default async function HomePage() {
                 India.
               </span>
               <span className="block text-[clamp(28px,4vw,56px)] font-bold text-white/40 mt-2">
-                Para Shooting National Federation
+                PARA OLYMPIC COMMITTEE
               </span>
             </h1>
           </div>
