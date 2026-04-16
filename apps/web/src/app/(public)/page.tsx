@@ -329,37 +329,37 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════
           EVENTS — Dark section with bold grid
       ══════════════════════════════════════════ */}
-      {realEvents && realEvents.length > 0 && (
-        <section id="events" className="py-28 px-6 bg-[#001A4D] relative overflow-hidden">
-          {/* Background texture */}
-          <div className="absolute inset-0 opacity-[0.04]" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-            backgroundSize: '32px 32px',
-          }} />
-          {/* Gold diagonal accent */}
-          <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-gold/0 via-gold/30 to-gold/0 hidden xl:block" style={{ right: '15%' }} />
+      <section id="events" className="py-28 px-6 bg-[#001A4D] relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+        }} />
+        {/* Gold diagonal accent */}
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-gold/0 via-gold/30 to-gold/0 hidden xl:block" style={{ right: '15%' }} />
 
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="flex items-end justify-between mb-14">
-              <RevealSection>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-[2px] bg-gold" />
-                    <span className="text-[10px] font-black tracking-[0.3em] uppercase text-gold/60">Calendar</span>
-                  </div>
-                  <h2 className="font-heading text-[clamp(28px,4vw,48px)] font-black text-white leading-tight">
-                    Upcoming Championships
-                  </h2>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex items-end justify-between mb-14">
+            <RevealSection>
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-[2px] bg-gold" />
+                  <span className="text-[10px] font-black tracking-[0.3em] uppercase text-gold/60">Calendar</span>
                 </div>
-              </RevealSection>
-              <RevealSection>
-                <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[12px] font-black tracking-[0.2em] uppercase text-gold border-b-2 border-gold/40 pb-1 hover:border-gold transition-colors">
-                  Full Calendar
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </Link>
-              </RevealSection>
-            </div>
+                <h2 className="font-heading text-[clamp(28px,4vw,48px)] font-black text-white leading-tight">
+                  Upcoming Championships
+                </h2>
+              </div>
+            </RevealSection>
+            <RevealSection>
+              <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[12px] font-black tracking-[0.2em] uppercase text-gold border-b-2 border-gold/40 pb-1 hover:border-gold transition-colors">
+                Full Calendar
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </Link>
+            </RevealSection>
+          </div>
 
+          {realEvents && realEvents.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10">
               {realEvents.map((event: any, i: number) => (
                 <RevealSection key={`${event.day}-${event.month}-${i}`} delay={i * 80}>
@@ -367,9 +367,13 @@ export default async function HomePage() {
                 </RevealSection>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          ) : (
+            <div className="flex justify-center items-center py-16 border border-white/10 bg-white/5">
+              <p className="text-white/60 font-body text-base">No updates available</p>
+            </div>
+          )}
+        </div>
+      </section>
 
 
       {/* ══════════════════════════════════════════
@@ -421,13 +425,19 @@ export default async function HomePage() {
             </RevealSection>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mediaItems.map((item, i) => (
-              <RevealSection key={item.title} delay={i * 100}>
-                <MediaCard {...item} />
-              </RevealSection>
-            ))}
-          </div>
+          {mediaItems && mediaItems.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {mediaItems.map((item, i) => (
+                <RevealSection key={item.title} delay={i * 100}>
+                  <MediaCard {...item} />
+                </RevealSection>
+              ))}
+            </div>
+          ) : (
+            <div className="flex justify-center items-center py-16 border border-white/10 bg-white/5">
+              <p className="text-white/60 font-body text-base">No media available</p>
+            </div>
+          )}
         </div>
       </section>
 

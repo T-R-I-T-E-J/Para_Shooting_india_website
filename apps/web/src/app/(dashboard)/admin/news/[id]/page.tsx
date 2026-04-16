@@ -83,13 +83,22 @@ export default function EditNewsPage({ params }: { params: { id: string } }) {
         credentials: 'include',
         body: fd,
       })
-      if (!res.ok) throw new Error(`Upload error ${res.status}`)
+      if (!res.ok) {
+        const errBody = await res.text()
+        console.error(`[upload] Server error ${res.status}:`, errBody)
+        throw new Error(`Upload failed: server returned ${res.status}`)
+      }
       const json = await res.json()
-      const url: string | undefined = json?.data?.file?.url
-      if (!url) throw new Error('No URL in response')
+      console.log('[upload] Response:', json)
+      const url: string | undefined = json?.data?.file?.url ?? json?.file?.url
+      if (!url) {
+        console.error('[upload] No URL in response:', json)
+        throw new Error('No URL in server response')
+      }
       setFormData((prev) => ({ ...prev, featured_image_url: url }))
-    } catch {
-      alert('Featured image upload failed.')
+    } catch (err) {
+      console.error('[upload] Featured image upload failed:', err)
+      alert(`Featured image upload failed: ${err instanceof Error ? err.message : 'Unknown error'}`)
     } finally {
       setImageUploading(false)
     }
@@ -105,16 +114,25 @@ export default function EditNewsPage({ params }: { params: { id: string } }) {
         credentials: 'include',
         body: fd,
       })
-      if (!res.ok) throw new Error(`Upload error ${res.status}`)
+      if (!res.ok) {
+        const errBody = await res.text()
+        console.error(`[upload] Server error ${res.status}:`, errBody)
+        throw new Error(`Upload failed: server returned ${res.status}`)
+      }
       const json = await res.json()
-      const url: string | undefined = json?.data?.file?.url
-      if (!url) throw new Error('No URL in response')
+      console.log('[upload] Response:', json)
+      const url: string | undefined = json?.data?.file?.url ?? json?.file?.url
+      if (!url) {
+        console.error('[upload] No URL in response:', json)
+        throw new Error('No URL in server response')
+      }
       setFormData((prev) => ({
         ...prev,
         documents: [...prev.documents, { url, name: file.name }],
       }))
-    } catch {
-      alert('Document upload failed.')
+    } catch (err) {
+      console.error('[upload] Document upload failed:', err)
+      alert(`Document upload failed: ${err instanceof Error ? err.message : 'Unknown error'}`)
     }
   }
 

@@ -82,9 +82,6 @@ export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }
     return () => clearInterval(timer)
   }, [isPaused, maxIndex, scrollTo, items.length])
 
-  // Don't render the section at all if there's no content
-  if (items.length === 0) return null
-
   return (
     <section className="py-16 px-6 bg-white border-t border-neutral-100">
       <div className="max-w-7xl mx-auto">
@@ -101,22 +98,26 @@ export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }
           </div>
           <div className="flex items-center gap-3">
             {/* Arrow buttons */}
-            <button
-              onClick={() => scrollTo(activeIndex - 1)}
-              disabled={activeIndex === 0}
-              aria-label="Previous news"
-              className="w-10 h-10 flex items-center justify-center border border-neutral-200 text-neutral-400 hover:border-primary hover:text-primary hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
-            >
-              <ArrowIcon dir="left" />
-            </button>
-            <button
-              onClick={() => scrollTo(activeIndex + 1)}
-              disabled={activeIndex >= maxIndex}
-              aria-label="Next news"
-              className="w-10 h-10 flex items-center justify-center border border-neutral-200 text-neutral-400 hover:border-primary hover:text-primary hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
-            >
-              <ArrowIcon dir="right" />
-            </button>
+            {items.length > 0 && (
+              <>
+                <button
+                  onClick={() => scrollTo(activeIndex - 1)}
+                  disabled={activeIndex === 0}
+                  aria-label="Previous news"
+                  className="w-10 h-10 flex items-center justify-center border border-neutral-200 text-neutral-400 hover:border-primary hover:text-primary hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
+                >
+                  <ArrowIcon dir="left" />
+                </button>
+                <button
+                  onClick={() => scrollTo(activeIndex + 1)}
+                  disabled={activeIndex >= maxIndex}
+                  aria-label="Next news"
+                  className="w-10 h-10 flex items-center justify-center border border-neutral-200 text-neutral-400 hover:border-primary hover:text-primary hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
+                >
+                  <ArrowIcon dir="right" />
+                </button>
+              </>
+            )}
             <Link
               href="/news"
               className="hidden sm:inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-primary border border-primary/30 px-4 py-2 hover:bg-primary/5 transition-colors ml-2"
@@ -127,87 +128,95 @@ export default function NewsCarousel({ articles }: { articles?: CarouselItem[] }
           </div>
         </div>
 
-        {/* Carousel Track */}
-        <div
-          ref={trackRef}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          className="flex gap-4 overflow-x-auto scroll-smooth hide-scrollbar"
-          style={{ scrollSnapType: 'x mandatory' }}
-        >
-          {items.map((item) => {
-            const catColor = CATEGORY_COLORS[item.category] ?? '#003DA5'
-            return (
-              <Link
-                key={item.id}
-                href={`/news/${item.slug}`}
-                className="group flex-shrink-0 flex flex-col bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer"
-                style={{
-                  scrollSnapAlign: 'start',
-                  width: visible === 1 ? '100%' : visible === 2 ? 'calc(50% - 8px)' : 'calc(33.333% - 11px)',
-                  minWidth: visible === 1 ? '100%' : visible === 2 ? 'calc(50% - 8px)' : 'calc(33.333% - 11px)',
-                }}
-              >
-                {/* Thumbnail */}
-                <div className="relative h-48 overflow-hidden flex-shrink-0">
-                  {item.featured_image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={item.featured_image_url}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div
-                      className="w-full h-full group-hover:scale-105 transition-transform duration-500"
-                      style={{ background: `linear-gradient(135deg, ${item.gradientFrom}, ${item.gradientTo})` }}
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  {/* Category badge */}
-                  <div className="absolute top-3 left-3">
-                    <span
-                      className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 bg-white"
-                      style={{ color: catColor }}
-                    >
-                      {item.category.replace('_', ' ')}
-                    </span>
-                  </div>
-                </div>
+        {items.length === 0 ? (
+          <div className="py-12 text-center text-neutral-500 font-body border border-neutral-200">
+            No news available
+          </div>
+        ) : (
+          <>
+            {/* Carousel Track */}
+            <div
+              ref={trackRef}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              className="flex gap-4 overflow-x-auto scroll-smooth hide-scrollbar"
+              style={{ scrollSnapType: 'x mandatory' }}
+            >
+              {items.map((item) => {
+                const catColor = CATEGORY_COLORS[item.category] ?? '#003DA5'
+                return (
+                  <Link
+                    key={item.id}
+                    href={`/news/${item.slug}`}
+                    className="group flex-shrink-0 flex flex-col bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer"
+                    style={{
+                      scrollSnapAlign: 'start',
+                      width: visible === 1 ? '100%' : visible === 2 ? 'calc(50% - 8px)' : 'calc(33.333% - 11px)',
+                      minWidth: visible === 1 ? '100%' : visible === 2 ? 'calc(50% - 8px)' : 'calc(33.333% - 11px)',
+                    }}
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative h-48 overflow-hidden flex-shrink-0">
+                      {item.featured_image_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.featured_image_url}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full group-hover:scale-105 transition-transform duration-500"
+                          style={{ background: `linear-gradient(135deg, ${item.gradientFrom}, ${item.gradientTo})` }}
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                      {/* Category badge */}
+                      <div className="absolute top-3 left-3">
+                        <span
+                          className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 bg-white"
+                          style={{ color: catColor }}
+                        >
+                          {item.category.replace('_', ' ')}
+                        </span>
+                      </div>
+                    </div>
 
-                {/* Content */}
-                <div className="p-5 flex flex-col flex-1">
-                  <p className="text-neutral-400 text-[11px] mb-2">{formatDate(item.published_at)}</p>
-                  <h3 className="font-heading text-[0.95rem] font-bold text-neutral-900 leading-snug mb-3 group-hover:text-primary transition-colors line-clamp-2 flex-1">
-                    {item.title}
-                  </h3>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase text-primary/70 group-hover:text-primary transition-colors mt-auto">
-                    Read More
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                    </svg>
-                  </span>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
+                    {/* Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <p className="text-neutral-400 text-[11px] mb-2">{formatDate(item.published_at)}</p>
+                      <h3 className="font-heading text-[0.95rem] font-bold text-neutral-900 leading-snug mb-3 group-hover:text-primary transition-colors line-clamp-2 flex-1">
+                        {item.title}
+                      </h3>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase text-primary/70 group-hover:text-primary transition-colors mt-auto">
+                        Read More
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
 
-        {/* Dots */}
-        <div className="flex items-center justify-center gap-1.5 mt-6">
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`transition-all duration-300 cursor-pointer ${
-                i === activeIndex
-                  ? 'w-6 h-1.5 bg-primary'
-                  : 'w-1.5 h-1.5 bg-neutral-300 hover:bg-neutral-400'
-              }`}
-            />
-          ))}
-        </div>
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-1.5 mt-6">
+              {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`transition-all duration-300 cursor-pointer ${
+                    i === activeIndex
+                      ? 'w-6 h-1.5 bg-primary'
+                      : 'w-1.5 h-1.5 bg-neutral-300 hover:bg-neutral-400'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
         {/* Mobile CTA */}
         <div className="mt-6 text-center sm:hidden">

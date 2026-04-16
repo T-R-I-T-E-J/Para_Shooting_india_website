@@ -92,6 +92,13 @@ const terms = [
 // Data fetch
 // ---------------------------------------------------------------------------
 
+const CLASSIFICATION_ONLY = [
+  'classification',
+  'medical_classification',
+  'national_classification',
+  'ipc_license',
+]
+
 async function getDownloads(): Promise<Download[]> {
   try {
     const apiUrl =
@@ -102,7 +109,7 @@ async function getDownloads(): Promise<Download[]> {
     if (!res.ok) return []
     const json = await res.json()
     const items: Download[] = json?.data ?? json ?? []
-    return items.filter((d) => d.isActive)
+    return items.filter((d) => d.isActive && !CLASSIFICATION_ONLY.includes(d.category))
   } catch {
     return []
   }
