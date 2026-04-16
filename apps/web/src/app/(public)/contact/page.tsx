@@ -4,94 +4,110 @@ import Link from 'next/link'
 
 const leadershipCards = [
   {
-    role: 'Para Shooting Administration',
+    role: 'Administration',
     name: 'Mr. Pramod Raje',
-    credential: 'Administrative · Range Coordination',
+    credential: 'NS-NIS & ISSF Coach D License · WSPS & ISSF Judge',
     phone: '+91 95827 43138',
     phoneTel: '+919582743138',
-    email: 'theparashootingindia@gmail.com',
+    email: 'stcparashootng@gmail.com',
   },
   {
-    role: 'Administrative — Office Queries',
+    role: 'Administrative — Range Coordination',
     name: 'Mr. Pavittar',
-    credential: 'Administrative Support',
+    credential: 'ISSF Coach C and D',
     phone: '+91 70152 64709',
     phoneTel: '+917015264709',
     email: 'theparashootingindia@gmail.com',
   },
   {
-    role: 'Technical Rules & Conduct — Rifle/Pistol',
+    role: 'Administrative — Office Queries',
     name: 'Mr. Hardik Rajput',
-    credential: 'Equipment Technical Rules & Conduct · ISSF Coach C&D · WSPS & ISSF Jury · Director Sports Ops-PCI · 8th PEFI National Awardee',
+    credential: 'Administrative Support',
     phone: '+91 98106 44202',
     phoneTel: '+919810644202',
     email: 'theparashootingindia@gmail.com',
   },
   {
-    role: 'Media Incharge',
+    role: 'Technical Rules & Conduct — Rifle/Pistol',
     name: 'Mr. Vivek Saini',
-    credential: 'NS-NIS & ISSF Coach D License · WSPS & ISSF Judge',
+    credential: 'WSPS & ISSF Jury · Director Sports Ops-PCI · 8th PEFI National Awardee',
     phone: '+91 88025 62883',
     phoneTel: '+918802562883',
     email: 'theparashootingindia@gmail.com',
   },
   {
-    role: 'Competition Incharge',
+    role: 'Equipment Technical Rules & Conduct',
     name: 'Mr. Charanjeet Singh Ghuman',
-    credential: 'WSPS & ISSF Jury · Founder and Treasurer Para Target Shooting Association Pune',
+    credential: 'WSPS & ISSF Jury',
     phone: '+91 93555 97111',
     phoneTel: '+919355597111',
     email: 'theparashootingindia@gmail.com',
   },
   {
     role: 'Medical Classification Incharge',
-    name: 'Mr. Amit Panwar',
-    credential: 'Medical Classifier · International Medalist in Para Sports',
-    phone: '+91 83077 12992',
-    phoneTel: '+918307712992',
+    name: 'Ms. Guranchal Pawar',
+    credential: 'Medical Classifier',
+    phone: '+91 98151 11552',
+    phoneTel: '+919815111552',
     email: 'medicalclassification@gmail.com',
   },
   {
     role: 'Medical Classification Co-ordinator',
-    name: 'Mr. Shantnu Thakur',
-    credential: 'WSPS Judge',
-    phone: '+91 94666 67417',
-    phoneTel: '+919466667417',
+    name: 'Mr. Ishwar Singh',
+    credential: 'Medical Classification Support',
+    phone: '+91 98136 49016',
+    phoneTel: '+919813649016',
     email: 'medicalclassification@gmail.com',
   },
   {
     role: 'Education Program Incharge',
     name: 'Wing Comdr. Shantanu',
-    credential: 'WSPS & ISSF Judge',
+    credential: 'International Medalist in Para Sports',
     phone: '+91 80079 12900',
     phoneTel: '+918007912900',
-    email: 'stcparashooting@gmail.com',
+    email: 'theparashootingindia@gmail.com',
+  },
+  {
+    role: 'Media Incharge',
+    name: 'Mr. Shantnu Thakur',
+    credential: 'WSPS & ISSF Judge',
+    phone: '+91 94666 67417',
+    phoneTel: '+919466667417',
+    email: 'stcparashootng@gmail.com',
+  },
+  {
+    role: 'Competition Incharge',
+    name: 'Mr. Amit Panwar',
+    credential: 'WSPS Judge',
+    phone: '+91 83077 12992',
+    phoneTel: '+918307712992',
+    email: 'theparashootingindia@gmail.com',
   },
 ]
 
 const zoneIncharges = [
-  { zone: 'East Zone', name: 'Ms. Sanjana Baruah', phone: '+91 96129 05586', phoneTel: '+919612905586' },
-  { zone: 'West Zone', name: 'Mr. Aakash Kumbhar', phone: '+91 76665 20812', phoneTel: '+917666520812' },
-  { zone: 'South Zone', name: 'Mr. Varanasi Sandeep', phone: '+91 90521 26394', phoneTel: '+919052126394' },
-  { zone: 'North Zone', name: 'Mr. Shiva Kkaranwal', phone: '+91 91050 35678', phoneTel: '+919105035678' },
+  { zone: 'East Zone', name: 'Ms. Sanjana Baruah', phone: '+91 96129 05586', phoneTel: '+919612905586', credential: 'WSPS & ISSF Jury' },
+  { zone: 'West Zone', name: 'Mr. Aakash Kumbhar', phone: '+91 76665 20812', phoneTel: '+917666520812', credential: 'Founder & Treasurer Para Target Shooting Association Pune' },
+  { zone: 'South Zone', name: 'Mr. Varanasi Sandeep', phone: '+91 90521 26394', phoneTel: '+919052126394', credential: 'WSPS & ISSF Judge' },
+  { zone: 'North Zone', name: 'Mr. Shiva Kkaranwal', phone: '+91 91050 35678', phoneTel: '+919105035678', credential: 'WSPS & ISSF Judge' },
 ]
 
 const directoryRows = [
   { role: 'Chairperson — STC Para Shooting', name: 'Mr. Jaiprakash Nautiyal', phone: '+91 95600 50909', phoneTel: '+919560050909', email: 'chairmanparashooting@paralympicindia.com', badge: 'Chairman', badgeStyle: 'bg-gold/10 text-[#7A6008] border border-gold/30' },
-  { role: 'Para Shooting Administration', name: 'Mr. Pramod Raje', phone: '+91 95827 43138', phoneTel: '+919582743138', email: 'theparashootingindia@gmail.com', badge: 'Administration', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
-  { role: 'Administrative — Office Queries', name: 'Mr. Pavittar', phone: '+91 70152 64709', phoneTel: '+917015264709', email: 'theparashootingindia@gmail.com', badge: 'Administration', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
-  { role: 'Technical Rules & Conduct — Rifle/Pistol', name: 'Mr. Hardik Rajput', phone: '+91 98106 44202', phoneTel: '+919810644202', email: 'theparashootingindia@gmail.com', badge: 'Technical', badgeStyle: 'bg-green/8 text-green border border-green/20' },
-  { role: 'Media Incharge', name: 'Mr. Vivek Saini', phone: '+91 88025 62883', phoneTel: '+918802562883', email: 'theparashootingindia@gmail.com', badge: 'Media', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
-  { role: 'Competition Incharge', name: 'Mr. Charanjeet Singh Ghuman', phone: '+91 93555 97111', phoneTel: '+919355597111', email: 'theparashootingindia@gmail.com', badge: 'Competition', badgeStyle: 'bg-green/8 text-green border border-green/20' },
+  { role: 'Administration', name: 'Mr. Pramod Raje', phone: '+91 95827 43138', phoneTel: '+919582743138', email: 'stcparashootng@gmail.com', badge: 'Administration', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
+  { role: 'Administrative — Range Coordination', name: 'Mr. Pavittar', phone: '+91 70152 64709', phoneTel: '+917015264709', email: 'theparashootingindia@gmail.com', badge: 'Administration', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
+  { role: 'Administrative — Office Queries', name: 'Mr. Hardik Rajput', phone: '+91 98106 44202', phoneTel: '+919810644202', email: 'theparashootingindia@gmail.com', badge: 'Administration', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
+  { role: 'Technical Rules & Conduct — Rifle/Pistol', name: 'Mr. Vivek Saini', phone: '+91 88025 62883', phoneTel: '+918802562883', email: 'theparashootingindia@gmail.com', badge: 'Technical', badgeStyle: 'bg-green/8 text-green border border-green/20' },
+  { role: 'Equipment Technical Rules & Conduct', name: 'Mr. Charanjeet Singh Ghuman', phone: '+91 93555 97111', phoneTel: '+919355597111', email: 'theparashootingindia@gmail.com', badge: 'Technical', badgeStyle: 'bg-green/8 text-green border border-green/20' },
   { role: 'East Zone Incharge', name: 'Ms. Sanjana Baruah', phone: '+91 96129 05586', phoneTel: '+919612905586', email: 'theparashootingindia@gmail.com', badge: 'East Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
   { role: 'West Zone Incharge', name: 'Mr. Aakash Kumbhar', phone: '+91 76665 20812', phoneTel: '+917666520812', email: 'theparashootingindia@gmail.com', badge: 'West Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
-  { role: 'South Zone Incharge', name: 'Mr. Varanasi Sandeep', phone: '+91 90521 26394', phoneTel: '+919052126394', email: 'theparashootingindia@gmail.com', badge: 'South Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
-  { role: 'North Zone Incharge', name: 'Mr. Shiva Kkaranwal', phone: '+91 91050 35678', phoneTel: '+919105035678', email: 'theparashootingindia@gmail.com', badge: 'North Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
-  { role: 'Medical Classification Incharge', name: 'Mr. Amit Panwar', phone: '+91 83077 12992', phoneTel: '+918307712992', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
-  { role: 'Medical Classification Co-ordinator', name: 'Mr. Shantnu Thakur', phone: '+91 94666 67417', phoneTel: '+919466667417', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
-  { role: 'Education Program Incharge', name: 'Wing Comdr. Shantanu', phone: '+91 80079 12900', phoneTel: '+918007912900', email: 'stcparashooting@gmail.com', badge: 'Education', badgeStyle: 'bg-green/8 text-green border border-green/20' },
-  { role: 'Additional Member', name: 'Ms. Guranchal Pawar', phone: '+91 98136 49016', phoneTel: '+919813649016', email: 'stcparashooting@gmail.com', badge: 'Member', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
-  { role: 'Additional Member', name: 'Mr. Ishwar Singh', phone: '—', phoneTel: '', email: 'stcparashooting@gmail.com', badge: 'Member', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
+  { role: 'South Zone Incharge', name: 'Mr. Varanasi Sandeep', phone: '+91 90521 26394', phoneTel: '+919052126394', email: 'stcparashootng@gmail.com', badge: 'South Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
+  { role: 'North Zone Incharge', name: 'Mr. Shiva Kkaranwal', phone: '+91 91050 35678', phoneTel: '+919105035678', email: 'stcparashootng@gmail.com', badge: 'North Zone', badgeStyle: 'bg-orange/8 text-orange border border-orange/20' },
+  { role: 'Medical Classification Incharge', name: 'Ms. Guranchal Pawar', phone: '+91 98151 11552', phoneTel: '+919815111552', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
+  { role: 'Medical Classification Co-ordinator', name: 'Mr. Ishwar Singh', phone: '+91 98136 49016', phoneTel: '+919813649016', email: 'medicalclassification@gmail.com', badge: 'Medical', badgeStyle: 'bg-red-50 text-red-700 border border-red-200' },
+  { role: 'Education Program Incharge', name: 'Wing Comdr. Shantanu', phone: '+91 80079 12900', phoneTel: '+918007912900', email: 'theparashootingindia@gmail.com', badge: 'Education', badgeStyle: 'bg-green/8 text-green border border-green/20' },
+  { role: 'Media Incharge', name: 'Mr. Shantnu Thakur', phone: '+91 94666 67417', phoneTel: '+919466667417', email: 'stcparashootng@gmail.com', badge: 'Media', badgeStyle: 'bg-navy/8 text-navy border border-navy/15' },
+  { role: 'Competition Incharge', name: 'Mr. Amit Panwar', phone: '+91 83077 12992', phoneTel: '+918307712992', email: 'theparashootingindia@gmail.com', badge: 'Competition', badgeStyle: 'bg-green/8 text-green border border-green/20' },
 ]
 
 export default function ContactPage() {
@@ -223,25 +239,10 @@ export default function ContactPage() {
             ))}
           </div>
 
-          {/* Additional members */}
-          <div className="mt-5 bg-neutral-50 rounded-2xl p-5 border border-neutral-100 flex flex-wrap items-center gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-navy flex items-center justify-center flex-shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange mb-0.5">Additional Member</p>
-                <p className="font-heading text-base font-bold text-navy">Ms. Guranchal Pawar</p>
-                <p className="text-xs text-neutral-400">WSPS & ISSF Jury · <a href="tel:+919813649016" className="text-navy hover:underline">+91 98136 49016</a></p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 ml-auto">
-              <div>
-                <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange mb-0.5">Additional Member</p>
-                <p className="font-heading text-base font-bold text-navy">Mr. Ishwar Singh</p>
-                <p className="text-xs text-neutral-400">WSPS & ISSF Judge · Contact via STC email</p>
-              </div>
-            </div>
+          {/* Zone email & additional info */}
+          <div className="mt-5 bg-neutral-50 rounded-2xl p-5 border border-neutral-100">
+            <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange mb-3">Zone Contact Email</p>
+            <p className="text-sm text-neutral-600">All zone incharges can be reached at <a href="mailto:theparashootingindia@gmail.com" className="text-navy font-semibold hover:underline">theparashootingindia@gmail.com</a> or <a href="mailto:stcparashootng@gmail.com" className="text-navy font-semibold hover:underline">stcparashootng@gmail.com</a></p>
           </div>
         </div>
       </section>
