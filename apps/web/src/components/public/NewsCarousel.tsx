@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { DUMMY_NEWS, CATEGORY_COLORS } from '@/data/news-dummy'
+import { CATEGORY_COLORS } from '@/data/news-dummy'
 
 interface CarouselItem {
   id: number

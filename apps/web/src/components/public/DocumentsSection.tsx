@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { DUMMY_DOCUMENTS, DOC_CATEGORY_META, DEFAULT_DOC_META } from '@/data/documents-dummy'
+import { DOC_CATEGORY_META, DEFAULT_DOC_META } from '@/data/documents-dummy'
 
 interface DocumentItem {
   id: string
@@ -33,7 +33,7 @@ async function getLatestDocuments(): Promise<DocumentItem[]> {
       })
       .slice(0, 6)
   } catch {
-    return DUMMY_DOCUMENTS.slice(0, 6) as DocumentItem[]
+    return []
   }
 }
 
@@ -47,6 +47,8 @@ function formatDate(dateStr: string) {
 
 export default async function DocumentsSection() {
   const docs = await getLatestDocuments()
+
+  if (docs.length === 0) return null
 
   return (
     <section className="py-16 px-6 bg-white border-t border-neutral-100">

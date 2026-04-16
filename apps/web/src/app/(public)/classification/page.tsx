@@ -319,32 +319,32 @@ export default async function ClassificationPage({
       </section>
 
       {/* Documents & Guidelines — latest 6 preview */}
-      {docs.length > 0 && (
-        <section className="py-16 px-6 border-t border-neutral-200">
-          <div className="max-w-7xl mx-auto">
+      <section className="py-16 px-6 border-t border-neutral-200">
+        <div className="max-w-7xl mx-auto">
 
-            {/* Section header */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-              <div>
-                <p className="text-[#C8A415] text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Official Documents</p>
-                <h2 className="font-heading text-2xl font-bold text-neutral-900">Documents &amp; Guidelines</h2>
-                <p className="text-neutral-500 text-sm mt-1 max-w-xl">
-                  Classification rules, medical forms, and IPC licence documents.
-                </p>
-              </div>
-              <Link
-                href="/classification/documents"
-                className="group inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-500 hover:text-[#C8A415] transition-colors whitespace-nowrap"
-              >
-                {totalDocs > DOCS_LIMIT && <span className="text-neutral-300 group-hover:text-[#C8A415]/40 transition-colors">{totalDocs} total</span>}
-                <span>Browse All</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-1 transition-transform">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
+          {/* Section header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <p className="text-[#C8A415] text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Official Documents</p>
+              <h2 className="font-heading text-2xl font-bold text-neutral-900">Documents &amp; Guidelines</h2>
+              <p className="text-neutral-500 text-sm mt-1 max-w-xl">
+                Classification rules, medical forms, and IPC licence documents.
+              </p>
             </div>
+            <Link
+              href="/classification/documents"
+              className="group inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-500 hover:text-[#C8A415] transition-colors whitespace-nowrap"
+            >
+              {totalDocs > DOCS_LIMIT && <span className="text-neutral-300 group-hover:text-[#C8A415]/40 transition-colors">{totalDocs} total</span>}
+              <span>Browse Full Library</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-1 transition-transform">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+          </div>
 
-            {/* List preview */}
+          {/* List preview */}
+          {docs.length > 0 ? (
             <div className="border border-neutral-200 divide-y divide-neutral-100 mb-6">
               {sortedDocs.slice(0, DOCS_LIMIT).map((d) => {
                 const meta = CATEGORY_META[d.category] ?? DEFAULT_META
@@ -397,78 +397,41 @@ export default async function ClassificationPage({
                 )
               })}
             </div>
-
-            {/* Footer CTA bar */}
-            <div className="flex items-center justify-between py-4 px-6 border border-neutral-200 bg-neutral-50">
-              <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#C8A415]" />
-                <span className="text-neutral-500 text-[12px]">
-                  {totalDocs > DOCS_LIMIT
-                    ? <>Showing <span className="text-neutral-700 font-semibold">{DOCS_LIMIT}</span> of <span className="text-neutral-700 font-semibold">{totalDocs}</span> documents</>
-                    : <><span className="text-neutral-700 font-semibold">{totalDocs}</span> document{totalDocs !== 1 ? 's' : ''} total</>}
-                </span>
-              </div>
-              <Link
-                href="/classification/documents"
-                className="group inline-flex items-center gap-2.5 bg-[#C8A415] text-white text-[11px] font-extrabold tracking-widest uppercase px-5 py-2.5 hover:bg-[#b8940f] transition-colors"
-              >
-                Browse Full Library
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-0.5 transition-transform">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
+          ) : (
+            <div className="py-12 text-center text-neutral-400 border border-neutral-200 bg-neutral-50 mb-6">
+              No classification documents available at this time.
             </div>
+          )}
 
-          </div>
-        </section>
-      )}
-
-      {/* Upcoming Camps */}
-      <section className="py-16 px-6 border-t border-neutral-200 bg-neutral-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading text-2xl font-bold text-neutral-900 mb-2">Upcoming Classification Camps</h2>
-          <p className="text-neutral-500 text-sm mb-8">Register early — spots are limited and priority is given to first-time classification requests.</p>
-
-          <div className="border border-neutral-200 overflow-hidden bg-white">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-neutral-50 border-b border-neutral-200">
-                  <th className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-400">Date</th>
-                  <th className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-400">Location</th>
-                  <th className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-400">Type</th>
-                  <th className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-400">Capacity</th>
-                  <th className="px-6 py-4 text-right text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-400">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-100">
-                {filteredCamps.length > 0 ? (
-                  filteredCamps.map((camp, i) => (
-                    <tr key={i} className="hover:bg-neutral-50 transition-colors">
-                      <td className="px-6 py-5 font-semibold text-[#C8A415] text-[13px]">{camp.date}</td>
-                      <td className="px-6 py-5 text-neutral-600 text-[13px]">{camp.location}</td>
-                      <td className="px-6 py-5">
-                        <span className="text-[10px] font-bold tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2 py-1 border border-neutral-200">{camp.type}</span>
-                      </td>
-                      <td className="px-6 py-5 text-neutral-500 text-[13px]">{camp.spots}</td>
-                      <td className="px-6 py-5 text-right">
-                        <button className="bg-primary text-white text-[11px] font-extrabold tracking-widest uppercase px-4 py-2 hover:bg-primary-light transition-colors cursor-pointer">
-                          Register
-                        </button>
-                      </td>
-                    </tr>
-                  ))
+          {/* Footer CTA bar */}
+          <div className="flex items-center justify-between py-4 px-6 border border-neutral-200 bg-neutral-50">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#C8A415]" />
+              <span className="text-neutral-500 text-[12px]">
+                {totalDocs > 0 ? (
+                  totalDocs > DOCS_LIMIT
+                    ? <>Showing <span className="text-neutral-700 font-semibold">{DOCS_LIMIT}</span> of <span className="text-neutral-700 font-semibold">{totalDocs}</span> documents</>
+                    : <><span className="text-neutral-700 font-semibold">{totalDocs}</span> document{totalDocs !== 1 ? 's' : ''} total</>
                 ) : (
-                  <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-neutral-400">
-                      No upcoming camps matched &ldquo;{sq}&rdquo;.
-                    </td>
-                  </tr>
+                  'No documents found'
                 )}
-              </tbody>
-            </table>
+              </span>
+            </div>
+            <Link
+              href="/classification/documents"
+              className="group inline-flex items-center gap-2.5 bg-[#C8A415] text-white text-[11px] font-extrabold tracking-widest uppercase px-5 py-2.5 hover:bg-[#b8940f] transition-colors"
+            >
+              Browse Full Library
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="translate-x-0 group-hover:translate-x-0.5 transition-transform">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
           </div>
+
         </div>
       </section>
+
+
 
       {/* CTA */}
       <section className="py-16 px-6 border-t border-neutral-200">

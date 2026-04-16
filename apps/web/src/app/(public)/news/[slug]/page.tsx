@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import SanitizedHtml from '@/components/SanitizedHtml'
-import { DUMMY_NEWS, getArticleBySlug, getRelatedArticles, CATEGORY_COLORS } from '@/data/news-dummy'
+import { CATEGORY_COLORS } from '@/data/news-dummy'
 
 export const dynamic = 'force-dynamic'
 

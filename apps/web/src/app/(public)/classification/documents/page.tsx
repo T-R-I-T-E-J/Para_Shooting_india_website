@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { DUMMY_DOCUMENTS, DOC_CATEGORY_META, DEFAULT_DOC_META } from '@/data/documents-dummy'
+import { DOC_CATEGORY_META, DEFAULT_DOC_META } from '@/data/documents-dummy'
 
 // ---------------------------------------------------------------------------
 // Types

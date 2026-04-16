@@ -22,7 +22,7 @@ export class DownloadsService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.seedInitialData();
+    // Seeding logic removed to prevent recreating dummy data in production
   }
 
   async create(createDownloadDto: CreateDownloadDto): Promise<Download> {

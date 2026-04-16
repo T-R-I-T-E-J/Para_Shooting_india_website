@@ -8,52 +8,6 @@ import RevealSection from '@/components/public/RevealSection'
 import DocumentsSection from '@/components/public/DocumentsSection'
 import TickerBar from '@/components/public/TickerBar'
 
-const featuredNews = [
-  {
-    category: 'Championship',
-    date: '24 Feb 2026',
-    title: 'Indian Team Secures 5 Medals at World Cup',
-    snippet:
-      'In an outstanding display of skill, the Indian para shooting contingent brought home three gold and two silver medals from the recent World Cup in Cheongju.',
-    imageGradientFrom: '#001A4D',
-    imageGradientTo: '#003DA5',
-    slug: 'world-cup-medals',
-  },
-  {
-    category: 'Announcement',
-    date: '18 Feb 2026',
-    title: 'New Coaching Camp Dates Revealed',
-    snippet:
-      'The upcoming National Technical and Coaches Course will be held at Dr. Karni Singh Shooting Range from March 10th to March 15th.',
-    imageGradientFrom: '#C8A415',
-    imageGradientTo: '#8B7005',
-    slug: 'new-camp-dates',
-  },
-  {
-    category: 'General',
-    date: '05 Feb 2026',
-    title: 'Updated Classification Roster',
-    snippet:
-      'The master national classification roster has been updated for Q1 2026. Athletes are requested to check their statuses before upcoming regionals.',
-    imageGradientFrom: '#046A38',
-    imageGradientTo: '#014022',
-    slug: 'updated-roster',
-  },
-]
-
-const upcomingEvents = [
-  { day: '10', month: 'Mar', title: 'National Technical and Coaches Course', location: 'Dr. Karni Singh Shooting Range', status: 'upcoming' as const },
-  { day: '22', month: 'Apr', title: 'Zonal Para Shooting Championship', location: 'Pune Balewadi Stadium', status: 'upcoming' as const },
-  { day: '05', month: 'May', title: 'Medical Classification Seminar', location: 'Virtual / Zoom', status: 'completed' as const },
-  { day: '14', month: 'Jun', title: 'National Selection Trials', location: 'Dr. Karni Singh Shooting Range', status: 'upcoming' as const },
-]
-
-const featuredMedia = [
-  { type: 'video' as const, title: 'Highlights from the 5th National Para Shooting Championship', date: '20 Dec 2025', videoDuration: '04:12', thumbnailFrom: '#1E293B', thumbnailTo: '#0F172A' },
-  { type: 'gallery' as const, title: 'Training Camp - New Delhi', date: '15 Nov 2025', thumbnailFrom: '#C8A415', thumbnailTo: '#A5840D' },
-  { type: 'gallery' as const, title: 'International Classification Workshop', date: '10 Oct 2025', thumbnailFrom: '#046A38', thumbnailTo: '#024D28' },
-]
-
 const stats = [
   { value: '900+', label: 'Registered Athletes' },
   { value: '25+', label: 'International Athletes' },
@@ -171,7 +125,7 @@ async function getLatestUpdatesTicker() {
 
 export default async function HomePage() {
   const latestNews = await getLatestNews()
-  const realEvents = await getUpcomingEvents() || upcomingEvents
+  const realEvents = await getUpcomingEvents() || []
   const mediaItems = await getFeaturedMedia()
   const tickerUpdates = await getLatestUpdatesTicker()
   
@@ -375,45 +329,47 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════
           EVENTS — Dark section with bold grid
       ══════════════════════════════════════════ */}
-      <section id="events" className="py-28 px-6 bg-[#001A4D] relative overflow-hidden">
-        {/* Background texture */}
-        <div className="absolute inset-0 opacity-[0.04]" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-          backgroundSize: '32px 32px',
-        }} />
-        {/* Gold diagonal accent */}
-        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-gold/0 via-gold/30 to-gold/0 hidden xl:block" style={{ right: '15%' }} />
+      {realEvents && realEvents.length > 0 && (
+        <section id="events" className="py-28 px-6 bg-[#001A4D] relative overflow-hidden">
+          {/* Background texture */}
+          <div className="absolute inset-0 opacity-[0.04]" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '32px 32px',
+          }} />
+          {/* Gold diagonal accent */}
+          <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-gold/0 via-gold/30 to-gold/0 hidden xl:block" style={{ right: '15%' }} />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex items-end justify-between mb-14">
-            <RevealSection>
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-[2px] bg-gold" />
-                  <span className="text-[10px] font-black tracking-[0.3em] uppercase text-gold/60">Calendar</span>
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex items-end justify-between mb-14">
+              <RevealSection>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-[2px] bg-gold" />
+                    <span className="text-[10px] font-black tracking-[0.3em] uppercase text-gold/60">Calendar</span>
+                  </div>
+                  <h2 className="font-heading text-[clamp(28px,4vw,48px)] font-black text-white leading-tight">
+                    Upcoming Championships
+                  </h2>
                 </div>
-                <h2 className="font-heading text-[clamp(28px,4vw,48px)] font-black text-white leading-tight">
-                  Upcoming Championships
-                </h2>
-              </div>
-            </RevealSection>
-            <RevealSection>
-              <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[12px] font-black tracking-[0.2em] uppercase text-gold border-b-2 border-gold/40 pb-1 hover:border-gold transition-colors">
-                Full Calendar
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </Link>
-            </RevealSection>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10">
-            {realEvents.map((event: any, i: number) => (
-              <RevealSection key={`${event.day}-${event.month}-${i}`} delay={i * 80}>
-                <EventCard {...event} />
               </RevealSection>
-            ))}
+              <RevealSection>
+                <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[12px] font-black tracking-[0.2em] uppercase text-gold border-b-2 border-gold/40 pb-1 hover:border-gold transition-colors">
+                  Full Calendar
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </Link>
+              </RevealSection>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10">
+              {realEvents.map((event: any, i: number) => (
+                <RevealSection key={`${event.day}-${event.month}-${i}`} delay={i * 80}>
+                  <EventCard {...event} />
+                </RevealSection>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
 
       {/* ══════════════════════════════════════════

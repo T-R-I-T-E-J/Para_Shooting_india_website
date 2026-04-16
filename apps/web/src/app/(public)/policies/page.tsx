@@ -171,34 +171,32 @@ export default async function PoliciesPage() {
       </section>
 
       {/* ── Documents preview strip ───────────────────────────────────────── */}
-      {preview.length > 0 && (
-        <section className="py-16 px-6 border-t border-neutral-200">
-          <div className="max-w-7xl mx-auto">
+      <section className="py-16 px-6 border-t border-neutral-200">
+        <div className="max-w-7xl mx-auto">
 
-            {/* Section header */}
-            <div className="flex items-end justify-between mb-10">
-              <div>
-                <p className="text-[#C8A415] font-body text-[10px] font-bold tracking-[0.35em] uppercase mb-2">
-                  Document Library
-                </p>
-                <h2 className="font-heading text-3xl font-bold text-neutral-900">
-                  Latest Documents
-                </h2>
-              </div>
-              {hasMore && (
-                <Link
-                  href="/policies/documents"
-                  className="hidden md:inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-[#C8A415] border border-[#C8A415]/40 px-5 py-2.5 hover:bg-[#C8A415]/10 transition-colors"
-                >
-                  Browse Full Library
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              )}
+          {/* Section header */}
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[#C8A415] font-body text-[10px] font-bold tracking-[0.35em] uppercase mb-2">
+                Document Library
+              </p>
+              <h2 className="font-heading text-3xl font-bold text-neutral-900">
+                Latest Documents
+              </h2>
             </div>
+            <Link
+              href="/policies/documents"
+              className="hidden md:inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-[#C8A415] border border-[#C8A415]/40 px-5 py-2.5 hover:bg-[#C8A415]/10 transition-colors"
+            >
+              Browse Full Library
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
 
-            {/* List */}
+          {/* List */}
+          {preview.length > 0 ? (
             <div className="border border-neutral-200 divide-y divide-neutral-100">
               {preview.map((d) => {
                 const meta = CATEGORY_META[d.category] ?? DEFAULT_META
@@ -264,28 +262,31 @@ export default async function PoliciesPage() {
                 )
               })}
             </div>
+          ) : (
+            <div className="py-12 text-center text-neutral-400 border border-neutral-200 bg-neutral-50 mb-6">
+              No policies documents available at this time.
+            </div>
+          )}
 
-            {/* Footer: count + CTA */}
-            {hasMore && (
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-neutral-200">
-                <p className="text-neutral-400 text-[12px]">
-                  Showing <span className="text-neutral-600 font-semibold">6</span> of{' '}
-                  <span className="text-neutral-600 font-semibold">{totalCount}</span> documents
-                </p>
-                <Link
-                  href="/policies/documents"
-                  className="inline-flex items-center gap-2 bg-[#C8A415] text-white font-body font-extrabold text-[11px] tracking-widest uppercase px-7 py-3 hover:bg-[#b8940f] transition-colors"
-                >
-                  Browse Full Library
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            )}
+          {/* Footer: count + CTA */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-neutral-200">
+            <p className="text-neutral-400 text-[12px]">
+              {totalCount > 0 ? (
+                <>Showing <span className="text-neutral-600 font-semibold">{preview.length}</span> of{' '}<span className="text-neutral-600 font-semibold">{totalCount}</span> documents</>
+              ) : 'No documents found'}
+            </p>
+            <Link
+              href="/policies/documents"
+              className="inline-flex items-center gap-2 bg-[#C8A415] text-white font-body font-extrabold text-[11px] tracking-widest uppercase px-7 py-3 hover:bg-[#b8940f] transition-colors"
+            >
+              Browse Full Library
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* ── Terms & Conditions ────────────────────────────────────────────── */}
       <section className="py-16 px-6 mt-8 border-t border-neutral-200 bg-neutral-50">

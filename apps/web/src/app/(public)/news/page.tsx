@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import NewsCard from '@/components/public/NewsCard'
 import NewsFilter from '@/components/public/NewsFilter'
-import { DUMMY_NEWS } from '@/data/news-dummy'
+
 import { useSearchParams } from 'next/navigation'
 
 interface NewsArticle {
