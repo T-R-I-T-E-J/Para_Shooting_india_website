@@ -108,7 +108,7 @@ export default function AdminCollectionDetailPage() {
   }
 
   useEffect(() => {
-    fetchCollection()
+    if (id) fetchCollection()
   }, [id])
 
   if (loading) {
