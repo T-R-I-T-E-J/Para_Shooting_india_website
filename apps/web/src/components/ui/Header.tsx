@@ -27,6 +27,7 @@ const navItems: NavItem[] = [
     href: '/news',
     children: [
       { label: 'Latest News', href: '/news' },
+      { label: 'Latest Updates', href: '/news/latest-updates' },
       { label: 'Upcoming Events', href: '/events' },
     ],
   },

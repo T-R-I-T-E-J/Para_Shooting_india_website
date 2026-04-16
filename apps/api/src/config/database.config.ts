@@ -30,10 +30,7 @@ export const getDatabaseConfig = (
     migrationsRun: process.env.RUN_MIGRATIONS === 'true', // Controlled by env var
     dropSchema: false,
     logging: true, // Keep logging to see what happens
-    ssl:
-      process.env.NODE_ENV === 'production' || process.env.POSTGRES_URL
-        ? { rejectUnauthorized: false }
-        : false,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
     extra: {
       max: 20,
       connectionTimeoutMillis: 30000,

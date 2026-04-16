@@ -36,6 +36,8 @@ import { envValidationSchema } from './config/env.validation';
 import { LoggerModule } from './common/logger/logger.module';
 import { CompetitionsModule } from './competitions/competitions.module';
 import { RegistrationsModule } from './registrations/registrations.module';
+import { LatestUpdatesModule } from './latest-updates/latest-updates.module';
+import { MediaCollectionsModule } from './media-collections/media-collections.module.js';
 
 // Disable ServeStaticModule in production (Render, Vercel, or NODE_ENV=production)
 // On Render, RENDER_EXTERNAL_URL is always set (e.g., https://yourapp.onrender.com)
@@ -146,6 +148,8 @@ const uploadServeStaticModules = isProduction
 
     CompetitionsModule,
     RegistrationsModule,
+    LatestUpdatesModule,
+    MediaCollectionsModule,
   ],
   controllers: [AppController],
   providers: [

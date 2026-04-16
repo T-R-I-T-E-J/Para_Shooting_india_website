@@ -17,7 +17,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
               alt="Paralympic Committee India"
               width={111}
               height={104}
+              style={{ width: 'auto', height: 'auto' }}
               className="object-contain"
+              priority
             />
             <span className="font-heading font-bold text-lg text-primary hidden sm:block">
               Para Shooting India

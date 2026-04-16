@@ -85,11 +85,6 @@ export default function Footer() {
             <Link href="/accessibility" className="text-white/35 hover:text-white transition-colors">Accessibility</Link>
           </div>
         </div>
-        
-        {/* Supported by */}
-        <div className="py-3 text-center text-[11px] text-white/25 border-t border-white/5 mx-auto w-full">
-          Supported by &nbsp;★&nbsp; Ministry of Youth Affairs &amp; Sports, Government of India &nbsp;·&nbsp; Recognised by IPC Germany, IWAS UK, APC UAE
-        </div>
       </div>
     </footer>
   )

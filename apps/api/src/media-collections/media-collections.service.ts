@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MediaCollection } from './entities/media-collection.entity.js';
-import { CollectionImage } from './entities/collection-image.entity.js';
-import { CreateMediaCollectionDto } from './dto/create-media-collection.dto.js';
-import { UpdateMediaCollectionDto } from './dto/update-media-collection.dto.js';
+import { MediaCollection } from './entities/media-collection.entity';
+import { CollectionImage } from './entities/collection-image.entity';
+import { CreateMediaCollectionDto } from './dto/create-media-collection.dto';
+import { UpdateMediaCollectionDto } from './dto/update-media-collection.dto';
 
 @Injectable()
 export class MediaCollectionsService {

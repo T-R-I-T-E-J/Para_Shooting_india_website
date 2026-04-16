@@ -1,13 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-const navLinks = [
+type NavChild = { name: string; path: string }
+type NavLink = {
+  name: string
+  path: string
+  children?: NavChild[]
+}
+
+const navLinks: NavLink[] = [
   { name: 'ABOUT US', path: '/about' },
-  { name: 'NEWS', path: '/news' },
+  {
+    name: 'NEWS',
+    path: '/news',
+    children: [
+      { name: 'Latest News', path: '/news' },
+      { name: 'Latest Updates', path: '/news/latest-updates' },
+    ],
+  },
   { name: 'EVENTS', path: '/events' },
   { name: 'AWARDS', path: '/awards' },
   { name: 'RESULTS', path: '/results' },
@@ -17,23 +31,10 @@ const navLinks = [
   { name: 'CONTACT', path: '/contact' },
 ]
 
-/** Proper Paralympic Agitos – three asymmetric arcs */
-function AgitosSVG() {
-  return (
-    <svg width="16" height="13" viewBox="0 0 48 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Red arc */}
-      <path d="M6 32 A22 22 0 0 1 28 10" stroke="#EE0000" strokeWidth="5" strokeLinecap="round" fill="none" />
-      {/* Blue arc */}
-      <path d="M12 38 A22 22 0 0 1 40 18" stroke="#0085C7" strokeWidth="5" strokeLinecap="round" fill="none" />
-      {/* Green arc */}
-      <path d="M20 34 A16 16 0 0 1 44 24" stroke="#009F6B" strokeWidth="5" strokeLinecap="round" fill="none" />
-    </svg>
-  )
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -42,12 +43,8 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close drawer on route change
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [pathname])
+  useEffect(() => { setMobileOpen(false) }, [pathname])
 
-  // Prevent body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -62,7 +59,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-          {/* Logo Zone */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 no-underline group cursor-pointer" aria-label="Para Shooting India – Home">
             <div className="bg-white rounded-md p-1 flex-shrink-0">
               <Image
@@ -76,10 +73,10 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-heading text-[13px] font-bold text-white leading-none tracking-wide">
-                PARALYMPIC COMMITTEE INDIA
+                STC PARA SHOOTING
               </span>
               <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/50 mt-1">
-                STC PARA SHOOTING
+                PARALYMPIC TECHNICAL COMMITTEE
               </span>
             </div>
           </Link>
@@ -87,7 +84,38 @@ export default function Navbar() {
           {/* Desktop Links */}
           <div className="hidden md:flex items-center h-full">
             {navLinks.map((link) => {
-              const isActive = pathname === link.path
+              const isActive = pathname === link.path || pathname.startsWith(link.path + '/')
+              if (link.children) {
+                return (
+                  <div key={link.name} className="relative h-full group flex items-center">
+                    <button
+                      className={`h-full px-3 flex items-center gap-1 text-[11.5px] font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer ${
+                        isActive ? 'text-white' : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      {link.name}
+                      <svg className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                      {isActive && <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-gold" />}
+                    </button>
+
+                    {/* Dropdown */}
+                    <div className="absolute top-full left-0 pt-1 hidden group-hover:block z-[1000] min-w-[200px]">
+                      <ul className="bg-white shadow-[0_8px_30px_rgba(0,0,0,0.15)] border border-neutral-100 rounded-md overflow-hidden">
+                        {link.children.map((child) => (
+                          <li key={child.path} className="border-b border-neutral-50 last:border-0">
+                            <Link
+                              href={child.path}
+                              className="block px-4 py-3 text-[12px] font-semibold text-neutral-700 hover:bg-[#001A4D] hover:text-white transition-colors tracking-wide"
+                            >
+                              {child.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )
+              }
               return (
                 <Link
                   key={link.name}
@@ -97,9 +125,7 @@ export default function Navbar() {
                   }`}
                 >
                   {link.name}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-gold" />
-                  )}
+                  {isActive && <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-gold" />}
                 </Link>
               )
             })}
@@ -112,7 +138,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Hamburger */}
           <button
             className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px] rounded-md hover:bg-white/10 transition-colors"
             onClick={() => setMobileOpen((v) => !v)}
@@ -126,7 +152,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Overlay */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-[850] bg-black/60 md:hidden"
@@ -135,7 +161,7 @@ export default function Navbar() {
         />
       )}
 
-      {/* Mobile Drawer Panel */}
+      {/* Mobile Drawer */}
       <div
         role="dialog"
         aria-modal="true"
@@ -162,7 +188,36 @@ export default function Navbar() {
         {/* Drawer Links */}
         <nav className="flex-1 flex flex-col py-4 overflow-y-auto">
           {navLinks.map((link) => {
-            const isActive = pathname === link.path
+            const isActive = pathname === link.path || pathname.startsWith(link.path + '/')
+            if (link.children) {
+              const expanded = mobileExpanded === link.name
+              return (
+                <div key={link.name}>
+                  <button
+                    onClick={() => setMobileExpanded(expanded ? null : link.name)}
+                    className={`w-full flex items-center justify-between px-6 py-3.5 text-sm font-semibold tracking-wider uppercase transition-colors border-l-2 ${
+                      isActive ? 'text-white border-gold bg-white/5' : 'text-white/60 hover:text-white border-transparent hover:border-white/20 hover:bg-white/5'
+                    }`}
+                  >
+                    {link.name}
+                    <svg className={`w-4 h-4 transition-transform ${expanded ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                  {expanded && (
+                    <div className="bg-white/5 border-l-2 border-gold/30 ml-6">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.path}
+                          href={child.path}
+                          className="block px-6 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }
             return (
               <Link
                 key={link.name}
