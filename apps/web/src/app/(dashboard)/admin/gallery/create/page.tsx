@@ -59,7 +59,7 @@ export default function CreateCollectionPage() {
       }
 
       const created = await createRes.json()
-      const collectionId: number = created.id
+      const collectionId: number = (created.data || created).id
 
       // 2. Upload featured image if selected
       if (featuredFile) {
