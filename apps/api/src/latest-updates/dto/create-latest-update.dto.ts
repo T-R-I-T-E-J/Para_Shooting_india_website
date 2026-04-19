@@ -1,4 +1,4 @@
-import { IsString, IsOptional, ValidateNested, IsObject } from 'class-validator';
+import { IsString, IsOptional, ValidateNested, IsObject, IsDateString } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class DocumentDto {
@@ -18,4 +18,8 @@ export class CreateLatestUpdateDto {
   @ValidateNested()
   @Type(() => DocumentDto)
   document?: DocumentDto;
+
+  @IsOptional()
+  @IsDateString()
+  date?: string;
 }

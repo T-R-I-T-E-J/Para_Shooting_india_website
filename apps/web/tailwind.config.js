@@ -66,6 +66,15 @@ module.exports = {
         nav: '0 2px 10px rgba(0, 0, 0, 0.05)',
         card: '0 1px 4px rgba(0, 0, 0, 0.08)',
       },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],

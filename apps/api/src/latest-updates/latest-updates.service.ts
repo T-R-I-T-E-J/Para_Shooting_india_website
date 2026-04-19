@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LatestUpdate } from './entities/latest-update.entity';
 import { CreateLatestUpdateDto } from './dto/create-latest-update.dto';
+import { UpdateLatestUpdateDto } from './dto/update-latest-update.dto';
 
 @Injectable()
 export class LatestUpdatesService {
@@ -13,13 +14,16 @@ export class LatestUpdatesService {
 
   async create(createDto: CreateLatestUpdateDto) {
     const update = this.latestUpdateRepo.create(createDto);
+    if (!update.date) {
+      update.date = new Date();
+    }
     return await this.latestUpdateRepo.save(update);
   }
 
   async findAll(limit?: number) {
     const query = this.latestUpdateRepo
       .createQueryBuilder('update')
-      .orderBy('update.created_at', 'DESC');
+      .orderBy('update.date', 'DESC');
       
     if (limit) {
       query.take(limit);
@@ -34,6 +38,15 @@ export class LatestUpdatesService {
       throw new NotFoundException(`Latest update with ID ${id} not found`);
     }
     return update;
+  }
+
+  async update(id: number, updateDto: UpdateLatestUpdateDto) {
+    const update = await this.findOne(id);
+    Object.assign(update, updateDto);
+    if (!update.date) {
+      update.date = new Date();
+    }
+    return await this.latestUpdateRepo.save(update);
   }
 
   async remove(id: number) {

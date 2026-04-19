@@ -4,6 +4,7 @@ import { FileText, Download, Calendar, ArrowLeft } from 'lucide-react'
 import { format } from 'date-fns'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getLatestUpdates() {
   try {
@@ -67,7 +68,7 @@ export default async function LatestUpdatesPage() {
                 <div className="flex-1 pr-4">
                   <div className="flex items-center gap-2 text-[11px] font-bold text-neutral-400 uppercase tracking-widest mb-3">
                     <Calendar className="w-3.5 h-3.5 text-gold" />
-                    {format(new Date(update.created_at), 'MMMM dd, yyyy')}
+                    {format(new Date(update.date || update.created_at), 'MMMM dd, yyyy')}
                   </div>
                   <h3 className="text-xl font-heading font-black text-[#001A4D] group-hover:text-gold transition-colors leading-tight">
                     {update.title}

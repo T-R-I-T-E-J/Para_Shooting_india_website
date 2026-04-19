@@ -8,6 +8,9 @@ import RevealSection from '@/components/public/RevealSection'
 import DocumentsSection from '@/components/public/DocumentsSection'
 import TickerBar from '@/components/public/TickerBar'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const stats = [
   { value: '900+', label: 'Registered Athletes' },
   { value: '25+', label: 'International Athletes' },

@@ -23,6 +23,9 @@ export class LatestUpdate {
   @Column({ type: 'jsonb', nullable: true })
   document: { url: string; name: string } | null;
 
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  date: Date;
+
   @CreateDateColumn({ type: 'timestamptz' })
   created_at: Date;
 

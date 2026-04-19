@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Body,
+  Patch,
   Param,
   ParseIntPipe,
   Delete,
@@ -10,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { LatestUpdatesService } from './latest-updates.service';
 import { CreateLatestUpdateDto } from './dto/create-latest-update.dto';
+import { UpdateLatestUpdateDto } from './dto/update-latest-update.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../auth/decorators/roles.decorator.js';
 
@@ -34,6 +36,15 @@ export class LatestUpdatesController {
   @Public()
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.service.findOne(id);
+  }
+
+  @Patch(':id')
+  @Roles('admin', 'system_admin')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateLatestUpdateDto,
+  ) {
+    return this.service.update(id, updateDto);
   }
 
   @Delete(':id')

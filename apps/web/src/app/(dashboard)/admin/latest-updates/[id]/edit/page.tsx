@@ -1,22 +1,58 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { DashboardHeader } from '@/components/dashboard'
 import { ArrowLeft, Loader2, Save, FileText, Plus, X } from 'lucide-react'
 
 const API_URL = '/api/v1'
 
-export default function CreateLatestUpdatePage() {
+export default function EditLatestUpdatePage() {
   const router = useRouter()
+  const params = useParams()
   const [loading, setLoading] = useState(false)
+  const [fetching, setFetching] = useState(true)
 
   const [formData, setFormData] = useState({
     title: '',
     document: null as { url: string; name: string } | null,
     date: '',
   })
+
+  useEffect(() => {
+    const fetchUpdate = async () => {
+      try {
+        const res = await fetch(`${API_URL}/latest-updates/${params.id}`, { cache: 'no-store' })
+        if (!res.ok) throw new Error('Fetch failed')
+        const data = await res.json()
+        const updateData = data.data || data
+        
+        let dateVal = ''
+        if (updateData.date) {
+            const d = new Date(updateData.date)
+            d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+            dateVal = d.toISOString().slice(0, 16)
+        } else if (updateData.created_at) {
+            const d = new Date(updateData.created_at)
+            d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+            dateVal = d.toISOString().slice(0, 16)
+        }
+
+        setFormData({
+          title: updateData.title,
+          document: updateData.document,
+          date: dateVal,
+        })
+      } catch (e) {
+        console.error(e)
+        alert('Failed to load update details.')
+      } finally {
+        setFetching(false)
+      }
+    }
+    fetchUpdate()
+  }, [params.id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -34,15 +70,11 @@ export default function CreateLatestUpdatePage() {
       })
       if (!res.ok) {
         const errBody = await res.text()
-        console.error(`[upload] Server error ${res.status}:`, errBody)
         throw new Error(`Upload failed: server returned ${res.status}`)
       }
       const json = await res.json()
-      console.log('[upload] Response:', json)
-      // Handle both wrapped (TransformInterceptor) and unwrapped response shapes
       const url: string | undefined = json?.data?.file?.url ?? json?.file?.url
       if (!url) {
-        console.error('[upload] No URL in response:', json)
         throw new Error('No URL in server response')
       }
       setFormData((prev) => ({
@@ -73,8 +105,8 @@ export default function CreateLatestUpdatePage() {
         payload.date = new Date(payload.date).toISOString();
       }
 
-      const res = await fetch(`${API_URL}/latest-updates`, {
-        method: 'POST',
+      const res = await fetch(`${API_URL}/latest-updates/${params.id}`, {
+        method: 'PATCH',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -84,7 +116,7 @@ export default function CreateLatestUpdatePage() {
         router.refresh()
       } else {
         const err = await res.json()
-        alert(`Failed to create: ${err.message || 'Unknown error'}`)
+        alert(`Failed to update: ${err.message || 'Unknown error'}`)
       }
     } catch {
       alert('An error occurred. Please try again.')
@@ -93,9 +125,20 @@ export default function CreateLatestUpdatePage() {
     }
   }
 
+  if (fetching) {
+    return (
+      <>
+        <DashboardHeader title="Edit Latest Update" subtitle="Update an existing ticker item" />
+        <div className="p-6 max-w-4xl mx-auto flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
-      <DashboardHeader title="Create Latest Update" subtitle="Add a new update to the ticker and list" />
+      <DashboardHeader title="Edit Latest Update" subtitle="Update an existing ticker item" />
       <div className="p-6 max-w-4xl mx-auto">
         <Link href="/admin/latest-updates" className="flex items-center text-sm text-neutral-500 hover:text-primary mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" /> Back to Latest Updates
@@ -153,7 +196,7 @@ export default function CreateLatestUpdatePage() {
             <Link href="/admin/latest-updates" className="btn-secondary">Cancel</Link>
             <button type="submit" disabled={loading} className="btn-primary flex items-center gap-2 cursor-pointer">
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              Create Update
+              Save Update
             </button>
           </div>
         </form>

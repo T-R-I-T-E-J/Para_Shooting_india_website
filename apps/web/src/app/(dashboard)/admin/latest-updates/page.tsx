@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { DashboardHeader } from '@/components/dashboard'
-import { Plus, Trash2 } from 'lucide-react'
+import { Plus, Trash2, Edit2 } from 'lucide-react'
 import { format } from 'date-fns'
 
 const API_URL = '/api/v1'
@@ -100,12 +100,19 @@ export default function AdminLatestUpdatesPage() {
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-neutral-500">
-                        {format(new Date(update.created_at), 'dd MMM yyyy, HH:mm')}
+                        {format(new Date(update.date || update.created_at), 'dd MMM yyyy, HH:mm')}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
+                        <Link
+                          href={`/admin/latest-updates/${update.id}/edit`}
+                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer inline-block"
+                          title="Edit"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </Link>
                         <button
                           onClick={() => handleDelete(update.id)}
-                          className="p-2 text-error hover:bg-error/10 rounded-lg transition-colors cursor-pointer"
+                          className="p-2 text-error hover:bg-error/10 rounded-lg transition-colors cursor-pointer inline-block"
                           title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />
